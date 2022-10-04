@@ -37,6 +37,8 @@
 		%>
 
 		<h4>구구단</h4>
+		
+		<h3>방법1</h3>
 		<table border="1">
 			<tr>
 				<th>2단</th>
@@ -48,28 +50,9 @@
 				<th>8단</th>
 				<th>9단</th>
 			</tr>
-			<tr>
-				<td>2 x 1 = 2</td>
-				<td>3 x 1 = 3</td>
-				<td>4 x 1 = 4</td>
-				<td>5 x 1 = 5</td>
-				<td>6 x 1 = 6</td>
-				<td>7 x 1 = 7</td>
-				<td>8 x 1 = 8</td>
-				<td>9 x 1 = 9</td>
-			</tr>
-			<tr>
-				<td>2 x 2 = 2</td>
-				<td>3 x 2 = 6</td>
-				<td>4 x 2 = 8</td>
-				<td>5 x 2 = 10</td>
-				<td>6 x 2 = 12</td>
-				<td>7 x 2 = 14</td>
-				<td>8 x 2 = 16</td>
-				<td>9 x 2 = 18</td>
-			</tr>
+			
 			<%
-				for(int i=3; i<=9; i++){
+				for(int i=1; i<=9; i++){
 					out.println("<tr>");
 					for(int k=2; k<=9; k++){
 						out.println("<td>" + k + " x " + i + " = " + k*i + "</td>");
@@ -80,6 +63,7 @@
 
 		</table>
 		
+		<h3>방법2</h3>
 		<table border="1">
 			<tr>
 				<th>2단</th>

@@ -11,7 +11,7 @@
 			내용 : JSP 지시자 실습하기	
 			지시자(Directives)
 			 - JSP 페이지에 추가적인 정보를 설정하는 스크립트 문법
-			 - 스크립트릿 표형식과 함께 JSP 구성요소
+			 - 스크립트릿 표현식과 함께 JSP 구성요소
 			 - 대표적으로 page, include, taglib 지시자
 			 
 			include 지시자
