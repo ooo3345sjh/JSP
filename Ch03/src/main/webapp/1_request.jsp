@@ -36,7 +36,7 @@
 		</form>
 		
 		<h4>회원가입</h4>
-		<form action="./proc/registerProc.jsp" method="post">
+		<form action="./proc/registerProc.jsp" method="get">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
