@@ -23,7 +23,7 @@
 		</form>
 		
 		<h2>2. 클라이언트의 요청 매개변수 읽기</h2>
-		<form action="P89.jsp" method="post">
+		<form action="P91.jsp" method="post">
 			<label>아이디 : <input type="text" name="id" value=""/> </label><br/>
 			성별 : 
 			<label><input type="radio" name="sex" value="man"/>남자</label>
@@ -42,7 +42,7 @@
 		</form>
 		
 		<h2>3. HTTP 요청 헤더 정보 읽기</h2>
-		<a href="P89.jsp">
+		<a href="P93.jsp">
 			요청 헤더 정보 읽기
 		</a>		
 	</body>
