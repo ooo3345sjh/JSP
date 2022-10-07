@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<h2>web.xml에 설정한 내용 읽어오기</h2>
-		초기화 매개변수 ; <%= application.getInitParameter("INIT_PARAM") %>
+		초기화 매개변수 : <%= application.getInitParameter("INIT_PARAM") %>
 		
 		<h2>서버의 물리적 경로 얻어오기</h2>
 		application 내장 객체 : <%= application.getRealPath("/Ch02") %>
