@@ -15,8 +15,11 @@
 		<h2>페이지 이동 후 session 영역의 속성 읽기</h2>
 		<%
 			ArrayList<String> lists = (ArrayList<String>)session.getAttribute("lists");
-			for(String str : lists){
-				out.print(str + "<br/>");
+			if(lists == null) out.print("데이터가 존재하지 않습니다."); 
+			else{
+				for(String str : lists){
+					out.print(str + "<br/>");
+				}				
 			}
 		%>		
 	</body>
