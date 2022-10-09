@@ -1,7 +1,7 @@
 <!-- 
 	날짜 : 2022/10/07
 	이름 : 서정현
-	내용 : page 영역레 속성값 저장하고 불러오기
+	내용 : page 영역에 속성값 저장하고 불러오기
  -->
 <%@page import="common.Person"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>

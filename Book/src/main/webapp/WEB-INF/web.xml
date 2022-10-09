@@ -28,4 +28,28 @@
   	<location>/Ch02/P108.jsp</location> 
   </error-page> 
  -->
+ 
+ <!-- web.xml에 오라클 접속 정보 입력 -->
+ <context-param>
+ 	<param-name>MysqlDriver</param-name> <!-- 드라이버 이름 -->
+ 	<param-value>com.mysql.cj.jdbc.Driver</param-value>
+ </context-param>
+ <context-param>
+ 	<param-name>MysqlURL</param-name> <!-- 접속 URL -->
+ 	<param-value>jdbc:mysql://127.0.0.1:3307/boarddb</param-value>
+ </context-param>
+ <context-param>
+ 	<param-name>MysqlId</param-name> <!-- 계정 아이디 -->
+ 	<param-value>board_tester</param-value>
+ </context-param>
+ <context-param>
+ 	<param-name>MysqlPwd</param-name> <!-- 패스워드 -->
+ 	<param-value>1234</param-value>
+ </context-param>
+ 
+ <!-- P211 세션 유지 시간 설정(20분 설정)-->
+ <session-config>
+ 	<session-timeout>20</session-timeout>
+ </session-config>
+
 </web-app>
