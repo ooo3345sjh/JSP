@@ -1,0 +1,23 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" 
+trimDirectiveWhitespaces="true"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>액션 태그 - UseBean</title>
+		<%--
+			날짜 : 2022/10/10
+			이름 : 서정현
+			내용 : 폼값을 받는 페이지
+		--%>
+	</head>
+	<body>
+		<h3>액션 태그로 폼값 한 번에 받기</h3>
+		<jsp:useBean id="person" class="common.Person"/>
+		<jsp:setProperty property="*" name="person"/>
+		<ul>
+			<li>이름 : <jsp:getProperty name="person" property="name"/></li>
+			<li>나이 : <jsp:getProperty name="person" property="age"/></li>
+		</ul>
+	</body>
+</html>
