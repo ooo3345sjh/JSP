@@ -8,6 +8,7 @@
 			날짜 : 2022/10/11
 			이름 : 서정현
 			내용 : JSP forward 액션태그 실습하기
+			참고 사이트 : https://ninetynine-2026.tistory.com/174
 		--%>
 	</head>
 	<body>
