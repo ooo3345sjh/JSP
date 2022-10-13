@@ -2,7 +2,7 @@ package bean;
 
 public class StudentBean {
 	private String stdNo;
-	private String stdname;
+	private String stdName;
 	private String stdHp;
 	private int stdYear;
 	private String stdAddress;
@@ -14,10 +14,10 @@ public class StudentBean {
 		this.stdNo = stdNo;
 	}
 	public String getStdname() {
-		return stdname;
+		return stdName;
 	}
 	public void setStdname(String stdname) {
-		this.stdname = stdname;
+		this.stdName = stdname;
 	}
 	public String getStdHp() {
 		return stdHp;

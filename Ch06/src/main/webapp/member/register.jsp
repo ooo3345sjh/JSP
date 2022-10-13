@@ -50,7 +50,9 @@
 				</tr>
 				<tr>
 					<td>입사일</td>
-					<td><input type="date" name="rdate" placeholder="입사일 선택"/></td>
+					<td><!-- yyyy-MM-dd HH:mm:ss 입력 형식 -->
+						<input type="datetime-local" step="1" name="rdate" placeholder="입사일 선택"/>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right">

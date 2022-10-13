@@ -37,19 +37,14 @@
 			users.add(ub);
 		}
 		
-		
-		
 		// 6단계
 		rs.close();
 		stmt.close();
 		conn.close();
 		
-			
 	}catch(Exception e){
 		e.printStackTrace();
 	}
-
-
 %>
 <!DOCTYPE html>
 <html>

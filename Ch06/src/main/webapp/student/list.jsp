@@ -1,3 +1,4 @@
+<%@page import="config.MyDB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="bean.StudentBean"%>
@@ -11,11 +12,18 @@
 
 	// 데이터베이스 작업
 	try{
-		Connection conn = DB.getInstance().getConnection();
+		
+		// 1, 2단계 JDBC 드라이버 로드 및 데이터베이스 접속
+		Connection conn = MyDB.getInstance().getConnection(2);
+		
+		// 3단계 SQL실행 객체 생성
 		Statement stmt = conn.createStatement();
+		
+		// 4단계 SQL실행
 		ResultSet rs = stmt.executeQuery("SELECT * FROM `student`");
 		students = new ArrayList<>();
 		
+		// 5단계 SQl결과 처리
 		while(rs.next()){
 			StudentBean sb = new StudentBean();
 			sb.setStdNo(rs.getString(1));
@@ -27,6 +35,7 @@
 			students.add(sb);
 		}
 		
+		// 6단계 SQL실행 객체 종료
 		conn.close();
 		stmt.close();
 		rs.close();

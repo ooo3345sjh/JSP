@@ -1,6 +1,5 @@
-<%@page import="java.util.Date"%>
+<%@page import="config.MyDB"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.sql.Date"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.MemberBean"%>
 <%@page import="java.util.List"%>
@@ -12,17 +11,11 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%	
 	// 데이터 베이스 작업
-	String host = "jdbc:mysql://127.0.0.1:3306/java2db";
-	String user = "root";
-	String pw = "1234";
 	List<MemberBean> members = null; 
 	
 	try{
-		// 1단계
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
-		// 2단계
-		Connection conn = DriverManager.getConnection(host, user, pw);
+		// 1, 2단계 JDBC 드라이버 로드 및 데이터베이스 접속
+		Connection conn = MyDB.getInstance().getConnection(1);
 		
 		// 3단계
 		String sql = "SELECT * FROM `member`;";
@@ -86,18 +79,15 @@
 								case 101: out.println("영업1부"); break;
 								case 102: out.println("영업2부"); break;
 								case 103: out.println("영업3부"); break;
-								case 104: out.println("인사과"); break;
+								case 104: out.println("인사부"); break;
 								case 105: out.println("영업지원부"); break;
 							}
 						%>
 					</td>
 					<td>
-						<% 
-							String sDate = mb.getRdate();
-							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-							java.util.Date date = sdf.parse(sDate);
-							
-							out.println(sDate);
+						<%
+							String rdate = mb.getRdate(); 
+							out.println(rdate.substring(2));
 						%>
 					</td>
 					<td>

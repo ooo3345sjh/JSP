@@ -1,10 +1,11 @@
+<%@page import="config.MyDB"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-
+	// 전송 데이터 처리
 	request.setCharacterEncoding("utf-8");
 	String uid = request.getParameter("uid");
 	String name = request.getParameter("name");
@@ -12,29 +13,25 @@
 	String pos = request.getParameter("pos");
 	String dep = request.getParameter("dep");
 	String rdate = request.getParameter("rdate");
-	
-	//데이터 베이스 작업
-	String host = "jdbc:mysql://127.0.0.1:3306/java2db";
-	String user = "root";
-	String pw = "1234";
-	
-	
+
 	try{
-		// 1단계
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		// 1, 2단계 JDBC 드라이버 로드 및 데이터베이스 접속
+		Connection conn = MyDB.getInstance().getConnection(1);
 		
-		// 2단계
-		Connection conn = DriverManager.getConnection(host, user, pw);
-		
-		// 3단계
-		String sql = "UPDATE `member` SET `name` = ?, `hp`=?  WHERE `uid` = ?;";
+		// 3단계 SQL실행 객체 생성
+		String sql = "UPDATE `member` SET `name` = ?, `hp`=?, `pos`=?, `dep`=?, `rdate`=?  WHERE `uid` = ?;";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, name);
 		psmt.setString(2, hp);
-		psmt.setString(3, uid);
+		psmt.setString(3, pos);
+		psmt.setString(4, dep);
+		psmt.setString(5, rdate);
+		psmt.setString(6, uid);
 		
+		// 4단계 SQL 실행
 		psmt.executeUpdate();
 		
+		// 5단계 실행 객체 종료
 		conn.close();
 		psmt.close();
 	}catch(Exception e){

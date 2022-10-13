@@ -1,7 +1,5 @@
 package bean;
 
-import java.sql.Date;
-
 public class MemberBean {
 	private String uid;
 	private String name;

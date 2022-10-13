@@ -18,21 +18,27 @@
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="name" placeholder="이름 입력"> </td>
+					<td><input type="text" name="stdName" placeholder="이름 입력"> </td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="hp" placeholder="휴대폰 입력"> </td>
+					<td><input type="text" name="stdHp" placeholder="휴대폰 입력"> </td>
 				</tr>
 				<tr>
-					<td>학번</td>
-					<td><input type="text" name="year" placeholder="학년 입력"> </td>
+					<td>학년</td>
+					<td>
+						<select name="stdYear">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="addr" placeholder="휴대폰 입력"> </td>
+					<td><input type="text" name="stdAddress" placeholder="주소 입력"> </td>
 				</tr>
-				
 				<tr>
 					<td colspan="2" align="right">
 						<input type="submit" value="등록하기">
