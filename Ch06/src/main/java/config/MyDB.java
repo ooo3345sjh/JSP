@@ -13,8 +13,8 @@ public class MyDB {
 	private MyDB() {}
 	
 	// 데이터베이스 정보
-	private final String HOST_M = "jdbc:mysql://127.0.0.1:3307/java2db";
-	private final String HOST_S = "jdbc:mysql://127.0.0.1:3307/java2_college";
+	private final String HOST_M = "jdbc:mysql://127.0.0.1:3306/java2db";
+	private final String HOST_S = "jdbc:mysql://127.0.0.1:3306/java2_college";
 	private final String USER = "root";
 	private final String PW = "1234";
 	

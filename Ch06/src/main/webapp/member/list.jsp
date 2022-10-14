@@ -1,3 +1,4 @@
+<%@page import="config.DB"%>
 <%@page import="config.MyDB"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>

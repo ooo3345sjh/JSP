@@ -1,3 +1,4 @@
+<%@page import="config.DB"%>
 <%@page import="config.MyDB"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
