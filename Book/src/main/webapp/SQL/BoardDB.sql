@@ -32,3 +32,16 @@ create table `Board`(
 
 insert into `member`(`id`, `pass`, `name`) values ('musthave', '1234', '머스트해브');
 insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) values ('제목1입니다', '내용1입니다', 'musthave',now(), 0);
+
+insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) values ('지금은 봄입니다', '봄의왈츠', 'musthave',now(), 0);
+insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) values ('지금은 여름입니다', '여름향기', 'musthave',now(), 0);
+insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) values ('지금은 가을입니다', '가을동화', 'musthave',now(), 0);
+insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) values ('지금은 겨울입니다', '겨울연가', 'musthave',now(), 0);
+insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) VALUES ('지금은 10월입니다', '10월', 'musthave',now(), 0);
+ALTER TABLE `board` AUTO_INCREMENT=1;
+
+SELECT B.*, M. 
+FROM `member` M
+JOIN `board` B 
+ON M.id = B.id"
+WHERE B.num=9;

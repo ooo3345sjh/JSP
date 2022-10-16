@@ -10,9 +10,10 @@ trimDirectiveWhitespaces="true"%>
 			이름 : 서정현
 			내용 : 로그인 폼
 		-->
-		<style>
-			#wrapper {width: 500px; height: auto;}
-		</style>
+		 <style>
+		 	*{padding: 0; margin:0;}
+		 	#wrapper{ width: 900px; height: auto; margin: auto; }
+		 </style>
 	</head>
 	<body>
 	<div id="wrapper">
