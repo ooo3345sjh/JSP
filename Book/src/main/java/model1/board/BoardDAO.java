@@ -82,6 +82,51 @@ public class BoardDAO extends JDBConnect{
 		return bbs;
 	}
 	
+	// 검색 조건에 맞는 게시물 목록을 반환합니다.(페이징 기능 지원)(P319)
+	public List<BoardDTO> selectListPage(Map<String, Object> map){
+		List<BoardDTO> bbs = new ArrayList<>(); // 결과(게시물 목록)을 담을 변수
+		
+		// 쿼리문 템플릿
+		String sql = "SELECT * FROM (SELECT *, ROW_NUMBER OVER(ORDER BY `NUM` DESC) rNum";
+		
+		// 검색 조건 추가 
+		if(map.get("searchWord") != null) {
+			sql += " WHERE " + map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%') ";
+		}
+		
+		sql += "WHERE rNum BETWEEN ? AND ?";
+		
+		try {
+			// 쿼리문 완성
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, map.get("start").toString());
+			psmt.setString(2, map.get("end").toString());
+			
+			// 쿼리문 실행
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				// 한 행(게시물 하나)의 데이터를 DTO에 저장
+				BoardDTO dto = new BoardDTO();
+				dto.setName(rs.getString("num"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setName(rs.getString("postdate"));
+				dto.setName(rs.getString("id"));
+				dto.setName(rs.getString("visitcount"));
+				
+				// 반환할 결과 목록에 게시물 추가
+				bbs.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("게시물 조회 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		// 목록 반환
+		return bbs;
+	}
+	
 	// DAO에 글쓰기 메서드 추가(P282)
 	// 게시글 데이터를 받아 DB에 추가합니다.
 	public int insertWrite(BoardDTO dto) {
@@ -176,6 +221,29 @@ public class BoardDAO extends JDBConnect{
 			System.out.println("게시물 수정 중 예외 발생");
 			e.printStackTrace();
 		}
+		return result; // 결과 반환
+	}
+	
+	// DAO에 삭제하기 메서드 추가(P302)
+	// 지정한 게시물을 삭제합니다.
+	public int deletePost(BoardDTO dto) {
+		int result = 0;
+		try {
+			// 쿼리문 템플릿
+			String query = "DELETE FROM `board` WHERE num = ?";
+			
+			// 쿼리문 완성
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getNum());
+			
+			// 쿼리문 실행
+			result = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}
+		
 		return result; // 결과 반환
 	}
 	

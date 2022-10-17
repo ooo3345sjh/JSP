@@ -40,8 +40,14 @@ insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) values 
 insert into `board` (`title`, `content`, `id`, `postdate`, `visitcount`) VALUES ('지금은 10월입니다', '10월', 'musthave',now(), 0);
 ALTER TABLE `board` AUTO_INCREMENT=1;
 
-SELECT B.*, M. 
+SELECT B.*, M.name
 FROM `member` M
-JOIN `board` B 
-ON M.id = B.id"
+JOIN `board` B
+ON M.id = B.id
 WHERE B.num=9;
+
+UPDATE `board` SET `visitcount`= `visitcount`+1 WHERE `num`=9;
+
+SELECT tb.* FROM 
+(SELECT *, ROW_NUMBER() OVER(ORDER BY num DESC) AS rnum FROM `board`) tb
+WHERE `rnum` BETWEEN 1 AND 10;
