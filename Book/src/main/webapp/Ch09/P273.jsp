@@ -1,3 +1,4 @@
+<%@page import="utils.BoardPage"%>
 <%@page import="model1.board.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
@@ -19,10 +20,22 @@ trimDirectiveWhitespaces="true"%>
 	
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
-	if(searchWord != null){
-		param.put("searchField", searchField);
-		param.put("searchWord", searchWord);
+	String check = request.getParameter("check");
+	
+	if(check != null){ // 검색하기 버튼을 눌렀는지 확인
+		if(check.equals("true") ){ // 검색 내용이 있는지 확인
+			session.setAttribute("searchField", searchField);
+			session.setAttribute("searchWord", searchWord);
+		}
+		else { //검색 내용이 없다면 삭제 
+			session.removeAttribute("searchField");
+			session.removeAttribute("searchWord");
+		}
 	}
+	
+	param.put("searchField", session.getAttribute("searchField"));
+	param.put("searchWord", session.getAttribute("searchWord"));
+	
 	
 	int totalCount = dao.selectCount(param); // 게시물 수 확인
 	
@@ -46,7 +59,7 @@ trimDirectiveWhitespaces="true"%>
 	param.put("end", end);
 	/*** 페이지 처리 end ***/
 	
-	List<BoardDTO> boardLists = dao.selectList(param); // 게시물 목록 받기
+	List<BoardDTO> boardLists = dao.selectListPage(param); // 게시물 목록 받기
 	dao.close(); // DB 연결 닫기
 %>
 <!DOCTYPE html>
@@ -63,12 +76,20 @@ trimDirectiveWhitespaces="true"%>
 		 	*{padding: 0; margin:0;}
 		 	#wrapper{ width: 900px; height: auto; margin: auto; }
 		 </style>
+		 <script type="text/javascript">
+			 function checkForm(form) {
+				if(form.searchWord.value != ""){
+					form.check.value = 'true';
+				}
+			}
+		 </script>
 	</head>
 	<body>
 		<div id="wrapper">
 			<jsp:include page="P225.jsp"/> <!-- 공통 링크 -->
-			<h2>목록 보기(List)</h2>
-			<form method="get">
+			<%= request.getParameter("check") %>
+			<h2>목록 보기(List) - 현재 페이지 : <%= pageNum %> (전체 : <%= totalPage %>))</h2>
+			<form method="get" onsubmit="checkForm(this)">
 				<table border="1" width="90%">
 					<tr>
 						<td align="center">
@@ -78,6 +99,7 @@ trimDirectiveWhitespaces="true"%>
 							</select>
 							<input type="text" name="searchWord"/>
 							<input type="submit" value="검색하기"/>
+							<input type="hidden" name="check" value="false"/>
 						</td>
 					</tr>
 				</table>
@@ -107,8 +129,10 @@ trimDirectiveWhitespaces="true"%>
 			else {
 				// 게시물이 있을 때
 				int virtualNum = 0; // 화면상에서의 게시물 번호
+				int countNum = 0;
 				for(BoardDTO dto : boardLists){
-					virtualNum = totalCount--; // 전체 게시물 수에서 시작해 1씩 감소
+					//virtualNum = totalCount--; // 전체 게시물 수에서 시작해 1씩 감소(기존 코드)
+					 virtualNum = totalCount - (((pageNum-1) * pageSize) + countNum++);
 			%>
 				<tr>
 					<td align="center"><%= virtualNum %></td> <!-- 게시물 번호 -->
@@ -124,7 +148,12 @@ trimDirectiveWhitespaces="true"%>
 			</table>
 			<!-- 목록 하단의 [글쓰기] 버튼 -->
 			<table border="1" width="90%">
-				<tr align="right">
+				<tr align="center">
+					<!-- 페이징 처리 -->
+					<td>
+						<%= BoardPage.pafingStr(totalCount, pageSize, blockPage, pageNum, request.getRequestURI()) %>
+					</td>
+					<!-- 글쓰기 버튼 -->
 					<td><button type="button" onclick="location.href='P280.jsp'">글쓰기</button></td>
 				</tr>		
 			</table>

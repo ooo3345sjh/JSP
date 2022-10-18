@@ -49,5 +49,10 @@ WHERE B.num=9;
 UPDATE `board` SET `visitcount`= `visitcount`+1 WHERE `num`=9;
 
 SELECT tb.* FROM 
-(SELECT *, ROW_NUMBER() OVER(ORDER BY num DESC) AS rnum FROM `board`) tb
+(SELECT *, ROW_NUMBER() OVER(ORDER BY num DESC) rnum FROM `board`
+WHERE title LIKE '%91%') tb
 WHERE `rnum` BETWEEN 1 AND 10;
+
+DELETE FROM `board` WHERE `num` IN(SELECT num FROM(SELECT num FROM `board` WHERE `title` LIKE '%페이징%') tmp);
+
+SELECT num FROM `board` WHERE `title` LIKE '%페이징%';

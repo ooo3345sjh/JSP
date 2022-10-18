@@ -30,7 +30,7 @@ public class BoardPage {
 				pagingStr += "&nbsp;" + pageTemp + "&nbsp;";
 			} else {
 				pagingStr += "&nbsp;<a href='" + reqUrl + "?pageNum=" + pageTemp + "'>" 
-						 + pageTemp + "</a>&nbsp:";
+						 + pageTemp + "</a>&nbsp;";
 			}
 			pageTemp++;
 			blockCount++;

@@ -17,6 +17,7 @@ trimDirectiveWhitespaces="true"%>
 	// DAO 객체를 통해 DB에 DTO 저장
 	BoardDAO dao = new BoardDAO(application);
 	int iResult = dao.insertWrite(dto);
+	
 	dao.close();
 	
 	// 성공 or 실패?

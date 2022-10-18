@@ -87,14 +87,14 @@ public class BoardDAO extends JDBConnect{
 		List<BoardDTO> bbs = new ArrayList<>(); // 결과(게시물 목록)을 담을 변수
 		
 		// 쿼리문 템플릿
-		String sql = "SELECT * FROM (SELECT *, ROW_NUMBER OVER(ORDER BY `NUM` DESC) rNum";
+		String sql = "SELECT tb.* FROM (SELECT *, ROW_NUMBER() OVER(ORDER BY `NUM` DESC) rNum FROM `board`";
 		
 		// 검색 조건 추가 
 		if(map.get("searchWord") != null) {
-			sql += " WHERE " + map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%') ";
+			sql += " WHERE " + map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%'";
 		}
 		
-		sql += "WHERE rNum BETWEEN ? AND ?";
+		sql += ") tb WHERE `rNum` BETWEEN ? AND ?";
 		
 		try {
 			// 쿼리문 완성
@@ -108,12 +108,12 @@ public class BoardDAO extends JDBConnect{
 			while(rs.next()) {
 				// 한 행(게시물 하나)의 데이터를 DTO에 저장
 				BoardDTO dto = new BoardDTO();
-				dto.setName(rs.getString("num"));
+				dto.setNum(rs.getString("num"));
 				dto.setTitle(rs.getString("title"));
 				dto.setContent(rs.getString("content"));
-				dto.setName(rs.getString("postdate"));
-				dto.setName(rs.getString("id"));
-				dto.setName(rs.getString("visitcount"));
+				dto.setPostdate(rs.getString("postdate"));
+				dto.setId(rs.getString("id"));
+				dto.setVisitcount(rs.getString("visitcount"));
 				
 				// 반환할 결과 목록에 게시물 추가
 				bbs.add(dto);
