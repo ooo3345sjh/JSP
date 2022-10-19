@@ -7,7 +7,7 @@ public class BoardDTO {
 	private String title;
 	private String content;
 	private String id;
-	private String posdate;
+	private String postdate;
 	private int visitCount;
 	private String name;
 
@@ -36,11 +36,11 @@ public class BoardDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getPosdate() {
-		return posdate;
+	public String getPostdate() {
+		return postdate;
 	}
-	public void setPosdate(String posdate) {
-		this.posdate = posdate;
+	public void setPostdate(String posdate) {
+		this.postdate = posdate;
 	}
 	public int getVisitCount() {
 		return visitCount;

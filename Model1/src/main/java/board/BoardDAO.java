@@ -67,15 +67,30 @@ public class BoardDAO {
 		sql += " ORDER BY `num` DESC";
 		
 		try {
-			stmt = con.createStatement();
-			rs =  stmt.executeQuery(sql);
-			while(rs.next()) {
-				BoardDTO dto = new BoardDTO();
-				dto.setNum(rs.getInt(1));
+			stmt = con.createStatement(); // 쿼리문 생성
+			rs =  stmt.executeQuery(sql); // 쿼리 실행
+			
+			while(rs.next()) { // 결과를 순회하며...
+				// 한 행(게시물 하나)의 내용을 DTO에 저장
+				BoardDTO dto = new BoardDTO(); 
+				
+				dto.setNum(rs.getInt(1)); // 일련번호
+				dto.setTitle(rs.getString(2)); // 제목
+				dto.setContent(rs.getString(3)); // 내용
+				dto.setId(rs.getString(3)); // 작성일
+				dto.setPostdate(rs.getString(4)); // 작성자 아이디
+				dto.setVisitCount(rs.getInt(5)); // 조회수
+				
+				bbs.add(dto); // 결과 목록에 저장
 			}
+			close();
+			
 		} catch (Exception e) {
+			System.out.println("게시물 조회 중 예외 발생");
 			e.printStackTrace();
 		}
+		
+		return bbs;
 	}
 	
 	// 연결을 해제하는 메서드

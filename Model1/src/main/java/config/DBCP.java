@@ -12,7 +12,9 @@ public class DBCP {
 	public static DataSource ds = null;
 	
 	public static Connection getConnection() throws NamingException, SQLException {
-		ds = (DataSource) new InitialContext().lookup("java:comp/env/dbcp_mysql");
+		if(ds == null) {
+			ds = (DataSource) new InitialContext().lookup("java:comp/env/dbcp_mysql");
+		}
 		
 		return ds.getConnection();
 	}
