@@ -1,5 +1,31 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="board.BoardDTO"%>
+<%@page import="board.BoardDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" 
 trimDirectiveWhitespaces="true"%>
+<%
+	// 검색 내용이 있을 경우 전송되는 데이터
+	String searchField = request.getParameter("searchField");
+	String searchWord = request.getParameter("searchWord");
+	
+	Map<String, Object> map = new HashMap<>();
+	
+	if(searchWord != null && !searchWord.equals("")){
+		map.put("searchField", searchField);
+		map.put("searchWord", searchWord);
+	}
+	
+	BoardDAO dao = new BoardDAO();
+	BoardDTO dto = new BoardDTO();
+	
+	List<BoardDTO> boards = new ArrayList<>();
+	boards = dao.selectList(map); // 모든 게시물 조회
+	int totalCount = dao.selectCount(map); // 게시물 총 갯수
+	dao.close();
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -23,7 +49,7 @@ trimDirectiveWhitespaces="true"%>
 								<option value="title">제목</option>
 								<option value="content">내용</option>
 							</select>
-							<input type="text" name="content">
+							<input type="text" name="searchWord">
 							<input type="submit" value="검색하기">
 						</td>
 					</tr>
@@ -37,12 +63,27 @@ trimDirectiveWhitespaces="true"%>
 					<th width="10%">조회수</th>
 					<th width="20%">작성일</th>
 				</tr>
+				<% 
+					if(boards != null){
+						for(BoardDTO board : boards){
+							int num = totalCount--;
+				%>
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td align="center"><%= num %></td>
+					<td><a href="view.jsp?num=<%= board.getNum()%>"><%= board.getTitle() %></a></td>
+					<td align="center"><%= board.getId() %></td>
+					<td align="center"><%= board.getVisitCount() %></td>
+					<td align="center"><%= board.getPostdate() %></td>
+				</tr>
+				<%
+						}
+					}
+				
+				%>
+				<tr>
+					<td colspan="5" align="right"> 
+						<button onclick="location.href='write.jsp'">글쓰기</button>
+					</td>
 				</tr>
 			</table>
 		</div>

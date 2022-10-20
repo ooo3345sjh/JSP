@@ -44,7 +44,7 @@ SELECT B.*, M.name
 FROM `member` M
 JOIN `board` B
 ON M.id = B.id
-WHERE B.num=9;
+WHERE B.num=10;
 
 UPDATE `board` SET `visitcount`= `visitcount`+1 WHERE `num`=9;
 
@@ -56,3 +56,5 @@ WHERE `rnum` BETWEEN 1 AND 10;
 DELETE FROM `board` WHERE `num` IN(SELECT num FROM(SELECT num FROM `board` WHERE `title` LIKE '%페이징%') tmp);
 
 SELECT num FROM `board` WHERE `title` LIKE '%페이징%';
+
+DELETE FROM `board` WHERE num BETWEEN 100 AND 200;

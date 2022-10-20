@@ -33,7 +33,7 @@ trimDirectiveWhitespaces="true"%>
 	</head>
 	<body>
 		<div id="wrapper">
-			<%@ include file="./link.jsp" %>
+			<jsp:include page="link.jsp"/>
 			<h3>로그인 페이지</h3>
 			<% 
 				if(request.getAttribute("loginErorr") != null && id == null){

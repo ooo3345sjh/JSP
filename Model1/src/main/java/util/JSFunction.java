@@ -25,7 +25,7 @@ public class JSFunction {
 	public static void alertBack(String msg, JspWriter out) {
 		String script = ""
 				      + "<script>"
-				      + "	alery('" + msg + "');"
+				      + "	alert('" + msg + "');"
 				      + " 	history.back();"
 				      + "</script>";
 		try {
