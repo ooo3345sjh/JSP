@@ -1,5 +1,5 @@
 /**
- * 
+ *  유저 등록
  */
 function register(){
 	
@@ -28,7 +28,7 @@ function register(){
 		table += "<td><input type='text' name='age'></td>";
 		table += "</tr>";
 		table += "<tr>";
-		table += "<td colspan='2' align='right'><input type='submit' id='btnRegister' 'value='등록'/></td>";
+		table += "<td colspan='2' id='btnSubmit'><input type='submit' id='btnRegister' value='등록'/></td>";
 		table += "</tr>";
 		table += "</table>";
 		
