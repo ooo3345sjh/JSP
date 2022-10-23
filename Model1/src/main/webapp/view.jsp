@@ -32,6 +32,33 @@ trimDirectiveWhitespaces="true"%>
 			#wrapper{width: 900px; height: auto; margin: auto;}
 			table{width: 100%; height: auto;}
 		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+		<script>
+			$(function () {
+				$('#btnModify').click(function (e) {
+					let title = $('#title').text();
+					let content = $('#content').text();
+					
+					location.href = 'modify.jsp?'
+								  + 'title=' + title
+								  + '&content=' + content
+								  + '&num=' + <%=num%>
+								  + '&id=' + '<%=dto.getId()%>';
+					return;
+				});
+				
+				$('#btnDelete').click(function () {
+					let checkDelete = confirm('정말 삭제하시겠습니까?');
+					
+					if(checkDelete){
+						location.href = 'deleteProc.jsp?'
+								      + 'id=' + '<%= dto.getId() %>'
+								      + '&num=' + <%= num %>;
+						return;
+					} 
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -52,11 +79,11 @@ trimDirectiveWhitespaces="true"%>
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td colspan="3"><%= dto.getTitle() %></td>
+					<td colspan="3" id="title"><%= dto.getTitle() %></td>
 				</tr>
 				<tr>
 					<td>내용</td>
-					<td colspan="3"><%= dto.getContent() %></td>
+					<td colspan="3" id="content"><%= dto.getContent() %></td>
 				</tr>
 				<tr>
 					<td colspan="4" align="center">
@@ -64,8 +91,8 @@ trimDirectiveWhitespaces="true"%>
 							if(session.getAttribute("id") != null){
 								if(session.getAttribute("id").equals(dto.getId())){
 						%>
-						<button onclick="location.href='#''">수정하기</button>
-						<button onclick="location.href='#'">삭제하기</button>
+						<button id='btnModify'>수정하기</button>
+						<button id='btnDelete'>삭제하기</button>
 						<%
 								}
 							}

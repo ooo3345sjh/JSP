@@ -92,6 +92,54 @@ public class BoardDAO {
 		return bbs;
 	}
 	
+	// 검색 조건에 맞는 게시물 목록을 반환합니다.(페이징 기능 지원)
+	public List<BoardDTO> selectListPage(Map<String, Object> map){
+		List<BoardDTO> bbs = new ArrayList<>(); // 결과(게시물 목록)을 담을 변수
+		
+		// 쿼리문 템플릿
+		String sql = "SELECT tb.* FROM "
+				   + " (SELECT *, ROW_NUMBER() OVER(ORDER BY `num` DESC) as rnum FROM `board`";
+		
+		// 검색 조건 추가
+		if(map.get("searchWord") != null) {
+			
+			sql += " WHERE " +  map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%'";
+		}
+				   
+		sql += ") tb WHERE `rnum` BETWEEN ? AND ?";
+		
+		try {
+			// 쿼리문 완성
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, map.get("start").toString());
+			psmt.setString(2, map.get("end").toString());
+			
+			// 쿼리문 실행
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				// 한 행(게시물 하나)의 데이터를 DTO에 저장
+				BoardDTO dto = new BoardDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setPostdate(rs.getString("postdate"));
+				dto.setId(rs.getString("id"));
+				dto.setVisitCount(rs.getInt("visitcount"));
+				
+				// 반환할 결과 목록에 게시물 추가
+				bbs.add(dto);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("페이징 게시물 조회 중 에러 발생");
+			e.printStackTrace();
+		}
+		
+		// 목록 반환
+		return bbs; 
+	}
+	
 	// 게시글을 추가하는 메서드
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
@@ -159,6 +207,50 @@ public class BoardDAO {
 			System.out.println("조회수 증가중 에러 발생");
 			e.printStackTrace();
 		}
+		return result;
+	}
+	
+	// 지정한 게시물을 수정
+	public int updateEdit(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			con = DBCP.getConnection();
+			String sql = "UPDATE `board` SET `title`=?, `content`=? WHERE `num`=?";
+			psmt = con.prepareStatement(sql);
+			
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setInt(3, dto.getNum());
+			
+			result = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("게시물 수정중 에러 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 지정한 게시물을 삭제
+	public int deletePost(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			con = DBCP.getConnection();
+			String sql = "DELETE FROM `board` WHERE `num`=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, dto.getNum());
+			
+			result = psmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			System.out.println("게시물 삭제중 에러 발생");
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 	
