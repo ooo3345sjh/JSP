@@ -1,4 +1,5 @@
-<%@page import="DB.DBCP"%>
+<%@page import="kr.co.jboard1.db.Sql"%>
+<%@page import="kr.co.jboard1.db.DBCP"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -28,11 +29,10 @@
 		Connection con = DBCP.getConnection();
 		
 		// 3단계 - SQL실행 객체 생성
-		String sql = "SELECT * FROM `board_terms`";
 		Statement stmt = con.createStatement();
 		
 		// 4단계 -  SQL실행
-		ResultSet rs = stmt.executeQuery(sql);
+		ResultSet rs = stmt.executeQuery(Sql.SELECT_TERMS);
 		
 		// 5단계 - SQL결과 처리
 		if(rs.next()){

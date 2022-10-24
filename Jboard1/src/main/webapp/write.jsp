@@ -1,13 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="_header.jsp" %>
+<script>
+	function vaildateForm(form) {
+		if(form.title.value == ""){
+			alert('제목을 입력해주세요.');
+			form.title.focus();
+			return false;
+		}
+		if(form.content.value == ""){
+			alert('내용을 입력해주세요.');
+			form.content.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
 	<main id="board">
 	    <section class="write">
-	        <form action="#">
+	        <form action="/Jboard1/proc/writeProc.jsp" method="post" onsubmit="return vaildateForm(this)">
+	        	<input type="hidden"  name="uid" value="<%= ub.getUid() %>">
 	            <table border="0">
 	             <caption>글쓰기</caption>
 	             <tr>
 	                 <th>제목</th>
-	                 <td><input type="text" name="title" placeholder="제목을 입력하세요."></td>
+	                 <td><input type="text" name="title" placeholder="제목을 입력하세요." autofocus></td>
 	             </tr>
 	             <tr>
 	                 <th>내용</th>

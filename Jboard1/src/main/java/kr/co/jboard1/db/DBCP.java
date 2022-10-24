@@ -1,4 +1,4 @@
-package DB;
+package kr.co.jboard1.db;
 import java.sql.Connection;
 
 import javax.naming.InitialContext;
