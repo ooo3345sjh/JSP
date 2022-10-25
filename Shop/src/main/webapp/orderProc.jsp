@@ -14,12 +14,15 @@
 
 	// 전송 결과 성공/실패 유무를 알기위한 변수 생성
 	int result = 1;
+	Connection con = null;
 
 	// 데이터베이스 작업	
 	try{
 		// 1, 2단계 - DB 접속
-		Connection con = DBCP.getConnection();
-		con.setAutoCommit(false); // 트랜잭션 시작
+		con = DBCP.getConnection();
+		
+		/*** 트랜잭션 시작 ***/
+		con.setAutoCommit(false); 
 		
 		String sql = "INSERT INTO `order` (`orderId`, `orderProduct`, `orderCount`, `orderDate`) "
 		       	   + " VALUES(?,?,?,NOW())";
@@ -42,13 +45,15 @@
 		psmt1.executeUpdate();
 		result = psmt2.executeUpdate();
 		
-		con.commit(); // 트랜잭션 종료
+		con.commit(); 
+		/*** 트랜잭션 종료 ***/
 		
 		// 6단계 - 연결 해제
 		con.close();
 		psmt1.close();
 		
-	}catch(Exception e){
+	}catch(Exception e){ // 작업 과정중 예외가 발생
+		con.rollback(); // 트랜잭션 실행 이전 상태로 되돌리기
 		e.printStackTrace();
 	}
 	

@@ -106,7 +106,7 @@
 						
 						if(data.result == 1){
 							alert('주문완료!');
-							$('table:eq(1)').remove();
+							$('table:eq(1)').remove(); // 주문 창 제거
 							location.reload();
 						} else {
 							alert('주문실패!');
