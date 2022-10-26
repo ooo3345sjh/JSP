@@ -25,8 +25,15 @@ public class Sql {
 	public static final String INSERT_ARTICLE = "INSERT INTO `board_article` SET "
 												+ "`title`=?,"
 												+ "`content`=?,"
+												+ "`file`=?,"
 												+ "`uid`=?,"
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 
+	public static final String INSERT_FILE = "INSERT INTO `board_file` SET "
+			+ "`parent`=?,"
+			+ "`newName`=?,"
+			+ "`oriName`=?";
+
+	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 }
