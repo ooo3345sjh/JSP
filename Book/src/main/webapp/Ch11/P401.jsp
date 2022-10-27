@@ -1,0 +1,24 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" 
+trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JSTL - url</title>
+		<%--
+			날짜 : 2022/10/27
+			이름 : 서정현
+			내용 : <c:url> 사용하기
+		--%>
+	</head>
+	<body>
+		<h4>url 태그로 링크 걸기</h4>
+		<c:url value="P397.jsp" var="url">
+			<c:param name="user_param1" value="Must"/>
+			<c:param name="user_param2">Have</c:param>
+		</c:url>
+		<a href="${ url }">P379.jsp 바로가기</a>
+		
+	</body>
+</html>
