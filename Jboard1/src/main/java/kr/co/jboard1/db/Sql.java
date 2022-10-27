@@ -36,4 +36,8 @@ public class Sql {
 			+ "`oriName`=?";
 
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article`";
+	public static final String SELECT_ARTICLE = "SELECT a.*, nick FROM `board_article` a JOIN "
+											  + " `board_user` u on a.uid = u.uid order by a.no DESC"
+											  + " LIMIT ?, 10";
 }

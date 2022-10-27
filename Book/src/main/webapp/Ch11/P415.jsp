@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" 
 trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -30,11 +30,12 @@ trimDirectiveWhitespaces="true"%>
 				<th>저자</th>
 				<th>가격</th>
 			</tr>
-			
+			<%-- 
 			<x:forEach select="$blist/booklist/book" var="item">
 			<tr>
 				<td><x:out select="$item/name"/></td>
 				<td><x:out select="$item/author"/></td>
+			
 				<td>
 					<x:choose>
 						<x:when select="$item/price >= 20000">
@@ -45,8 +46,10 @@ trimDirectiveWhitespaces="true"%>
 						</x:otherwise>
 					</x:choose>
 				</td>
+			
 			</tr>
 			</x:forEach>
+			--%>
 		</table>
 			
 	</body>
