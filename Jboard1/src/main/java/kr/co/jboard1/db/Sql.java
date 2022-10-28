@@ -37,7 +37,17 @@ public class Sql {
 
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article`";
-	public static final String SELECT_ARTICLE = "SELECT a.*, nick FROM `board_article` a JOIN "
+	public static final String SELECT_ARTICLES = "SELECT a.*, nick FROM `board_article` a JOIN "
 											  + " `board_user` u on a.uid = u.uid order by a.no DESC"
 											  + " LIMIT ?, 10";
+	
+	public static final String SELECT_ARTICLE = "SELECT a.*, f.fno, f.parent AS pno, f.newName, f.oriName, f.download "
+											  + " FROM `board_article` a LEFT JOIN `board_file` f "
+											  + " ON a.no = f.parent "
+			                                  + " WHERE a.`no`= ?";
+	
+	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
+	
+	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit`+ 1 WHERE `no` = ?"; 
+	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download`+ 1 WHERE `fno` = ?"; 
 }

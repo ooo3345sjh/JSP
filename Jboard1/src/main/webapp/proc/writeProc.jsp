@@ -1,3 +1,5 @@
+<%@page import="kr.co.jboard1.dao.ArticleDAO"%>
+<%@page import="kr.co.jboard1.bean.ArticleBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.awt.Taskbar.State"%>
@@ -25,41 +27,21 @@
 	String content = mr.getParameter("content");
 	String uid = mr.getParameter("uid");
 	String fname = mr.getFilesystemName("fname");
+	String regip = request.getRemoteAddr();
 	System.out.println("fname : " + fname);
-	int parent = 0;
 	
-	try{
-		Connection con = DBCP.getConnection();
-		
-		// 트랜잭션 시작
-		con.setAutoCommit(false);
-		PreparedStatement psmt = con.prepareStatement(Sql.INSERT_ARTICLE);
-		Statement stmt = con.createStatement();
-		
-		psmt.setString(1, title);
-		psmt.setString(2, content);
-		psmt.setInt(3, fname == null ? 0 : 1);
-		psmt.setString(4, uid);
-		psmt.setString(5, request.getRemoteAddr());
-		
-		psmt.executeUpdate();
-		ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
-		
-		con.commit(); // 작업 확정
-		// 트랜잭션 종료
-		
-		if(rs.next()){
-			parent = rs.getInt(1);
-		}
-		
-		con.close();
-		psmt.close();
-		rs.close();
-		stmt.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();		
-	}
+	ArticleBean ab = new ArticleBean();
+	ab.setTitle(title);
+	ab.setContent(content);
+	ab.setUid(uid);
+	ab.setFname(fname);
+	ab.setRegip(regip);
+	
+	ArticleDAO dao = ArticleDAO.getInstance();
+	
+	// 글 등록
+	int parent = dao.insertArticle(ab);
+	
 	
 	// 파일 첨부했으면
 	if(fname != null){
@@ -78,23 +60,7 @@
 		f1.renameTo(f2); // f1의 파일 이름을 f2의 가상객체의 파일이름으로 변경한다.
 		
 		// 파일 테이블 Insert
-		
-		try{
-			Connection con = DBCP.getConnection();
-			
-			PreparedStatement psmt = con.prepareStatement(Sql.INSERT_FILE);
-			psmt.setInt(1, parent);
-			psmt.setString(2, newName);
-			psmt.setString(3, fname);
-			
-			psmt.executeUpdate();
-			
-			psmt.close();
-			con.close();
-		
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		dao.insertFile(parent, newName, fname);
 			
 	}
 	

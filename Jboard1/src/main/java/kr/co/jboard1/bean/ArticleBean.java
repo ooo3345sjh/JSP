@@ -1,6 +1,7 @@
 package kr.co.jboard1.bean;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class ArticleBean {
 	
@@ -17,7 +18,51 @@ public class ArticleBean {
 	private Date rdate;
 	
 	// 추가 필드 
+	private String fname;
 	private String nick;
+	private int fno;
+	private int pno;
+	private String newName;
+	private String oriName;
+	
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+	
+	public int getFno() {
+		return fno;
+	}
+	public void setFno(int fno) {
+		this.fno = fno;
+	}
+	public int getPno() {
+		return pno;
+	}
+	public void setPno(int pno) {
+		this.pno = pno;
+	}
+	public String getNewName() {
+		return newName;
+	}
+	public void setNewName(String newName) {
+		this.newName = newName;
+	}
+	public String getOriName() {
+		return oriName;
+	}
+	public void setOriName(String oriName) {
+		this.oriName = oriName;
+	}
+	public int getDownload() {
+		return download;
+	}
+	public void setDownload(int download) {
+		this.download = download;
+	}
+	private int download;
 	
 	public String getNick() {
 		return nick;
@@ -81,6 +126,8 @@ public class ArticleBean {
 		this.uid = uid;
 	}
 	public Date getRdate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		String date = sdf.format(rdate); 
 		return rdate;
 	}
 	public void setRdate(Date rdate) {

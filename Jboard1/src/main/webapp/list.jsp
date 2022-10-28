@@ -70,7 +70,7 @@
 	                <% for(ArticleBean ab : articles){ %>
 	                <tr>
 	                    <td><%= pageStartNum-- %></td>
-	                    <td><a href="/Jboard1/view.jsp"><%= ab.getTitle() %>[<%= ab.getComment() %>]</a></td>
+	                    <td><a href="/Jboard1/view.jsp?no=<%= ab.getNo() %>&pg=<%= currentPage %>"><%= ab.getTitle() %>[<%= ab.getComment() %>]</a></td>
 	                    <td><%= ab.getNick() %></td>
 	                    <td><%= ab.getRdate() %></td>
 	                    <td><%= ab.getHit() %></td>
