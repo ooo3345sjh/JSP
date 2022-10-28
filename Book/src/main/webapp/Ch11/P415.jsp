@@ -30,7 +30,7 @@ trimDirectiveWhitespaces="true"%>
 				<th>저자</th>
 				<th>가격</th>
 			</tr>
-			<%-- 
+			
 			<x:forEach select="$blist/booklist/book" var="item">
 			<tr>
 				<td><x:out select="$item/name"/></td>
@@ -46,11 +46,20 @@ trimDirectiveWhitespaces="true"%>
 						</x:otherwise>
 					</x:choose>
 				</td>
-			
 			</tr>
 			</x:forEach>
-			--%>
 		</table>
-			
+		
+		<h4>파싱 3</h4>
+		<table border="1">
+			<x:forEach select="$blist/booklist/book" var="item">
+				<tr>
+					<td><x:out select="$item/name"/> </td>
+					<td><x:out select="$item/author"/> </td>
+					<td><x:out select="$item/price"/> </td>
+					<td><x:if select="$item/name = '총, 균, 쇠'">구매함</x:if></td>
+				</tr>
+			</x:forEach>
+		</table>		
 	</body>
 </html>

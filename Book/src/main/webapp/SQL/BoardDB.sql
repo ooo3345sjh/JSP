@@ -45,3 +45,18 @@ FROM `member` M
 JOIN `board` B 
 ON M.id = B.id
 WHERE B.num=9;
+
+insert into `board_article` (`title`, `content`, `uid`, `regip`, `rdate`) SELECT `title`, `content`, `uid`, `regip`, `rdate` FROM `board_article` ;
+
+
+
+# myfile 테이블 생성
+create table `myfile`(
+	`idx` int primary key auto_increment,
+   `name` VARCHAR(50) NOT null,
+   `title` VARCHAR(200) NOT null,
+   `cate` VARCHAR(30),
+   `ofile` VARCHAR(100) NOT null,
+   `sfile` VARCHAR(30) NOT null,
+   `postdate` DATETIME default current_timestamp
+);
