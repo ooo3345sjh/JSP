@@ -9,6 +9,7 @@
 		
 		if(commentVal == ""){ // 내용을 입력하지 않을 경우
 			alert("내용을 입력해주세요.");
+			comment.val('');
 			comment.focus(); 
 			return;
 		}

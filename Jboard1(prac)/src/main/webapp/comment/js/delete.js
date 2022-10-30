@@ -2,7 +2,7 @@
  function deleteComment(no, deleteBtn){ // 파라미터 - no : 게시글 번호, deleteBtn : 댓글 삭제 버튼 <a>태그
 	$(function(){
 			
-		let commentNo = deleteBtn.parent().parent().children('input[type=hidden]').val(); // 댓글 번호
+		let commentNo = deleteBtn.parent().siblings('input[type=hidden]').val(); // 댓글 번호
 		
 		let jsonData = { 
 			"no": no,

@@ -1,4 +1,4 @@
-/******* 댓글 삭제 *******/
+/******* 댓글 수정 *******/
  function showModifyInput(modifyBtn){ // 파라미터 - modifyBtn : 댓글 수정 버튼 <a> 태그
 	
 	// *강제로 취소 버튼을 클릭시키는 이벤트
@@ -6,7 +6,7 @@
 	//  - 취소 버튼을 클릭시켜 현재 활성화된 댓글 수정창을 지우고 댓글 목록을 보이게 한다.
 	$('#modifyCancel').trigger("click");
 	
-	let articleTag = modifyBtn.parent().parent(); // 댓글 목록의 article 태그를 선택
+	let articleTag = modifyBtn.closest('article'); // 댓글 목록의 article 태그를 선택
 	let nick = articleTag.children('span.nick').text(); // 닉네임
 	let content = articleTag.children('p.content').html(); // 댓글 내용
 	
@@ -29,9 +29,18 @@
 
 function modifyComplete(modifyCompleteBtn, articleTag){ // 파라미터 - modifyCompleteBtn : 댓글 수정완료 버튼, articleTag : 수정전의 댓글의 내용을 포함하는 article태그
 	
-	let textarea = modifyCompleteBtn.parent().parent().children('textarea'); // 댓글 수정 창인 textarea태그 선택
+	let textarea = modifyCompleteBtn.parent().prev(); // 댓글 수정 창인 textarea태그 선택
+	let comment = textarea.val() // 수정된 내용이 저장된 value값
 	
-	let comment = textarea.val().replace(/(?:\r\n|\r|\n)/g, '<br />'); // 수정 내용이 입력된 value값에 줄바꿈을 <br/>태그값으로 변환
+	if(comment == ''){
+		alert('내용을 입력해주세요.');
+		textarea.focus();
+		return;	
+	}
+	
+	
+	comment = comment.replace(/(?:\r\n|\r|\n)/g, '<br />'); // value값에 줄바꿈을 <br/>태그값으로 변환
+	
 	let no = articleTag.children('input[type=hidden]').val(); // 댓글의 번호
 	let josnData = { 
 			"no":no,

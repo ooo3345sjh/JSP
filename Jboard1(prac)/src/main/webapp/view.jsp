@@ -29,6 +29,10 @@
 		write(<%= no %>); // 파라미터 - no : 게시글 번호
 		
 		$('#comment').on('keydown', function (e) { // ENTER키를 누를때도 댓글 작성완료 버튼을 작동, SHIFT + ENTER 키는 줄바꿈
+			if($(this).val() == ''){ // 내용이 비어있다면
+				e.preventDefault(); // 이벤트를 취소 시킨다.
+			}
+		
 			if(e.keyCode == 13){
 				if(!e.shiftKey){
 					$('#write').trigger("click"); // 강제로 댓글 쓰기의 작성완료 버튼을 누른다.
@@ -57,6 +61,7 @@
 		function modify() {
 			let articleTag; // 전역 변수, 수정전의 댓글의 내용을 포함하는 article태그를 저장 
 			
+			// 댓글 창을 띄우는 함수
 			$(document).on('click','.modify', function (e) {
 				e.preventDefault();
 				let modifyBtn = $(this); // 댓글 수정 버튼
@@ -64,33 +69,39 @@
 			});
 			
 			
-			// #modifyCancel 클릭시 이벤트 정의 함수
+			// 취소버튼 클릭시 이벤트 정의 함수
 			//  - 취소 버튼을 누를 경우 댓글 수정 창을 지우고, 다시 수정전의 댓글을 보이게한다.			
 			$(document).on('click', '#modifyCancel',  function (e) {
 				e.preventDefault();
 				
-				let sectionTag = $(this).parent().parent().parent(); // 댓글 수정창인 section태그를 선택
+				let sectionTag = $(this).closest('section'); // 댓글 수정창인 section태그를 선택
 				
 				articleTag.show(); // 댓글을 보여준다.
 				sectionTag.remove(); // 댓글 수정창을 지운다.
 			});
 			
 			
-			// #modifyComplete 클릭시 이벤트 정의 함수
+			// 작성완료버튼 클릭시 이벤트 정의 함수
 			//  - 작성완료 버튼을 누를 경우 AJAX로 데이터를 modifyProc.jsp로 보내어 DB에 업데이트 한다.	
 			$(document).on('click', '#modifyComplete',  function (e) {
 				e.preventDefault();
 				let modifyCompleteBtn = $(this); // 댓글 수정완료 버튼
 				modifyComplete(modifyCompleteBtn, articleTag); // 파라미터 - modifyCompleteBtn : 댓글 수정완료 버튼, articleTag : 수정전의 댓글의 내용을 포함하는 article태그
+			
 			});
 			
+			
 			$(document).on('keydown', '#modifyContent', function (e) { // ENTER키를 누를때도 댓글 작성완료 버튼을 작동, SHIFT + ENTER 키는 줄바꿈
+				if($(this).val() == ''){
+					e.preventDefault();
+				}	
 				if(e.keyCode == 13){
 					if(!e.shiftKey){
 						$('#modifyComplete').trigger("click"); // 강제로 댓글 수정창의 작성완료 버튼을 누른다.
 					}
 				} 
 			});
+			
 			
 		}
 		
