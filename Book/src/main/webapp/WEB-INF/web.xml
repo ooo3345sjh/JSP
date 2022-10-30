@@ -111,5 +111,15 @@
  	<url-pattern>/Ch13/MemberAuth.mvc</url-pattern>
  </servlet-mapping>
  
+ <!-- P490 요청명과 서블릿 매핑 -->
+ <servlet>
+ 	<servlet-name>MVCBoardList</servlet-name> <!-- 서블릿 이름 -->
+ 	<servlet-class>model2.mvcboard.ListController</servlet-class> <!-- 서블릿 클래스 -->
+ </servlet>
+ <servlet-mapping>
+ 	<servlet-name>MVCBoardList</servlet-name> <!-- 서블릿 이름 -->
+ 	<url-pattern>/mvcboard/list.do</url-pattern> <!-- 요청명 -->
+ </servlet-mapping>
+ 
  
 </web-app>

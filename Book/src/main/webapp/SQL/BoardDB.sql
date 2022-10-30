@@ -60,3 +60,54 @@ create table `myfile`(
    `sfile` VARCHAR(30) NOT null,
    `postdate` DATETIME default current_timestamp
 );
+
+# mvcboard 테이블 생성
+create table `mvcboard`(
+	`idx` int primary key auto_increment,
+   `name` VARCHAR(50) NOT NULL,
+   `title` VARCHAR(200) NOT NULL,
+   `content` TEXT NOT NULL,
+   `postdate` DATETIME default CURRENT_TIMESTAMP,
+   `ofile` VARCHAR(200),
+   `sfile` VARCHAR(30),
+   `downcount` INT DEFAULT 0 NOT NULL,
+   `pass` VARCHAR(50) NOT NULL,
+   `visitcount` INT DEFAULT 0 NOT NULL 
+);
+
+
+
+insert into `mvcboard` SET 
+				`name`='장보고',
+				`title`='자료실 제목2 입니다.',
+				`content`='내용',
+				`pass`='1234';
+insert into `mvcboard` SET 
+				`name`='이순신',
+				`title`='자료실 제목3 입니다.',
+				`content`='내용',
+				`pass`='1234';	
+insert into `mvcboard` SET 
+				`name`='강감찬',
+				`title`='자료실 제목4 입니다.',
+				`content`='내용',
+				`pass`='1234';
+insert into `mvcboard` SET 
+				`name`='대조영',
+				`title`='자료실 제목5 입니다.',
+				`content`='내용',mvcboard
+				`pass`='1234';	
+				
+INSERT INTO `mvcboard` (`name`, `title`, `content`, `pass`) SELECT `name`, `title`, `content`, `pass`FROM `mvcboard`;		
+
+
+SELECT b.* FROM 
+(SELECT *, ROW_NUMBER() OVER(ORDER BY idx desc) rnum FROM `mvcboard`) b
+WHERE rnum BETWEEN 1 AND 10; 
+
+SELECT b.* FROM 
+(SELECT *, ROW_NUMBER() OVER(ORDER BY idx desc) rnum FROM `mvcboard`) b;
+LIMIT 0, 10;
+
+DELETE FROM `mvcboard` WHERE idx > 500;
+ 
