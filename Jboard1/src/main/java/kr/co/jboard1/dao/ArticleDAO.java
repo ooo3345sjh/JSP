@@ -81,6 +81,48 @@ public class ArticleDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public ArticleBean insertComment(ArticleBean comment) {
+		
+		ArticleBean article = null;
+		
+		int result = 0;
+		
+		try{
+	 		Connection con = DBCP.getConnection();
+	 		
+	 		con.setAutoCommit(false);
+	 		
+	 		PreparedStatement psmt = con.prepareStatement(Sql.INSERT_COMMENT);
+	 		Statement stmt = con.createStatement();
+	 		psmt.setInt(1, comment.getParent());
+	 		psmt.setString(2, comment.getContent());
+	 		psmt.setString(3, comment.getUid());
+	 		psmt.setString(4, comment.getRegip());
+	 		
+	 		result = psmt.executeUpdate();
+	 		ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
+	 		
+	 		con.commit();
+	 		
+	 		if(rs.next()) {
+	 			article = new ArticleBean();
+	 			article.setNo(rs.getInt(1));
+	 			article.setContent(rs.getString(6));
+	 			article.setRdate(rs.getDate(11));
+	 			article.setNick(rs.getString(12));
+	 		}
+	 		psmt.close();
+	 		con.close();
+	 		rs.close();
+	 		stmt.close();
+	 	}catch(Exception e){
+	 		e.printStackTrace();
+	 	}
+		
+		return article;
+	}
+	
 	public ArticleBean selectArticle(String no) {
 		
 		ArticleBean ab = null;
@@ -186,6 +228,7 @@ public class ArticleDAO {
 		}
 		return articles;
 	}
+	
 	public FileBean selectFile(String parent) {
 		
 		FileBean fb = null;
@@ -214,6 +257,43 @@ public class ArticleDAO {
 		}
 		
 		return fb;
+	}
+	
+	public List<ArticleBean> selectComments(String parent) {
+		List<ArticleBean> comments = new ArrayList<>();
+		try {
+			Connection con = DBCP.getConnection();
+			PreparedStatement psmt = con.prepareStatement(Sql.SELECT_COMMENTS);
+			psmt.setString(1, parent);
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleBean ab = new ArticleBean();
+				ab.setNo(rs.getInt("no"));
+				ab.setParent(rs.getInt("parent"));
+				ab.setComment(rs.getInt("comment"));
+				ab.setCate(rs.getString("cate"));
+				ab.setContent(rs.getString("content"));
+				ab.setTitle(rs.getString("title"));
+				ab.setUid(rs.getString("uid"));
+				ab.setRdate(rs.getDate("rdate"));
+				ab.setHit(rs.getInt("hit"));
+				ab.setFile(rs.getInt("file"));
+				ab.setRegip(rs.getString("regip"));
+				ab.setNick(rs.getString("nick"));
+				
+				comments.add(ab);
+			}
+			
+			con.close();
+			rs.close();
+			psmt.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return comments;
 	}
 	
 	public void updateArticle() {}

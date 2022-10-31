@@ -24,20 +24,20 @@
 <script src="/Jboard1/comment/js/modify.js"></script>
 <script>
 	$(function () {
-		 
 		/******* 댓글 작성 *******/
 		write(<%= no %>); // 파라미터 - no : 게시글 번호
 		
-		$('#comment').on('keydown', function (e) { // ENTER키를 누를때도 댓글 작성완료 버튼을 작동, SHIFT + ENTER 키는 줄바꿈
-			if($(this).val() == ''){ // 내용이 비어있다면
-				e.preventDefault(); // 이벤트를 취소 시킨다.
-			}
 		
+		$('#comment').on('keydown', function (e) { // ENTER키를 누를때도 댓글 작성완료 버튼을 작동, SHIFT + ENTER 키는 줄바꿈
 			if(e.keyCode == 13){
+				
+				if($(this).val() == ''){ // 내용이 비어있다면
+						e.preventDefault();
+				}
 				if(!e.shiftKey){
 					$('#write').trigger("click"); // 강제로 댓글 쓰기의 작성완료 버튼을 누른다.
 				}
-			} 
+			}
 		});
 		
 		
@@ -92,10 +92,11 @@
 			
 			
 			$(document).on('keydown', '#modifyContent', function (e) { // ENTER키를 누를때도 댓글 작성완료 버튼을 작동, SHIFT + ENTER 키는 줄바꿈
-				if($(this).val() == ''){
-					e.preventDefault();
-				}	
+			
 				if(e.keyCode == 13){
+					if($(this).val() == ''){
+						e.preventDefault();
+					}
 					if(!e.shiftKey){
 						$('#modifyComplete').trigger("click"); // 강제로 댓글 수정창의 작성완료 버튼을 누른다.
 					}
