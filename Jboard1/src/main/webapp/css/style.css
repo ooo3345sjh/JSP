@@ -461,7 +461,10 @@
 }
 #board > .view > .commentList > .nick {}
 #board > .view > .commentList > .date {}
-#board > .view > .commentList .content {padding: 10px;}
+#board > .view > .commentList .content {
+	padding: 10px;
+	white-space: pre-wrap;
+}
 #board > .view > .commentList > article > div {text-align: right;}
 #board > .view > .commentList > article .remove {}
 #board > .view > .commentList > article .modify {}

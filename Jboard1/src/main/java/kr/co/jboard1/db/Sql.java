@@ -56,6 +56,7 @@ public class Sql {
 			                                  + " WHERE a.`no`= ?";
 	
 	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
+	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` a "
 												+ " JOIN `board_user` b "
 												+ " ON a.uid = b.uid "
@@ -66,5 +67,12 @@ public class Sql {
 													 + " WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1";
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit`+ 1 WHERE `no` = ?"; 
+	
 	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download`+ 1 WHERE `fno` = ?"; 
+	public static final String UPDATE_COMMENT = "UPDATE `board_article` SET "
+											  + " `content`=?, " 
+											  + " `rdate`= NOW() " 
+											  + " WHERE `no`=? "; 
+	
+	public static final String DELETE_COMMENT = "DELETE FROM `board_article` WHERE `no`=? ";
 }

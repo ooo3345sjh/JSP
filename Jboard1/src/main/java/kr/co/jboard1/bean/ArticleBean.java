@@ -15,7 +15,7 @@ public class ArticleBean {
 	private int hit;
 	private String uid;
 	private String regip;
-	private Date rdate;
+	private String rdate;
 	
 	// 추가 필드 
 	private String fname;
@@ -128,12 +128,10 @@ public class ArticleBean {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	public Date getRdate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-		String date = sdf.format(rdate); 
-		return rdate;
+	public String getRdate() {
+		return rdate.substring(2,10);
 	}
-	public void setRdate(Date rdate) {
+	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
 	public int getHit() {

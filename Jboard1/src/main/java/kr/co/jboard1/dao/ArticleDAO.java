@@ -109,7 +109,7 @@ public class ArticleDAO {
 	 			article = new ArticleBean();
 	 			article.setNo(rs.getInt(1));
 	 			article.setContent(rs.getString(6));
-	 			article.setRdate(rs.getDate(11));
+	 			article.setRdate(rs.getString(11));
 	 			article.setNick(rs.getString(12));
 	 		}
 	 		psmt.close();
@@ -145,7 +145,7 @@ public class ArticleDAO {
 				ab.setHit(rs.getInt(8));
 				ab.setUid(rs.getString(9));
 				ab.setRegip(rs.getString(10));
-				ab.setRdate(rs.getDate(11));
+				ab.setRdate(rs.getString(11));
 				
 				ab.setFno(rs.getInt(12));
 				ab.setPno(rs.getInt(13));
@@ -209,7 +209,7 @@ public class ArticleDAO {
 				ab.setContent(rs.getString("content"));
 				ab.setTitle(rs.getString("title"));
 				ab.setUid(rs.getString("uid"));
-				ab.setRdate(rs.getDate("rdate"));
+				ab.setRdate(rs.getString("rdate"));
 				ab.setHit(rs.getInt("hit"));
 				ab.setFile(rs.getInt("file"));
 				ab.setRegip(rs.getString("regip"));
@@ -276,7 +276,7 @@ public class ArticleDAO {
 				ab.setContent(rs.getString("content"));
 				ab.setTitle(rs.getString("title"));
 				ab.setUid(rs.getString("uid"));
-				ab.setRdate(rs.getDate("rdate"));
+				ab.setRdate(rs.getString("rdate"));
 				ab.setHit(rs.getInt("hit"));
 				ab.setFile(rs.getInt("file"));
 				ab.setRegip(rs.getString("regip"));
@@ -331,6 +331,47 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int updateComment(String content, String no) {
+		int result = 0;
+		
+		try {
+			Connection con = DBCP.getConnection();
+			PreparedStatement psmt = con.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, no);
+			
+		    result = psmt.executeUpdate();
+			
+			psmt.close();
+			con.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public int deleteComment(String no) {
+		int result = 0;
+		
+		try {
+			Connection con = DBCP.getConnection();
+			PreparedStatement psmt = con.prepareStatement(Sql.DELETE_COMMENT);
+			psmt.setString(1, no);
+			
+		    result = psmt.executeUpdate();
+			
+			psmt.close();
+			con.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	public void deleteArticle() {}
