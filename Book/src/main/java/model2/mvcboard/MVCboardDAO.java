@@ -39,8 +39,9 @@ public class MVCboardDAO extends DBConnPool { // 커넥션 풀 상속
 		return totalCount; // 게시물 개수를 서블릿으로 반환
 	}
 	
-	// 검색 조건에 맞는 게시물 목록을 반환합니다.(페이징 기능 지원)
+	// 검색 조건에 맞는 게시물 목록을 반환한다.(페이징 기능 지원)
 	public List<MVCBoardDTO> slectListPage(Map<String, Object> map){
+
 		List<MVCBoardDTO> board = new ArrayList<>();
 		
 		// 쿼리문 준비
@@ -84,4 +85,36 @@ public class MVCboardDAO extends DBConnPool { // 커넥션 풀 상속
 		}
 		return board; // 목록 반환
 	}
+
+	/*
+	 * P503 글쓰기 처리 메서드 추가
+	 * 게시글 데이터를 받아 DB에 추가한다.(파일 업로드 지원)
+	 */
+	public int insertWrite(MVCBoardDTO dto) {
+		int result = 0;
+		try {
+			String sql = "INSERT INTO `mvcboard` SET "
+					   + " `name`=?,"
+					   + " `title`=?,"
+					   + " `content`=?,"
+					   + " `ofile`=?,"
+					   + " `sfile`=?,"
+					   + " `pass`=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getOfile());
+			psmt.setString(5, dto.getSfile());
+			psmt.setString(6, dto.getPass());
+			result = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("게시물 입력 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 }

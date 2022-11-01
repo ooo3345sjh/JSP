@@ -106,8 +106,8 @@ SELECT b.* FROM
 WHERE rnum BETWEEN 1 AND 10; 
 
 SELECT b.* FROM 
-(SELECT *, ROW_NUMBER() OVER(ORDER BY idx desc) rnum FROM `mvcboard`) b;
-LIMIT 0, 10;
+(SELECT *, ROW_NUMBER() OVER(ORDER BY idx desc) rnum FROM `mvcboard`) b
+LIMIT 10, 10;
 
 DELETE FROM `mvcboard` WHERE idx > 500;
  

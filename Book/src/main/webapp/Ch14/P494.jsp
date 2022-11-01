@@ -96,7 +96,7 @@
 						${ map.pageTags }
 					</td>
 					<td align="center" width='10%'>
-						<button type="button">글쓰기</button>
+						<button type="button" onclick="location.href='/Book/mvcboard/write.do';">글쓰기</button>
 					</td>
 				</tr>
 			</table>
