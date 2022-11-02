@@ -10,10 +10,11 @@ import java.util.List;
 import kr.co.jboard1.bean.ArticleBean;
 import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
+import kr.co.jboard1.db.DBHelper;
 import kr.co.jboard1.db.Sql;
 
 // DAO(Data Access Object) : 데이터베이스 처리 클래스
-public class ArticleDAO {
+public class ArticleDAO extends DBHelper {
 	
 	private static ArticleDAO instance = new ArticleDAO();
 	
@@ -21,19 +22,19 @@ public class ArticleDAO {
 		return instance;
 	}
 	
-	private ArticleDAO() {}
+	private ArticleDAO() {
+		con = getConnection();
+	}
 	
 	// 기본 CRUD
 	public int insertArticle(ArticleBean ab) {
 		
 		int parent = 0;
 		try{
-			Connection con = DBCP.getConnection();
-			
 			// 트랜잭션 시작
 			con.setAutoCommit(false);
-			PreparedStatement psmt = con.prepareStatement(Sql.INSERT_ARTICLE);
-			Statement stmt = con.createStatement();
+			psmt = con.prepareStatement(Sql.INSERT_ARTICLE);
+			stmt = con.createStatement();
 			
 			psmt.setString(1, ab.getTitle());
 			psmt.setString(2, ab.getContent());
@@ -42,7 +43,7 @@ public class ArticleDAO {
 			psmt.setString(5, ab.getRegip());
 			
 			psmt.executeUpdate();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
+			rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
 			
 			con.commit(); // 작업 확정
 			// 트랜잭션 종료
@@ -51,10 +52,7 @@ public class ArticleDAO {
 				parent = rs.getInt(1);
 			}
 			
-			con.close();
-			psmt.close();
-			rs.close();
-			stmt.close();
+			close();
 			
 		}catch(Exception e){
 			e.printStackTrace();		
@@ -65,18 +63,14 @@ public class ArticleDAO {
 	public void insertFile(int parent, String newName, String fname) {
 		
 		try{
-			Connection con = DBCP.getConnection();
-			
-			PreparedStatement psmt = con.prepareStatement(Sql.INSERT_FILE);
+			psmt = con.prepareStatement(Sql.INSERT_FILE);
 			psmt.setInt(1, parent);
 			psmt.setString(2, newName);
 			psmt.setString(3, fname);
 			
 			psmt.executeUpdate();
 			
-			psmt.close();
-			con.close();
-		
+			close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -86,22 +80,18 @@ public class ArticleDAO {
 		
 		ArticleBean article = null;
 		
-		int result = 0;
-		
 		try{
-	 		Connection con = DBCP.getConnection();
-	 		
 	 		con.setAutoCommit(false);
 	 		
-	 		PreparedStatement psmt = con.prepareStatement(Sql.INSERT_COMMENT);
-	 		Statement stmt = con.createStatement();
+	 		psmt = con.prepareStatement(Sql.INSERT_COMMENT);
+	 		stmt = con.createStatement();
 	 		psmt.setInt(1, comment.getParent());
 	 		psmt.setString(2, comment.getContent());
 	 		psmt.setString(3, comment.getUid());
 	 		psmt.setString(4, comment.getRegip());
 	 		
-	 		result = psmt.executeUpdate();
-	 		ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
+	 		psmt.executeUpdate();
+	 		rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
 	 		
 	 		con.commit();
 	 		
@@ -112,10 +102,8 @@ public class ArticleDAO {
 	 			article.setRdate(rs.getString(11));
 	 			article.setNick(rs.getString(12));
 	 		}
-	 		psmt.close();
-	 		con.close();
-	 		rs.close();
-	 		stmt.close();
+	 		
+	 		close();
 	 	}catch(Exception e){
 	 		e.printStackTrace();
 	 	}
@@ -127,11 +115,10 @@ public class ArticleDAO {
 		
 		ArticleBean ab = null;
 		try{
-			Connection con = DBCP.getConnection();
-			PreparedStatement psmt = con.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt = con.prepareStatement(Sql.SELECT_ARTICLE);
 			psmt.setString(1, no);
 			
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			
 			if(rs.next()){
 				ab = new ArticleBean();
@@ -154,10 +141,6 @@ public class ArticleDAO {
 				ab.setDownload(rs.getInt(16));
 			}
 			
-			con.close();
-			psmt.close();
-			rs.close();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -169,17 +152,12 @@ public class ArticleDAO {
 
 		int total = 0;
 		try{
-			Connection con = DBCP.getConnection();
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
 			
 			if(rs.next()){
 				total = rs.getInt(1);
 			}
-			
-			con.close();
-			rs.close();
-			stmt.close();
 			
 		} catch(Exception e){
 			e.printStackTrace();	
@@ -193,10 +171,9 @@ public class ArticleDAO {
 		List<ArticleBean> articles = null;
 		
 		try{
-			Connection con = DBCP.getConnection();
-			PreparedStatement psmt = con.prepareStatement(Sql.SELECT_ARTICLES);
+			psmt = con.prepareStatement(Sql.SELECT_ARTICLES);
 			psmt.setInt(1,  limitStart);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			
 			articles = new ArrayList<>();
 			
@@ -219,10 +196,6 @@ public class ArticleDAO {
 				articles.add(ab);			
 			}
 			
-			con.close();
-			rs.close();
-			psmt.close();
-			
 		} catch(Exception e){
 			e.printStackTrace();	
 		}
@@ -233,11 +206,10 @@ public class ArticleDAO {
 		
 		FileBean fb = null;
 		try{
-			Connection con = DBCP.getConnection();
-			PreparedStatement psmt = con.prepareStatement(Sql.SELECT_FILE);
+			psmt = con.prepareStatement(Sql.SELECT_FILE);
 			psmt.setString(1, parent);
 			
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			
 			if(rs.next()){
 				fb = new FileBean();
@@ -248,9 +220,7 @@ public class ArticleDAO {
 				fb.setDownload(rs.getInt(5));
 			}
 			
-			con.close();
-			psmt.close();
-			rs.close();
+			close();
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -262,10 +232,9 @@ public class ArticleDAO {
 	public List<ArticleBean> selectComments(String parent) {
 		List<ArticleBean> comments = new ArrayList<>();
 		try {
-			Connection con = DBCP.getConnection();
-			PreparedStatement psmt = con.prepareStatement(Sql.SELECT_COMMENTS);
+			psmt = con.prepareStatement(Sql.SELECT_COMMENTS);
 			psmt.setString(1, parent);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
 				ArticleBean ab = new ArticleBean();
@@ -285,10 +254,6 @@ public class ArticleDAO {
 				comments.add(ab);
 			}
 			
-			con.close();
-			rs.close();
-			psmt.close();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -296,19 +261,34 @@ public class ArticleDAO {
 		return comments;
 	}
 	
-	public void updateArticle() {}
+	public int updateArticle(String no, String title, String content) {
+		
+		int result = 0;
+		
+		try{
+			psmt = con.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			
+			psmt.executeUpdate();
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	public void updateArticleHit(String no) {
 		
 		try {
-			Connection con = DBCP.getConnection();
-		    PreparedStatement psmt = con.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+		    psmt = con.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
 		    psmt.setString(1, no);
 		    
 		    psmt.executeUpdate();
-		    
-		    psmt.close();
-		    con.close();
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -319,14 +299,12 @@ public class ArticleDAO {
 	public void updateFileDownload(int fno) {
 		
 		try {
-			Connection con = DBCP.getConnection();
-		    PreparedStatement psmt = con.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
+		    psmt = con.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
 		    psmt.setInt(1, fno);
 		    
 		    psmt.executeUpdate();
 		    
-		    psmt.close();
-		    con.close();
+		    close();
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -335,18 +313,15 @@ public class ArticleDAO {
 	
 	public int updateComment(String content, String no, String rdate) {
 		int result = 0;
-		System.out.println(rdate);
 		try {
-			Connection con = DBCP.getConnection();
-			PreparedStatement psmt = con.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt = con.prepareStatement(Sql.UPDATE_COMMENT);
 			psmt.setString(1, content);
 			psmt.setString(2, rdate);
 			psmt.setString(3, no);
 			
 		    result = psmt.executeUpdate();
 			
-			psmt.close();
-			con.close();
+			close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -359,14 +334,12 @@ public class ArticleDAO {
 		int result = 0;
 		
 		try {
-			Connection con = DBCP.getConnection();
-			PreparedStatement psmt = con.prepareStatement(Sql.DELETE_COMMENT);
+			psmt = con.prepareStatement(Sql.DELETE_COMMENT);
 			psmt.setString(1, no);
 			
 		    result = psmt.executeUpdate();
 			
-			psmt.close();
-			con.close();
+			close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -375,5 +348,69 @@ public class ArticleDAO {
 		return result;
 	}
 	
-	public void deleteArticle() {}
+	public String deleteFile(String no) {
+		
+		String newName = null;
+		
+		try {
+			con.setAutoCommit(false);
+			
+			PreparedStatement psmt1 = con.prepareStatement(Sql.SELECT_FILE);
+			PreparedStatement psmt2 = con.prepareStatement(Sql.DELETE_FILE);
+			
+			psmt1.setString(1, no);
+			psmt2.setString(1, no);
+			
+		    rs = psmt1.executeQuery();
+		    psmt2.executeUpdate();
+		    
+		    con.commit();
+			
+		    if(rs.next()) {
+		    	newName = rs.getString(3);
+		    }
+			
+		    close();
+		    psmt1.close();
+		    psmt2.close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return newName;
+	}
+	
+	public void deleteArticle(String no) {
+		
+		try {
+			psmt = con.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			
+		    psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 게시글, 댓글 , 파일 데이터 삭제
+	public void deleteArticleFile(String no) {
+		
+		try {
+			psmt = con.prepareStatement(Sql.DELETE_ARTICLE_FILE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			
+			psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

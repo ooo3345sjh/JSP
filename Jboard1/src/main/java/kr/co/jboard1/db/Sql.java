@@ -66,6 +66,12 @@ public class Sql {
 													 + " JOIN `board_user` b USING(`uid`) "
 													 + " WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1";
 	
+	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET "
+												 + " `title`=?,"
+												 + " `content`=?,"
+												 + " `rdate`=NOW() "
+												 + " WHERE `no`=?";
+	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit`+ 1 WHERE `no` = ?"; 
 	
 	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download`+ 1 WHERE `fno` = ?"; 
@@ -74,5 +80,14 @@ public class Sql {
 											  + " `rdate`=? " 
 											  + " WHERE `no`=? "; 
 	
+	public static final String DELETE_FILE = "DELETE FROM `board_file` WHERE `parent`=? ";
 	public static final String DELETE_COMMENT = "DELETE FROM `board_article` WHERE `no`=? ";
+
+	public static final String DELETE_ARTICLE = "DELETE FROM `board_article` WHERE `no`=? OR `parent`=? ";
+	public static final String DELETE_ARTICLE_FILE = "DELETE a.*, f.* FROM " 
+												   + " `board_article` AS a "
+												   + " INNER JOIN " 
+												   + "`board_file` AS f "
+												   + " ON a.no = f.parent "
+												   + " WHERE a.`no`= ?  OR a.`parent`= ?";
 }
