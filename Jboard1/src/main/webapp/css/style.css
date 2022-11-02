@@ -2,7 +2,10 @@
  * {
      margin: 0;
      padding: 0;
-     font: normal 12px '돋움';
+ }
+ 
+ body{
+ 	font: normal 12px '돋움';
  }
 
  ul, ol {list-style: none;}
@@ -32,6 +35,7 @@
      float: left;
      margin-top: 10px;
      margin-left: 10px;
+     font: bold 12px 돋움 ;
  }
 
  header > p {
@@ -116,10 +120,13 @@
      box-sizing: border-box;
  }
 
- #user > .login > div > h3 {}
+ #user > .login > div > h3 {
+  	font: normal 12px '돋움';
+  }
 
  #user > .login > div > p {
      margin: 10px 0;
+    
  }
 
  #user > .login > div > a {
@@ -425,6 +432,9 @@
     height: 24px;
     border: none;
 }
+#board .view table #content {
+	height: 280px;
+}
 #board .view table td > textarea {
     width: 100%;
     height: 280px;
@@ -476,14 +486,15 @@
    width: 100%;
    height: auto;
    box-sizing: border-box;
-   overflow: hidden;;
+   overflow: hidden;
 }
 #board > .view > .commentForm textarea{
-   width: 680px;
+   width: 100%;
    height: 62px;
    resize: none;
    border: 1px solid #e4eaec;
    padding: 6px;
+   box-sizing: border-box;
 }
 #board > .view > .commentForm div{
    float: right;
@@ -516,6 +527,7 @@
     bottom: 0;
  }
  .btnComplete {
+    font: normal 12px '돋움';
     border: 1px solid #3b3c3f;
     background: #4b545e;
     color: #fff;

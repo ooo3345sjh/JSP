@@ -12,6 +12,14 @@
 	ArticleBean article = ArticleDAO.getInstance().selectArticle(no);
 %>
 <%@ include file="_header.jsp" %>
+<script type="text/javascript" src="/Jboard1/smartEditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script src="/Jboard1/js/smartEditor.js"></script>
+<script>
+	
+	$(function () {
+		smarteditor ();
+	});
+</script>
 
         <main id="board">
             <section class="modify">
@@ -27,7 +35,8 @@
                      <tr>
                          <th>내용</th>
                          <td>
-                             <textarea name="content" ><%= article.getContent() %></textarea>
+                             <textarea name="editorTxt" id="editorTxt" rows="20" cols="10" 
+                            placeholder="내용을 입력해주세요" style="width: 100%"><%= article.getContent() %></textarea>
                          </td>
                      </tr>
                     </table>

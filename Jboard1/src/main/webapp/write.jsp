@@ -1,57 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="_header.jsp" %>
-<script>
-	function vaildateForm(form) {
-		if(form.title.value == ""){
-			alert('제목을 입력해주세요.');
-			form.title.focus();
-			return false;
-		}
-	/*	if(form.content.value == ""){
-			alert('내용을 입력해주세요.');
-			form.content.focus();
-			return false;
-		}
-		return true;*/
-	}
-	
-</script>
 <script type="text/javascript" src="/Jboard1/smartEditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script src="/Jboard1/js/smartEditor.js"></script>
 <script>
+	
 	$(function () {
-	    let oEditors = []
-	
-	    smartEditor = function() {
-	     	console.log("Naver SmartEditor")
-	     	nhn.husky.EZCreator.createInIFrame({
-	        oAppRef: oEditors,
-	        elPlaceHolder: "editorTxt",
-	        sSkinURI: "/Jboard1/smartEditor/SmartEditor2Skin.html",
-	        fCreator: "createSEditor2"
-	        });
-	    }
-	
-	    $(document).ready(function() {
-	      smartEditor();
-	    })
-	    
-	    submitPost = function() {
- 	    	oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
-        	let content = document.getElementById("editorTxt").value
+		smarteditor ();
+	});
+</script>
 
-  			if(content == '') {
-    			alert("내용을 입력해주세요.")
-    			oEditors.getById["editorTxt"].exec("FOCUS")
-    			return
-  			} else {
-    			console.log(content)
- 		 	}
-		}
-	})
- </script>
 	<main id="board">
 	    <section class="write">
-	        <form action="/Jboard1/proc/writeProc.jsp" method="post" onsubmit="return vaildateForm(this)" 
+	        <form action="/Jboard1/proc/writeProc.jsp" method="post" 
 	        enctype="multipart/form-data">
 	        	<input type="hidden"  name="uid" value="<%= ub.getUid() %>">
 	            <table border="0">

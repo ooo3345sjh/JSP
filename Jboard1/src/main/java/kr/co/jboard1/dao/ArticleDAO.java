@@ -307,6 +307,8 @@ public class ArticleDAO extends DBHelper {
 		    
 		    psmt.executeUpdate();
 		    
+		    close();
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

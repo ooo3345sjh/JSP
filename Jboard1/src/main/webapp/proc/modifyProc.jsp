@@ -10,7 +10,7 @@
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
 	String title = request.getParameter("title");
-	String content = request.getParameter("content");
+	String content = request.getParameter("editorTxt");
 	
 	int result = ArticleDAO.getInstance().updateArticle(no, title, content);
 	

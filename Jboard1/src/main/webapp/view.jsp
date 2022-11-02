@@ -21,11 +21,14 @@
 	
 	// 댓글 가져오기
 	List<ArticleBean> comments = dao.selectComments(no);
+	dao.close();
 %>
 <%@ include file="_header.jsp" %>
 <script src="/Jboard1/js/comment.js"></script>
 <script>
 	$(document).ready(function () {	
+		
+		let content = 
 		
 		// 글 삭제
 		$('.btnRemove').click(function (e) {
@@ -49,6 +52,11 @@
 		
 		// 댓글 작성 
 		commentWrite();
+		
+		$('.btnCalcel').click(function (e) {
+			e.preventDefault();
+			$('textarea[name=content]').val('');
+		})
 	});
 </script>
 	<main id="board">
@@ -72,7 +80,8 @@
 	            <tr>
 	                <th>내용</th>
 	                <td>
-	                    <textarea name="content" readonly><%= ab.getContent() %></textarea>
+	                   <!-- <textarea name="content" readonly></textarea> --> 
+	                   <div id='content'><%= ab.getContent() %></div>
 	                </td>
 	            </tr>
 	            
