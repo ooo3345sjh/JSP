@@ -79,6 +79,15 @@ public class Sql {
 											  + " `content`=?, " 
 											  + " `rdate`=? " 
 											  + " WHERE `no`=? "; 
+	public static final String UPDATE_COMMENT_PlUS = "UPDATE `board_article` SET "
+													+ " `comment`= `comment`+1 "
+													+ " WHERE no=? ";
+	
+	public static final String UPDATE_COMMENT_MINUS = "UPDATE `board_article` SET "
+													+ " `comment` = `comment` - 1 " 
+													+ " WHERE  `no` IN "
+													+ " (SELECT t.parent FROM  "
+													+ " (SELECT parent FROM `board_article` WHERE `no`=? ) AS t)";
 	
 	public static final String DELETE_FILE = "DELETE FROM `board_file` WHERE `parent`=? ";
 	public static final String DELETE_COMMENT = "DELETE FROM `board_article` WHERE `no`=? ";
@@ -86,7 +95,7 @@ public class Sql {
 	public static final String DELETE_ARTICLE = "DELETE FROM `board_article` WHERE `no`=? OR `parent`=? ";
 	public static final String DELETE_ARTICLE_FILE = "DELETE a.*, f.* FROM " 
 												   + " `board_article` AS a "
-												   + " INNER JOIN " 
+												   + " LEFT JOIN " 
 												   + "`board_file` AS f "
 												   + " ON a.no = f.parent "
 												   + " WHERE a.`no`= ?  OR a.`parent`= ?";

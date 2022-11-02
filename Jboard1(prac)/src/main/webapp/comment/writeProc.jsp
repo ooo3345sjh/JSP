@@ -29,7 +29,7 @@
 	// 날짜 생성
 	Date date = new Date(); // 현재 날짜 객체를 생성
 	
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); // 날짜 포맷
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 날짜 포맷
 	String rdate = sdf.format(date); // ex) 2022-10-28 10:32:22
 	
 	// CommentBean 객체 생성

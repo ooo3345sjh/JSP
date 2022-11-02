@@ -10,7 +10,7 @@
 	String no = request.getParameter("no");
 	String content = request.getParameter("content");//replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
 	Date now = new Date();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	String rdate = sdf.format(now);
 	int result = ArticleDAO.getInstance().updateComment(content, no, rdate);
 	

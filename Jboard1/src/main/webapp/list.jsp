@@ -53,7 +53,6 @@
 	
 	// 현재 페이지 게시물 가져오기
 	List<ArticleBean> articles = dao.selectArticles(limitStart);
-	dao.close();
 %>
 <%@ include file="_header.jsp" %>
 	<main id="board">

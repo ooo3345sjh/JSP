@@ -17,13 +17,12 @@ public class UserDAO extends DBHelper {
 		return instance;
 	}
 	
-	private UserDAO() {
-		con = getConnection();
-	}
+	private UserDAO() {}
 	
 	// 기본 CRUD
 	public void insertUserDAO(UserBean ub) {
 		try{
+			con = getConnection();
 			psmt = con.prepareStatement(Sql.INSERT_USER);
 			psmt.setString(1, ub.getUid());
 			psmt.setString(2, ub.getPass());
@@ -49,6 +48,7 @@ public class UserDAO extends DBHelper {
 		UserBean ub = null;
 
 		try{
+			con = getConnection();
 			psmt = con.prepareStatement(Sql.SELECT_USER);
 			psmt.setString(1, uid);
 			psmt.setString(2, pass);
@@ -85,6 +85,7 @@ public class UserDAO extends DBHelper {
 		int result = 0;
 		
 		try{
+			con = getConnection();
 			psmt = con.prepareStatement(Sql.SELECT_COUNT_UID);
 			psmt.setString(1, uid);
 			
@@ -107,6 +108,7 @@ public class UserDAO extends DBHelper {
 		int result = 0;
 		
 		try{
+			con = getConnection();
 			psmt = con.prepareStatement(Sql.SELECT_COUNT_NICK);
 			psmt.setString(1, nick);
 			

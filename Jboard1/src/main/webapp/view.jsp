@@ -21,8 +21,6 @@
 	
 	// 댓글 가져오기
 	List<ArticleBean> comments = dao.selectComments(no);
-	
-	dao.close();
 %>
 <%@ include file="_header.jsp" %>
 <script src="/Jboard1/js/comment.js"></script>
