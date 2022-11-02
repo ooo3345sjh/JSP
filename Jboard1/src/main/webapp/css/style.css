@@ -463,7 +463,6 @@
 #board > .view > .commentList > .date {}
 #board > .view > .commentList .content {
 	padding: 10px;
-	white-space: pre-wrap;
 }
 #board > .view > .commentList > article > div {text-align: right;}
 #board > .view > .commentList > article .remove {}
@@ -484,7 +483,7 @@
    height: 62px;
    resize: none;
    border: 1px solid #e4eaec;
-   text-indent: 6px;
+   padding: 6px;
 }
 #board > .view > .commentForm div{
    float: right;

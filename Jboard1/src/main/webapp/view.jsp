@@ -23,8 +23,22 @@
 	
 %>
 <%@ include file="_header.jsp" %>
+
 <script>
 	$(document).ready(function () {	
+		
+		// 게시글의 댓글 유무를 확인하고 출력하는 함수
+		function commentEmpty() {
+			let articles = $('.commentList > article');
+			console.log(articles.length == 0);
+			if(articles.length == 0){ // 댓글이 없다면
+				$('.empty').show();   // .empty 클래스 show 
+			} else {				  // 댓글이 있다면
+				$('.empty').hide();   // .empty 클래스 hide
+			}
+		}
+		commentEmpty();
+		
 		
 		// 댓글 삭제
 		$(document).on('click', '.remove', function (e) {
@@ -50,6 +64,7 @@
 						if(data.result == 1){
 							alert('댓글이 삭제되었습니다.');
 							article.remove();
+							commentEmpty();
 						}	
 					}
 				});
@@ -57,10 +72,10 @@
 		})
 		
 		// 댓글 수정
-		$(document).on('click', '.modity', function (e) {
+		$(document).on('click', '.modify', function (e) {
 			e.preventDefault();
 			let text = $(this).text();
-			let p_Tag = $(this).parent().prev();
+			p_Tag = $(this).parent().prev();
 			let modifyBtn = $(this);
 			
 			if(text == '수정'){
@@ -70,13 +85,16 @@
 				p_Tag.focus();
 			}else {
 				// 수정완료
-				let content = p_Tag.text();
+	//			let content = p_Tag.html().replace(<div>|<\/div>)/g, "<br>").replace(/[<br>]+/g, "<br>");
+				let content = p_Tag.html().replace(/<div><br><\/div>/g, "<br>").replace(/<\/div>/g, "").replace(/<div>/g, "<br>");
 				let no = $(this).attr('data-no');
 				
 				let jsonData = {
 						"no": no,
 						"content": content
 				};
+				
+				console.log(content);
 				
 				$.ajax({
 					url: '/Jboard1/proc/commentModifyProc.jsp',
@@ -123,7 +141,7 @@
 					if(data.result > 0){
 						
 						let article = "<article>";
-						article += "<span class='nick'>" + data.nick + "</span>&nbsp;";
+						article += "<span class='nick'>" + data.nick + "</span> ";
 						article += "<span class='date'>" + data.date + "</span>";
 						article += "<p class='content'>" + data.content + "</p>";
 						article += "<div>";
@@ -190,13 +208,11 @@
 	                <p class="content"><%= comment.getContent() %></p>
 	                <div>
 	                    <a href="#" class="remove" data-no="<%= comment.getNo()%>">삭제</a>
-	                    <a href="#" class="modity" data-no="<%= comment.getNo() %>">수정</a>
+	                    <a href="#" class="modify" data-no="<%= comment.getNo() %>">수정</a>
 	                </div>
 	            </article>
 	            <%} %>
-	            <% if(comments.size() == 0){ %>
 	            <p class="empty">등록된 댓글이 없습니다.</p>
-	            <%} %>   
 	        </section>
 	
 	        <!-- 댓글 쓰기 -->

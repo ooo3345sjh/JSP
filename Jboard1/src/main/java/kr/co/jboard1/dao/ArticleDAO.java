@@ -333,14 +333,15 @@ public class ArticleDAO {
 		}
 	}
 	
-	public int updateComment(String content, String no) {
+	public int updateComment(String content, String no, String rdate) {
 		int result = 0;
-		
+		System.out.println(rdate);
 		try {
 			Connection con = DBCP.getConnection();
 			PreparedStatement psmt = con.prepareStatement(Sql.UPDATE_COMMENT);
 			psmt.setString(1, content);
-			psmt.setString(2, no);
+			psmt.setString(2, rdate);
+			psmt.setString(3, no);
 			
 		    result = psmt.executeUpdate();
 			
