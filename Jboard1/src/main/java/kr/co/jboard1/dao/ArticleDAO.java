@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.jboard1.bean.ArticleBean;
 import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBHelper;
@@ -11,6 +14,8 @@ import kr.co.jboard1.db.Sql;
 
 // DAO(Data Access Object) : 데이터베이스 처리 클래스
 public class ArticleDAO extends DBHelper {
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private static ArticleDAO instance = new ArticleDAO();
 	
@@ -25,6 +30,7 @@ public class ArticleDAO extends DBHelper {
 		
 		int parent = 0;
 		try{
+			logger.info("insertArticle");
 			// 트랜잭션 시작
 			con = getConnection();
 			con.setAutoCommit(false);
@@ -50,7 +56,8 @@ public class ArticleDAO extends DBHelper {
 			close();
 			
 		}catch(Exception e){
-			e.printStackTrace();		
+			e.printStackTrace();	
+			logger.error(e.getMessage());
 		}
 		return parent;
 	}
@@ -58,6 +65,7 @@ public class ArticleDAO extends DBHelper {
 	public void insertFile(int parent, String newName, String fname) {
 		
 		try{
+			logger.info("insertFile");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.INSERT_FILE);
 			psmt.setInt(1, parent);
@@ -69,6 +77,7 @@ public class ArticleDAO extends DBHelper {
 			close();
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -77,6 +86,7 @@ public class ArticleDAO extends DBHelper {
 		ArticleBean article = null;
 		
 		try{
+			logger.info("insertComment");
 			con = getConnection();
 	 		con.setAutoCommit(false);
 	 		
@@ -108,6 +118,7 @@ public class ArticleDAO extends DBHelper {
 	 		close();
 	 	}catch(Exception e){
 	 		e.printStackTrace();
+	 		logger.error(e.getMessage());
 	 	}
 		
 		return article;
@@ -117,6 +128,7 @@ public class ArticleDAO extends DBHelper {
 		
 		ArticleBean ab = null;
 		try{
+			logger.info("selectArticle");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.SELECT_ARTICLE);
 			psmt.setString(1, no);
@@ -148,6 +160,7 @@ public class ArticleDAO extends DBHelper {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return ab;
 	}
@@ -157,6 +170,7 @@ public class ArticleDAO extends DBHelper {
 
 		int total = 0;
 		try{
+			logger.info("selectCountTotal");
 			con = getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
@@ -168,7 +182,8 @@ public class ArticleDAO extends DBHelper {
 			close();
 			
 		} catch(Exception e){
-			e.printStackTrace();	
+			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return total;
 	}
@@ -179,6 +194,7 @@ public class ArticleDAO extends DBHelper {
 		List<ArticleBean> articles = null;
 		
 		try{
+			logger.info("selectArticles");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.SELECT_ARTICLES);
 			psmt.setInt(1,  limitStart);
@@ -208,7 +224,8 @@ public class ArticleDAO extends DBHelper {
 			close();
 			
 		} catch(Exception e){
-			e.printStackTrace();	
+			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return articles;
 	}
@@ -217,6 +234,7 @@ public class ArticleDAO extends DBHelper {
 		
 		FileBean fb = null;
 		try{
+			logger.info("selectFile");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.SELECT_FILE);
 			psmt.setString(1, parent);
@@ -236,6 +254,7 @@ public class ArticleDAO extends DBHelper {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return fb;
@@ -244,6 +263,7 @@ public class ArticleDAO extends DBHelper {
 	public List<ArticleBean> selectComments(String parent) {
 		List<ArticleBean> comments = new ArrayList<>();
 		try {
+			logger.info("selectComments");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.SELECT_COMMENTS);
 			psmt.setString(1, parent);
@@ -271,6 +291,7 @@ public class ArticleDAO extends DBHelper {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return comments;
@@ -281,6 +302,7 @@ public class ArticleDAO extends DBHelper {
 		int result = 0;
 		
 		try{
+			logger.info("updateArticle");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.UPDATE_ARTICLE);
 			psmt.setString(1, title);
@@ -293,6 +315,7 @@ public class ArticleDAO extends DBHelper {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return result;
@@ -301,6 +324,7 @@ public class ArticleDAO extends DBHelper {
 	public void updateArticleHit(String no) {
 		
 		try {
+			logger.info("updateArticleHit");
 			con = getConnection();
 		    psmt = con.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
 		    psmt.setString(1, no);
@@ -311,6 +335,7 @@ public class ArticleDAO extends DBHelper {
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 	}
@@ -318,6 +343,7 @@ public class ArticleDAO extends DBHelper {
 	public void updateFileDownload(int fno) {
 		
 		try {
+			logger.info("updateFileDownload");
 			con = getConnection();
 		    psmt = con.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
 		    psmt.setInt(1, fno);
@@ -328,12 +354,14 @@ public class ArticleDAO extends DBHelper {
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	public int updateComment(String content, String no, String rdate) {
 		int result = 0;
 		try {
+			logger.info("updateComment");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.UPDATE_COMMENT);
 			psmt.setString(1, content);
@@ -346,6 +374,7 @@ public class ArticleDAO extends DBHelper {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return result;
@@ -355,6 +384,7 @@ public class ArticleDAO extends DBHelper {
 		int result = 0;
 		
 		try {
+			logger.info("deleteComment");
 			con = getConnection();
 			
 			con.setAutoCommit(false);
@@ -375,6 +405,7 @@ public class ArticleDAO extends DBHelper {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return result;
@@ -385,6 +416,7 @@ public class ArticleDAO extends DBHelper {
 		String newName = null;
 		
 		try {
+			logger.info("deleteFile");
 			con = getConnection();
 			con.setAutoCommit(false);
 			
@@ -409,6 +441,7 @@ public class ArticleDAO extends DBHelper {
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return newName;
@@ -417,6 +450,7 @@ public class ArticleDAO extends DBHelper {
 	public void deleteArticle(String no) {
 		
 		try {
+			logger.info("deleteArticle");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.DELETE_ARTICLE);
 			psmt.setString(1, no);
@@ -428,6 +462,7 @@ public class ArticleDAO extends DBHelper {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -435,6 +470,7 @@ public class ArticleDAO extends DBHelper {
 	public void deleteArticleFile(String no) {
 		
 		try {
+			logger.info("deleteArticleFile");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.DELETE_ARTICLE_FILE);
 			psmt.setString(1, no);
@@ -446,6 +482,7 @@ public class ArticleDAO extends DBHelper {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 }

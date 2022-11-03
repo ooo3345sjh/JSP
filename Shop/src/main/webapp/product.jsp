@@ -55,30 +55,16 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script>
 		$(function () {
-			$('.btnOrder').click(function() {
-				$('form').remove(); // 주문 버튼을 눌렀을때 중복해서 출력을 방지하기위해 삭제를 한번하고 다시 출력한다.
-				let prodNum = $(this).parent().parent().children("td:eq(0)").text(); 
-				let tags = "<form>";
-				tags += "<table border='1'>";
-				tags += "<tr>";
-				tags += "<td>상품번호</td>";
-				tags += "<td><input type='text' name='prodNo' value='" + prodNum + "'></td>";
-				tags += "</tr>";
-				tags += "<tr>";
-				tags += "<td>수량</td>";
-				tags += "<td><input type='text' name='orderCount'></td>";
-				tags += "</tr>";
-				tags += "<tr>";
-				tags += "<td>주문자</td>";
-				tags += "<td><input type='text' name='custId'></td>";
-				tags += "</tr>";
-				tags += "<tr>";
-				tags += "<td colspan='2' align='right'><input type='submit' value='주문하기'></td>";
-				tags += "</tr>";
-				tags += "</table>";
-				tags += "</form>";
-				
-				$('body').append(tags); // tags안에 있는 태그들을 body에 append한다.
+			
+			// 주문 버튼을 누르면
+			$('.btnOrder').click(function() {  
+				let prodNum = $(this).val(); // 상품 번호 
+				$('section').show().find('input[name=prodNo]').val(prodNum); // 주문창 숨기고, 상품번호 입력 
+			});
+			
+			// 닫기 버튼을 누르면
+			$('input[name=btnClose]').click(function() {
+				$('section').hide();  // 주문창 숨기기
 			});
 			
 			$(document).on('click', 'input[type=submit]', function (e) {
@@ -106,8 +92,7 @@
 						
 						if(data.result == 1){
 							alert('주문완료!');
-							$('table:eq(1)').remove(); // 주문 창 제거
-							location.reload();
+							location.href = '/Shop/order.jsp';
 						} else {
 							alert('주문실패!');
 						}
@@ -142,12 +127,40 @@
 				<td><%= pb.getStock() %></td>
 				<td><%= pb.getPrice() %></td>
 				<td><%= pb.getCompany() %></td>
-				<td><button class="btnOrder">주문</button> </td>
+				<td><button class="btnOrder" value="<%= pb.getProdNo() %>">주문</button> </td>
 			</tr>
 			<%
 				}
 			%>			
-		</table></br>
+		</table>
+		<br/>
+		
+		
+		<!-- 주문 창 -->
+		<section style="display: none;">
+				<table border='1'>
+					<tr>
+						<td>상품번호</td>
+						<td><input type='text' name='prodNo'></td>
+					</tr>
+						<tr>
+						<td>수량</td>
+						<td><input type='text' name='orderCount'></td>
+					</tr>
+					<tr>
+						<td>주문자</td>
+						<td><input type='text' name='custId'></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='right'>
+							<input type="button" name="btnClose" value="닫기"/>
+							<input type='submit' value='주문하기'>
+						</td>
+						
+					</tr>
+			    </table>
+				
+		</section>
 		
 	</body>
 </html>
