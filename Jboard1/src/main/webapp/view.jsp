@@ -77,7 +77,7 @@
 	                </td>
 	            </tr>
 	            <%} %>
-	            <tr>
+	            <tr class="contentTrTag">
 	                <th>내용</th>
 	                <td>
 	                   <!-- <textarea name="content" readonly></textarea> --> 

@@ -432,8 +432,11 @@
     height: 24px;
     border: none;
 }
-#board .view table #content {
+#board .view table .contentTrTag {
 	height: 280px;
+}
+#board .view table #content {
+	height: auto;
 }
 #board .view table td > textarea {
     width: 100%;

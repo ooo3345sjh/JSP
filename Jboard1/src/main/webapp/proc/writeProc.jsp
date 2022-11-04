@@ -1,3 +1,5 @@
+<%@page import="java.io.IOException"%>
+<%@page import="org.apache.commons.io.FileUtils"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="kr.co.jboard1.bean.ArticleBean"%>
 <%@page import="java.sql.ResultSet"%>
@@ -27,6 +29,8 @@
 	String content = mr.getParameter("editorTxt");
 	String uid = mr.getParameter("uid");
 	String fname = mr.getFilesystemName("fname");
+	String img = mr.getParameter("img"); // 이미지 경로값들 
+	System.out.println(img);
 	String regip = request.getRemoteAddr();
 	System.out.println("fname : " + fname);
 	
@@ -63,6 +67,23 @@
 		dao.insertFile(parent, newName, fname);
 			
 	}
+	
+	// 이미지 파일 첨부 시
+	String realPath = application.getRealPath("/smartEditor");
+	File files = new File(realPath, "tmp");
+	
+	// 임시 저장소에 파일이 존재한다면 DB에 데이터 저장
+	if(files.exists()){
+		String[] fileNames = files.list();
+		for(String filename : fileNames){
+			dao.insertFile(parent, filename, "삽입 이미지");
+		}
+		files.delete();
+	}
+	
+	
+	
+	
 	
 	response.sendRedirect("/Jboard1/list.jsp");
 %>
