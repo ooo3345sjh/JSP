@@ -70,7 +70,7 @@
 	
 	// 이미지 파일 첨부 시
 	String realPath = application.getRealPath("/smartEditor");
-	File files = new File(realPath, "tmp");
+	File files = new File(realPath, "temp");
 	
 	// 임시 저장소에 파일이 존재한다면 DB에 데이터 저장
 	if(files.exists()){
