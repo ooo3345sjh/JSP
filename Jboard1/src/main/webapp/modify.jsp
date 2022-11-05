@@ -17,13 +17,32 @@
 <script>
 	
 	$(function () {
-		smarteditor ();
+		let oEditors = []
+			
+	    smartEditor = function() {
+	     	console.log("Naver SmartEditor")
+	     	nhn.husky.EZCreator.createInIFrame({
+	        oAppRef: oEditors,
+	        elPlaceHolder: "editorTxt",
+	        sSkinURI: "/Jboard1/smartEditor/SmartEditor2Skin.html",
+	        fCreator: "createSEditor2"
+	        });
+	    }
+	
+	    $(document).ready(function() {
+	      smartEditor();
+	    })
 		
 		$('form').submit(function (e) {
-			e.prventDefault();
 			oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
 	       	let inputTitle = $('input[name=title]');
-	       	let content = $('#editorTxt').val();
+	       	let content = $('#editorTxt').val().replace(/<br style="clear:both;">/g, '');
+	       	
+	       	let arr = content.match(/image.{29}/g); // 이미지 경로값 배열
+	       	if(arr != null){
+		       	$('input[name=img]').val(arr.join('/')); // 이미지 경로값을 '/'로 이어붙여 input[name=img]의 value값에 대입
+	       	}
+	       	
 			if(inputTitle.val() == ''){
 				alert("제목을 입력해주세요.")
 				inputTitle.focus();
@@ -49,6 +68,7 @@
                 <form action="/Jboard1/proc/modifyProc.jsp">
                 	<input type="hidden" name="no" value="<%= no %>">
                 	<input type="hidden" name="pg" value="<%= pg %>">
+                	<input type="hidden"  name="img">
                     <table border="0">
                      <caption>글수정</caption>
                      <tr>

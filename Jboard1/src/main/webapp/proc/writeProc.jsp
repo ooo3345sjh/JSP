@@ -1,3 +1,6 @@
+<%@page import="java.util.Arrays"%>
+<%@page import="java.util.LinkedList"%>
+<%@page import="java.util.LinkedHashSet"%>
 <%@page import="java.io.IOException"%>
 <%@page import="org.apache.commons.io.FileUtils"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
@@ -29,10 +32,8 @@
 	String content = mr.getParameter("editorTxt");
 	String uid = mr.getParameter("uid");
 	String fname = mr.getFilesystemName("fname");
-	String img = mr.getParameter("img"); // 이미지 경로값들 
-	System.out.println(img);
+	String img = mr.getParameter("img"); // 게시글에 게시가된 이미지 주소값들 
 	String regip = request.getRemoteAddr();
-	System.out.println("fname : " + fname);
 	
 	ArticleBean ab = new ArticleBean();
 	ab.setTitle(title);
@@ -47,7 +48,9 @@
 	int parent = dao.insertArticle(ab);
 	
 	
-	// 파일 첨부했으면
+	//=========== 선 택 옵 션 항 목 ============//
+			
+	/****** 1. 파일 첨부시 ******/
 	if(fname != null){
 		
 		// 파일명 수정
@@ -68,22 +71,46 @@
 			
 	}
 	
-	// 이미지 파일 첨부 시
-	String realPath = application.getRealPath("/smartEditor");
-	File files = new File(realPath, "temp");
+	/****** 2. 이미지 파일 삽입시 ******/
+	String realPath = application.getRealPath("/");
+	File files = new File(realPath, "smartEditor/temp"); // 임시 저장소 디렉터리 주소
 	
-	// 임시 저장소에 파일이 존재한다면 DB에 데이터 저장
-	if(files.exists()){
-		String[] fileNames = files.list();
-		for(String filename : fileNames){
-			dao.insertFile(parent, filename, "삽입 이미지");
+	if(!img.equals("")){ // 이미지 주소 값이 있다면
+		
+		String[] images = img.split("/"); // 이미지 주소값들을 '/'를 기준으로 잘라서 문자열 배열로 반환한다.
+		String[] fileNames = files.list(); // 임시 저장소에 저장된 파일들의 이름을 가져온다.
+		boolean[] checking = new boolean[fileNames.length]; // 게시글에 삽입되지 않은 쓰레기 파일을 체킹하기위한 변수
+		
+		for(int j=0; j<images.length; j++){ // 요청 값으로 가져온 이미지 주소 값들 중
+			for(int i=0; i<fileNames.length; i++){ // 임시 저장소에 있는 파일과 이름이 같은 파일은
+				if(images[j].equals(fileNames[i])){ // true로 변환한다.
+					checking[i] = true;
+				} 
+			}
 		}
-		files.delete();
+		
+		for(int i=0; i<checking.length; i++){ // false로 되어 있는 인덱스 번호는 쓰레기 파일이므로 삭제 해준다.
+			if(checking[i] == false){ // 본 저장소에 있는 파일 삭제
+				File multiFile = new File(realPath, "file/" + fileNames[i]);
+				multiFile.delete();
+			}
+		}
+		
+		FileUtils.deleteDirectory(files); // 임시 저장소 폴더 삭제
+		dao.insertFiles(parent, images); // DB에 파일 등록
+		
+	} else{ // 이미지 경로 값이 없다면  
+		if(files.exists()){ // 임시 저장소에 파일이 있다면 저장소 및 임시 저장소 파일 제거 
+			String[] fileNames = files.list(); // 임시 저장소에 있는 파일들의 이름을 가져온다.
+			
+			for(String fileName : fileNames){ // 임시 저장소에 있는 파일 이름과 동이한 이름을 가진 본 저장소에 파일들을 삭제
+				File multiFile = new File(realPath, "file/" + fileName);
+				multiFile.delete();
+			}
+			
+			FileUtils.deleteDirectory(files); // 임시 저장소 폴더 삭제
+		}
 	}
-	
-	
-	
-	
 	
 	response.sendRedirect("/Jboard1/list.jsp");
 %>

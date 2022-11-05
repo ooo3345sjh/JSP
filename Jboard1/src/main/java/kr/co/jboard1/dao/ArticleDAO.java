@@ -81,6 +81,38 @@ public class ArticleDAO extends DBHelper {
 		}
 	}
 	
+	public void insertFiles(int parent, String[] fNames) {
+		
+		try{
+			logger.info("insertFiles");
+			con = getConnection();
+			String sql = "INSERT INTO `board_file` (`parent`, `newName`, `oriName`)"
+					+ " VALUES ";
+			for(int i=0; i<fNames.length; i++) {
+				if(i == fNames.length-1) {
+					sql += " (?,?,'삽입 이미지'); ";
+				} else {
+					sql += " (?,?,'삽입 이미지'), ";
+				}
+			}
+			
+			psmt = con.prepareStatement(sql);
+			int num = 1;
+			for(int i=0; i<fNames.length; i++) {
+				psmt.setInt(num++, parent);
+				psmt.setString(num++, fNames[i]);
+			}
+			
+			psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
+	
 	public ArticleBean insertComment(ArticleBean comment) {
 		
 		ArticleBean article = null;
@@ -230,9 +262,10 @@ public class ArticleDAO extends DBHelper {
 		return articles;
 	}
 	
-	public FileBean selectFile(String parent) {
+	public List<FileBean> selectFile(String parent) {
 		
-		FileBean fb = null;
+		List<FileBean> files = null;
+		
 		try{
 			logger.info("selectFile");
 			con = getConnection();
@@ -241,13 +274,17 @@ public class ArticleDAO extends DBHelper {
 			
 			rs = psmt.executeQuery();
 			
-			if(rs.next()){
-				fb = new FileBean();
+			files = new ArrayList<>();
+			
+			while(rs.next()){
+				FileBean fb = new FileBean();
 				fb.setFno(rs.getInt(1));
 				fb.setParent(rs.getInt(2));
 				fb.setNewName(rs.getString(3));
 				fb.setOriName(rs.getString(4));
 				fb.setDownload(rs.getInt(5));
+				
+				files.add(fb);
 			}
 			
 			close();
@@ -257,8 +294,9 @@ public class ArticleDAO extends DBHelper {
 			logger.error(e.getMessage());
 		}
 		
-		return fb;
+		return files;
 	}
+	
 	
 	public List<ArticleBean> selectComments(String parent) {
 		List<ArticleBean> comments = new ArrayList<>();
@@ -484,5 +522,96 @@ public class ArticleDAO extends DBHelper {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+	}
+	
+	public void deleteAllImg(String no) {
+		
+		try {
+			logger.info("deleteImg");
+			con = getConnection();
+			
+			String sql = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'";
+			
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setString(1, no);
+			
+			psmt.executeUpdate();
+		 
+			close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public void deleteSelectedImg(String no, String[] fileNames) {
+		try {
+			logger.info("deleteSelectedImg");
+			con = getConnection();
+			
+			String sql = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'"
+					   + " and `newName` NOT IN (";
+			
+			for(int i=0; i<fileNames.length; i++) {
+				if(i == fileNames.length-1) {
+					sql += "?)";
+					break;
+				}
+				sql += "?,";
+			}
+			
+			PreparedStatement psmt = con.prepareStatement(sql);
+			
+			psmt.setString(1, no);
+			
+			int num = 2;
+			for(int i=0; i<fileNames.length; i++) {
+				psmt.setString(num++, fileNames[i]);
+			}
+			
+			psmt.executeUpdate();
+			
+		    close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public List<FileBean> selectImg(String parent) {
+		
+		List<FileBean> files = null;
+		
+		try{
+			logger.info("selectImg");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_FILE_IMG);
+			psmt.setString(1, parent);
+			
+			rs = psmt.executeQuery();
+			
+			files = new ArrayList<>();
+			
+			while(rs.next()){
+				FileBean fb = new FileBean();
+				fb.setFno(rs.getInt(1));
+				fb.setParent(rs.getInt(2));
+				fb.setNewName(rs.getString(3));
+				fb.setOriName(rs.getString(4));
+				fb.setDownload(rs.getInt(5));
+				
+				files.add(fb);
+			}
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+		return files;
 	}
 }

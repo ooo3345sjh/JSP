@@ -37,7 +37,7 @@
         //파일 기본경로
         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
         //파일 기본경로 _ 상세경로
-        String filePath = dftFilePath + "smartEditor" + File.separator + "multiupload" + File.separator;
+        String filePath = dftFilePath + "file" + File.separator;
         String tempFilePath = dftFilePath + "smartEditor" + File.separator + "temp" + File.separator; // 임시 저장소 경로
         File file = new File(filePath);
         if (!file.exists()) {
@@ -66,7 +66,11 @@
         // 임시 저장소에 파일 복사
         File ofile = new File(filePath, realFileNm);
         File tmpFile = new File(tempFilePath, realFileNm);
+        File tmpFolder = new File(tempFilePath);
         
+        if(!tmpFolder.exists()){
+        	tmpFolder.mkdir();
+        }
         Files.copy(ofile.toPath(), tmpFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         
         ///////////////// 서버에 파일쓰기 /////////////////
@@ -75,7 +79,7 @@
         // 정보 출력
         sFileInfo += "&bNewLine=true";    
         sFileInfo += "&sFileName=" + filename;    
-        sFileInfo += "&sFileURL=/Jboard1/smartEditor/multiupload/"+realFileNm;
+        sFileInfo += "&sFileURL=/Jboard1/file/"+realFileNm;
         out.println(sFileInfo);
     }
 %>
