@@ -10,10 +10,11 @@ import java.util.List;
 import kr.co.jboard1.bean.ArticleBean;
 import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
+import kr.co.jboard1.db.DBHelper;
 import kr.co.jboard1.db.Sql;
 
 // DAO(Data Access Object) : 데이터베이스 처리 클래스
-public class ArticleDAO {
+public class ArticleDAO extends DBHelper{
 	
 	private static ArticleDAO instance = new ArticleDAO();
 	
@@ -81,6 +82,36 @@ public class ArticleDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void insertFiles(int parent, String[] fNames) {
+		
+		try{
+			con = getConnection();
+			String sql = "INSERT INTO `board_file` (`parent`, `newName`, `oriName`)"
+					+ " VALUES ";
+			for(int i=0; i<fNames.length; i++) {
+				if(i == fNames.length-1) {
+					sql += " (?,?,'삽입 이미지'); ";
+				} else {
+					sql += " (?,?,'삽입 이미지'), ";
+				}
+			}
+			
+			psmt = con.prepareStatement(sql);
+			int num = 1;
+			for(int i=0; i<fNames.length; i++) {
+				psmt.setInt(num++, parent);
+				psmt.setString(num++, fNames[i]);
+			}
+			
+			psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	public ArticleBean selectArticle(String no) {
 		
 		ArticleBean ab = null;
@@ -186,37 +217,60 @@ public class ArticleDAO {
 		}
 		return articles;
 	}
-	public FileBean selectFile(String parent) {
+	public List<FileBean> selectFile(String parent) {
 		
-		FileBean fb = null;
+		List<FileBean> files = null;
+		
 		try{
-			Connection con = DBCP.getConnection();
-			PreparedStatement psmt = con.prepareStatement(Sql.SELECT_FILE);
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_FILE);
 			psmt.setString(1, parent);
 			
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			
-			if(rs.next()){
-				fb = new FileBean();
+			files = new ArrayList<>();
+			
+			while(rs.next()){
+				FileBean fb = new FileBean();
 				fb.setFno(rs.getInt(1));
 				fb.setParent(rs.getInt(2));
 				fb.setNewName(rs.getString(3));
 				fb.setOriName(rs.getString(4));
 				fb.setDownload(rs.getInt(5));
+				
+				files.add(fb);
 			}
 			
-			con.close();
-			psmt.close();
-			rs.close();
+			close();
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return fb;
+		return files;
 	}
 	
-	public void updateArticle() {}
+	public int updateArticle(String no, String title, String content) {
+		
+		int result = 0;
+		
+		try{
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			
+			psmt.executeUpdate();
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	public void updateArticleHit(String no) {
 		
@@ -253,5 +307,108 @@ public class ArticleDAO {
 		}
 	}
 	
+	// 게시글, 댓글 , 파일 데이터 삭제
+		public void deleteArticleFile(String no) {
+			
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(Sql.DELETE_ARTICLE_FILE);
+				psmt.setString(1, no);
+				psmt.setString(2, no);
+				
+				psmt.executeUpdate();
+				
+				close();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	public void deleteArticle() {}
+	
+	
+	public void deleteSelectedImg(String no, String[] fileNames) {
+		try {
+			con = getConnection();
+			
+			String sql = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'"
+					   + " and `newName` NOT IN (";
+			
+			for(int i=0; i<fileNames.length; i++) {
+				if(i == fileNames.length-1) {
+					sql += "?)";
+					break;
+				}
+				sql += "?,";
+			}
+			
+			PreparedStatement psmt = con.prepareStatement(sql);
+			
+			psmt.setString(1, no);
+			
+			int num = 2;
+			for(int i=0; i<fileNames.length; i++) {
+				psmt.setString(num++, fileNames[i]);
+			}
+			
+			psmt.executeUpdate();
+			
+		    close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public List<FileBean> selectImg(String parent) {
+		
+		List<FileBean> files = null;
+		
+		try{
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_FILE_IMG);
+			psmt.setString(1, parent);
+			
+			rs = psmt.executeQuery();
+			
+			files = new ArrayList<>();
+			
+			while(rs.next()){
+				FileBean fb = new FileBean();
+				fb.setFno(rs.getInt(1));
+				fb.setParent(rs.getInt(2));
+				fb.setNewName(rs.getString(3));
+				fb.setOriName(rs.getString(4));
+				fb.setDownload(rs.getInt(5));
+				
+				files.add(fb);
+			}
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return files;
+	}
+	
+	public void deleteAllImg(String no) {
+		
+		try {
+			con = getConnection();
+			
+			String sql = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'";
+			
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setString(1, no);
+			
+			psmt.executeUpdate();
+		 
+			close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

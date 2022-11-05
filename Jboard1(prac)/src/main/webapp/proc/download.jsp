@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="java.io.BufferedOutputStream"%>
 <%@page import="java.io.BufferedInputStream"%>
@@ -22,8 +23,14 @@
 	
 	// 파일 정보 가져오기
 	ArticleDAO dao = ArticleDAO.getInstance();
-	FileBean fb = dao.selectFile(parent);
-	dao.updateFileDownload(fb.getFno());
+	List<FileBean> fbs = dao.selectFile(parent);
+	FileBean fb = null;
+	
+	for(FileBean file : fbs){
+		if(!file.getOriName().equals("삽입 이미지")){
+			fb = file;
+		}
+	}
 
 	//파일 다운로드 response 헤더수정
 	response.setContentType("application/octet-stream");

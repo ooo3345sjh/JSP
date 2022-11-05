@@ -2,7 +2,11 @@
  * {
      margin: 0;
      padding: 0;
-     font: normal 12px '돋움';
+     
+ }
+ 
+ body {
+ 	font: normal 12px '돋움';
  }
 
  ul, ol {list-style: none;}
@@ -27,11 +31,11 @@
  }
 
  header > h3 {
-     font-weight: bold;
      color: #777;
      float: left;
      margin-top: 10px;
      margin-left: 10px;
+     font: bold 12px '돋움';
  }
 
  header > p {
@@ -88,12 +92,14 @@
  #user >.login > form > table img {width: 20px;}
 
  #user >.login > form > table input {
+ 	 font: normal 12px '돋움';
      border: 1px solid #e4eaec;
      width: 162px;
      height: 22px;
      margin-left: 6px;
      margin-bottom: 4px;
-     background: #f7f7f7
+     background: #f7f7f7;
+     text-indent: 5px;
  }
 
  #user > .login > form > .btnLogin {
@@ -116,7 +122,7 @@
      box-sizing: border-box;
  }
 
- #user > .login > div > h3 {}
+ #user > .login > div > h3 {font: normal 12px '돋움';}
 
  #user > .login > div > p {
      margin: 10px 0;
@@ -431,6 +437,7 @@
     resize: none;
     border: none;
 }
+#board .view table .contentTrTag > td > div{height: auto; padding-bottom: 100px;}
 
 #board .view > div {
     text-align: right;
@@ -543,9 +550,11 @@
     bottom: 0;
  }
  .btnComplete {
+ 	font: normal 12px '돋움';
     border: 1px solid #3b3c3f;
     background: #4b545e;
     color: #fff;
+    cursor: pointer;
  }
 
 

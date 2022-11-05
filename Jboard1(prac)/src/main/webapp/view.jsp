@@ -129,17 +129,20 @@
 	                </td>
 	            </tr>
 	            <%} %>
-	            <tr>
+	            <tr class="contentTrTag">
 	                <th>내용</th>
 	                <td>
-	                    <textarea name="content" readonly><%= ab.getContent() %></textarea>
+	                      <!-- <textarea name="content" readonly></textarea> --> 
+	                	<div id='content'><%= ab.getContent() %></div>
 	                </td>
 	            </tr>
 	            
 	        </table>
 	        <div>
-	            <a href="#" class="btn btnRemove">삭제</a>
-	            <a href="/Jboard1/modify.jsp" class="btn btnModify">수정</a>
+	             <% if(ub.getUid().equals(ab.getUid()) ){ %>
+	            <a href="/Jboard1/proc/deleteProc.jsp?no=<%= no %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
+	            <a href="/Jboard1/modify.jsp?no=<%= no %>&pg=<%= pg %>" class="btn btnModify">수정</a>
+	            <%} %>
 	            <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
 	        </div>
 	

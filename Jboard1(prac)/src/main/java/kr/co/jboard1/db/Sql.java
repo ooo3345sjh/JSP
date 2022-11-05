@@ -47,11 +47,17 @@ public class Sql {
 			                                  + " WHERE a.`no`= ?";
 	
 	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
+	public static final String SELECT_FILE_IMG = "SELECT * FROM `board_file` WHERE `parent`=? and `oriName`='삽입 이미지'";
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit`+ 1 WHERE `no` = ?"; 
 	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download`+ 1 WHERE `fno` = ?"; 
 	public static final String UPDATE_ARTICLE_COMMENT_PLUSE = "UPDATE `board_article` SET `comment` = `comment`+ 1 WHERE `no`= ?";
 	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "UPDATE `board_article` SET `comment` = `comment`- 1 WHERE `no`= ?";
+	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET "
+											 + " `title`=?,"
+											 + " `content`=?,"
+											 + " `rdate`=NOW() "
+											 + " WHERE `no`=?";
 	
 	// comment
 	public static final String UPDATE_COMMENT = "UPDATE `board_comment` SET `comment`=? WHERE `no`=?";
@@ -65,4 +71,10 @@ public class Sql {
 											   + " `nick`= ?, "
 											   + " `regip`= ?, "
 											   + " `rdate`= ?";
+	public static final String DELETE_ARTICLE_FILE = "DELETE a.*, f.* FROM " 
+												   + " `board_article` AS a "
+												   + " LEFT JOIN " 
+												   + "`board_file` AS f "
+												   + " ON a.no = f.parent "
+												   + " WHERE a.`no`= ?  OR a.`parent`= ?";
 }
