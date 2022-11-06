@@ -28,8 +28,6 @@
 <script>
 	$(document).ready(function () {	
 		
-		let content = 
-		
 		// 글 삭제
 		$('.btnRemove').click(function (e) {
 			let isDelete = confirm('정말 삭제 하시겠습니까?');

@@ -308,22 +308,23 @@ public class ArticleDAO extends DBHelper{
 	}
 	
 	// 게시글, 댓글 , 파일 데이터 삭제
-		public void deleteArticleFile(String no) {
+	public void deleteArticleFile(String no) {
+		
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.DELETE_ARTICLE_FILE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.setString(3, no);
 			
-			try {
-				con = getConnection();
-				psmt = con.prepareStatement(Sql.DELETE_ARTICLE_FILE);
-				psmt.setString(1, no);
-				psmt.setString(2, no);
-				
-				psmt.executeUpdate();
-				
-				close();
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
 	public void deleteArticle() {}
 	
 	

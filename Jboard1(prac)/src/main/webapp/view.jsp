@@ -108,6 +108,16 @@
 		
 		modify(); // 댓글 수정 함수 호출
 		
+		// 글 삭제
+		$('.btnRemove').click(function (e) {
+			let isDelete = confirm('정말 삭제 하시겠습니까?');
+			
+			if(isDelete){
+				return true;
+			}else {
+				return false;
+			}
+		});
 		
 	});
 </script>

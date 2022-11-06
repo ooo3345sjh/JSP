@@ -37,12 +37,14 @@
                             	laceholder="내용을 입력해주세요" style="width: 100%"><%= article.getContent() %></textarea>
                          </td>
                      </tr>
+                     <% if(article.getFile() > 0){ %>
                      <tr>
                          <th>첨부</th>
                          <td>
                              <input type="file" name="file">
                          </td>
                      </tr>
+                     <% } %>
                     </table>
                     <div>
                         <a href="/Jboard1/view.jsp?no=<%= no %>&pg=<%= pg %>" class="btn btnCalcel">취소</a>

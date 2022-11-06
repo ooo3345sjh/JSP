@@ -32,7 +32,8 @@
 	if(!img.equals("")){ // 이미지 주소 값이 있다면
 		String[] images = img.split("/"); // 이미지 주소값들을 '/'를 기준으로 잘라서 문자열 배열로 반환한다.
 		
-		if(files.exists()){ // 임시 저장소에 파일이 있다면 
+		// 새로운 이미지를 추가 삽입한 경우(전송받은 이미지 주소값이외에 임시 파일저장소에 저장된 파일은 제거)
+		if(files.exists()){ // 임시 저장소에 파일이 있다면(새로운 이미지 파일을 추가했다는 의미)
 			String[] fileNames = files.list(); // 임시 저장소에 저장된 파일들의 이름을 가져온다.
 			boolean[] checking = new boolean[fileNames.length]; // 게시글에 삽입되지 않은 쓰레기 파일을 체크하기위한 변수
 			List<String> saveFile = new ArrayList<>();
@@ -58,7 +59,7 @@
 			
 		} 
 			
-		// DB에 있는 파일 제거
+		// 전송받은 이미지 주소 값 이외에 DB에 저장된 파일 제거
 		if(!fbs.isEmpty()){
 			boolean[] checking = new boolean[fbs.size()]; // 전송받은 이미지 주소값과 DB에 저장된 파일들을 비교 체크하기위한 변수
 			

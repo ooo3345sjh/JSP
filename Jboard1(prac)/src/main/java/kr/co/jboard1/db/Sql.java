@@ -71,10 +71,12 @@ public class Sql {
 											   + " `nick`= ?, "
 											   + " `regip`= ?, "
 											   + " `rdate`= ?";
-	public static final String DELETE_ARTICLE_FILE = "DELETE a.*, f.* FROM " 
+	public static final String DELETE_ARTICLE_FILE = "DELETE a.*, c.*, f.* FROM " 
 												   + " `board_article` AS a "
+												   + " LEFT JOIN "
+												   + " `board_comment` AS c  ON a.`no` = c.`parent` " 
 												   + " LEFT JOIN " 
 												   + "`board_file` AS f "
 												   + " ON a.no = f.parent "
-												   + " WHERE a.`no`= ?  OR a.`parent`= ?";
+												   + " WHERE a.`no`= ?  OR c.`parent`= ? OR f.`parent`= ?";
 }
