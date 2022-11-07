@@ -100,5 +100,28 @@ public class RegisterDAO extends DBHelper {
 		
 		return result;
 	}
+	
+	public int updateRegister(RegisterDTO dto) {
+		int result = 0;
+		
+		try {
+			con = DBCP.getConnection();
+			psmt = con.prepareStatement(Sql.UPDATE_REGISTER);
+			psmt.setInt(1, dto.getRegMidScore());
+			psmt.setInt(2, dto.getRegFinalScore());
+			psmt.setInt(3, dto.getRegTotalScore());
+			psmt.setString(4, dto.getRegGrade());
+			psmt.setString(5, dto.getRegStdNo());
+			psmt.setInt(6, dto.getRegLecNo());
+			
+			result = psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 }

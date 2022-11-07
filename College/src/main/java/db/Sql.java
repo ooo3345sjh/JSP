@@ -28,5 +28,11 @@ public class Sql {
 											  + " `stdHp`=?,"
 											  + " `stdYear`=?,"
 											  + " `stdAddress`=?";
+	public static final String UPDATE_REGISTER = "UPDATE `register` SET "
+												+ " `regMidScore`=?, "
+												+ " `regFinalScore`=?, "
+												+ " `regTotalScore`=?, "
+												+ " `regGrade`=? "
+												+ " WHERE `regStdNo`=? and `regLecNo`=?" ;
 
 }

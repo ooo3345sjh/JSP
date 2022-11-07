@@ -5,115 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>college::register</title>
+<style>
+	td {text-align: center;}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="/College/js/register.js"></script>
 <script>
 	$(function () {
-		
-		// 수강 등록 창 숨기기
-		$(".insertInput").hide();
-		
-		// 수강 리스트 목록 출력
-		$(document).ready(function () {
-			let reglist = $('.regList');
-			$.ajax({
-				url: '/College/proc/registerListProc.jsp',
-				method: "get",
-				dataType: "json",
-				success: function (data) {
-					for(let reg of data){
-						let trTag = "<tr>"
-							  + "<td>" + reg.regStdNo + "</td>"
-							  + "<td>" + reg.stdName + "</td>"
-							  + "<td>" + reg.lecName + "</td>"
-							  + "<td>" + reg.regLecNo + "</td>"
-							  + "<td>" + reg.regMidScore + "</td>"
-							  + "<td>" + reg.regFinalScore + "</td>"
-							  + "<td>" + reg.regTotalScore + "</td>"
-							  + "<td>" + reg.regGrade + "</td>"
-							  + "</tr>";	
-					reglist.append(trTag);
-					}
-				}
-			});
-		});
-		
-		// 등록 버튼을 누를시 수강 등록 창 보이기
-		$(document).on('click', '.submitBtn', function (e) {
-			$(".insertInput").show();
-			
-		});
-		
-		// 닫기 버튼을 누를시 수강 등록 창 숨기기
-		$(document).on('click', '.closeBtn', function (e) {
-			$(".insertInput").hide();
-		});
-		
-		// 추가 버튼을 누를시 DB에 데이터 추가 및 reload
-		$(document).on('click', '.insertBtn', function (e) {
-			let regStdNo = $('.insertInput input[name=regStdNo]').val();
-			let stdName = $('.insertInput input[name=stdName]').val();
-			let regLecNo = $('.regLecNo').val();
-			
-			let jsonData = {
-					"regStdNo":regStdNo,
-					"stdName":stdName,
-					"regLecNo":regLecNo
-			}
-			console.log(jsonData);
-			
-			$.ajax({
-				url:'/College/proc/registerInsertProc.jsp',
-					method: "post",
-					data: jsonData,
-					dataType: "json",
-					success: function (data) {
-						if(data.result == 1){
-							alert('등록 완료!');
-						}else {
-							alert('등록 실패!');
-						};
-						location.reload();
-					}
-			})
-			
-		});
-		
-		// 검색 버튼을 누를시 검색 조건에 맞는 리스트 출력
-		$(document).on('click', '.searchBtn', function (e) {
-			let searchVal = $('input[name=search]').val();
-			$('.regList tr').not(':first').remove();
-			
-			let jsonData = {
-				"searchVal":searchVal
-			}
-			
-			$.ajax({
-				url: '/College/proc/registerListProc.jsp',
-				method: "get",
-				data: jsonData,
-				dataType: "json",
-				success: function (data) {
-					let reglist = $('.regList');
-					console.log(data);
-					for(let reg of data){
-						let trTag = "<tr>"
-							  + "<td>" + reg.regStdNo + "</td>"
-							  + "<td>" + reg.stdName + "</td>"
-							  + "<td>" + reg.lecName + "</td>"
-							  + "<td>" + reg.regLecNo + "</td>"
-							  + "<td>" + reg.regMidScore + "</td>"
-							  + "<td>" + reg.regFinalScore + "</td>"
-							  + "<td>" + reg.regTotalScore + "</td>"
-							  + "<td>" + reg.regGrade + "</td>"
-							  + "</tr>";	
-						reglist.append(trTag);
-					}
-				}
-			});
-			
-		})
-		
-		
+		register();
 	});
 </script>
 </head>
@@ -137,6 +36,7 @@
 			<th>기말시험</th>
 			<th>총점</th>
 			<th>등급</th>
+			<th></th>
 		</tr>
 	</table>
 	<div class="insertInput">
