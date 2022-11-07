@@ -9,8 +9,10 @@
 <script>
 	$(function () {
 		
+		// 수강 등록 창 숨기기
 		$(".insertInput").hide();
 		
+		// 수강 리스트 목록 출력
 		$(document).ready(function () {
 			let reglist = $('.regList');
 			$.ajax({
@@ -35,15 +37,18 @@
 			});
 		});
 		
+		// 등록 버튼을 누를시 수강 등록 창 보이기
 		$(document).on('click', '.submitBtn', function (e) {
 			$(".insertInput").show();
 			
 		});
 		
+		// 닫기 버튼을 누를시 수강 등록 창 숨기기
 		$(document).on('click', '.closeBtn', function (e) {
 			$(".insertInput").hide();
 		});
 		
+		// 추가 버튼을 누를시 DB에 데이터 추가 및 reload
 		$(document).on('click', '.insertBtn', function (e) {
 			let regStdNo = $('.insertInput input[name=regStdNo]').val();
 			let stdName = $('.insertInput input[name=stdName]').val();
@@ -73,6 +78,7 @@
 			
 		});
 		
+		// 검색 버튼을 누를시 검색 조건에 맞는 리스트 출력
 		$(document).on('click', '.searchBtn', function (e) {
 			let searchVal = $('input[name=search]').val();
 			$('.regList tr').not(':first').remove();

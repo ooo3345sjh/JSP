@@ -9,8 +9,10 @@
 <script>
 	$(function () {
 		
+		// 학생 등록 창 숨기기
 		$(".insertInput").hide();
 		
+		// 학생 리스트 출력
 		$(document).ready(function () {
 			let stulist = $('.stuList');
 			$.ajax({
@@ -32,15 +34,18 @@
 			});
 		});
 		
+		// 등록 버튼을 누를시 학생 등록 창 보이기
 		$(document).on('click', '.submitBtn', function (e) {
 			$(".insertInput").show();
 			
 		});
 		
+		// 등록 버튼을 누를시 학생 등록 창 숨기기
 		$(document).on('click', '.closeBtn', function (e) {
 			$(".insertInput").hide();
 		});
 		
+		// 추가 버튼을 누를시 DB에 데이터 추가 및 reload
 		$(document).on('click', '.insertBtn', function (e) {
 			let stdNo = $('.insertInput input[name=stdNo]').val();
 			let stdName = $('.insertInput input[name=stdname]').val();

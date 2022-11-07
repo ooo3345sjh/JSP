@@ -9,8 +9,10 @@
 <script>
 	$(function () {
 		
+		// 강좌 등록 창 숨기기
 		$(".insertInput").hide();
 		
+		// 강좌 리스트 목록 출력
 		$(document).ready(function () {
 			let leclist = $('.leclist');
 			$.ajax({
@@ -33,15 +35,18 @@
 			});
 		});
 		
+		// 등록 버튼을 누를시 강좌 등록 창 보이기
 		$(document).on('click', '.submitBtn', function (e) {
 			$(".insertInput").show();
 			
 		});
 		
+		// 닫기 버튼을 누를시 등록 창 숨기기
 		$(document).on('click', '.closeBtn', function (e) {
 			$(".insertInput").hide();
 		});
 		
+		// 추가 버튼을 누를시 DB에 데이터 추가 및 reload
 		$(document).on('click', '.insertBtn', function (e) {
 			let lecNo = $('.insertInput input[name=lecNo]').val();
 			let lecName = $('.insertInput input[name=lecName]').val();
