@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * 이름 : 서정현
  * 내용 : 상세 보기 서블릿 
  */
-@WebServlet("/Ch14/view.do")
+@WebServlet("/mvcboard/view.do")
 public class ViewController  extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

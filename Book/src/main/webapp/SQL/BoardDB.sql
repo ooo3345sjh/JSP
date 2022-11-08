@@ -3,7 +3,7 @@
 # 내용 : JSP 웹 프로그래밍_제5장 데이터베이스
 
 # DB 생성
-create database `BoardDB`;
+create database `BoaboarddbrdDB`;
 
 # DB 접근 가능 아이디 생성
 create user 'board_tester'@'%' identified by '1234';
@@ -95,7 +95,7 @@ insert into `mvcboard` SET
 insert into `mvcboard` SET 
 				`name`='대조영',
 				`title`='자료실 제목5 입니다.',
-				`content`='내용',mvcboard
+				`content`='내용',
 				`pass`='1234';	
 				
 INSERT INTO `mvcboard` (`name`, `title`, `content`, `pass`) SELECT `name`, `title`, `content`, `pass`FROM `mvcboard`;		

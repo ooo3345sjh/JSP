@@ -73,7 +73,7 @@
 							${ map.pageStartNum - loop.index }
 						</td>
 						<td align="left"> <!-- 제목(링크) -->
-							<a href="/Book/Ch14/view.do">${ row.title }</a>
+							<a href="/Book/mvcboard/view.do?idx=${ row.idx }">${ row.title }</a>
 						</td>
 						<td align="center">${ row.name }</td> <!-- 작성자 -->
  						<td align="center">${ row.visitCount }</td> <!-- 조회수 -->

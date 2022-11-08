@@ -123,7 +123,7 @@ public class MVCboardDAO extends DBConnPool { // 커넥션 풀 상속
 		MVCBoardDTO dto = new MVCBoardDTO(); // DTO 객체 생성
 		String query = "SELECT * FROM `mvcboard` WHERE idx=?"; // 쿼리문 템플릿 준비
 		try {
-			psmt.getConnection().prepareStatement(query); // 쿼리문 준비
+			psmt = con.prepareStatement(query); // 쿼리문 준비
 			psmt.setString(1, idx); // 인파라미터 설정
 			rs = psmt.executeQuery(); // 쿼리문 실행
 			
