@@ -14,30 +14,38 @@
 			form {width: 100%;}
 			table {width: 100%;}
 		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 		<script>
-			function validateForm(form) {
-				if(form.name.value == ""){ // 필수 항목 입력 확인
-					alert('작성자를 입력하세요.');
-					from.name.focus();
-					return false;
-				}
-				if(form.title.value == ""){
-					alert('제목을 입력하세요.');
-					from.title.focus();
-					return false;
-				}
-				if(form.content.value == ""){
-					alert('내용을 입력하세요.');
-					from.content.focus();
-					return false;
-				}
-				if(form.pass.value == ""){
-					alert('비밀번호를 입력하세요.');
-					from.pass.focus();
-					return false;
-				}
-				
-			}
+		
+			$(function () {
+				$('button[type=submit]').click(function () {
+					if($('input[name=name]').val() == ""){ // 필수 항목 입력 확인
+						alert('작성자를 입력하세요.');
+						$('input[name=name]').focus();
+						return false;
+					}
+					if($('input[name=title]').val() == ""){ 
+						alert('제목을 입력하세요.');
+						$('input[name=title]').focus();
+						return false;
+					}
+					if($('textarea[name=content]').val() == ""){ 
+						alert('내용을 입력하세요.');
+						$('input[name=content]').focus();
+						return false;
+					}
+					if(!$('input[name=ofile]').val()){ 
+						alert('파일을 첨부해주세요.');
+						$('input[name=ofile]').focus();
+						return false;
+					}
+					if($('input[name=pass]').val() == ""){ 
+						alert('비밀번호을 입력하세요.');
+						$('input[name=pass]').focus();
+						return false;
+					}
+				});
+			});
 		</script>
 	</head>
 	<body>
