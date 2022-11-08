@@ -48,7 +48,7 @@
 				</tr>
 				
 				<!-- 첨부파일 -->
-				<%--<tr>
+				<tr>
 					<td>첨부파일</td>
 					<td>
 						<c:if test="${ not empty dto.ofile }">
@@ -59,9 +59,21 @@
 					</td>
 					<td>다운로드 수</td>
 					<td>${ dto.downcount }</td>
-				</tr>--%>
-				
-				
+				</tr>
+				<!-- 하단 메뉴(버튼) -->
+				<tr>
+					<td colspan="4" align="center">
+						<button type="button" onclick="location.href=/Book/mvcboard/pass.do?mode=edit&idx=${ param.idx}">
+							수정하기
+						</button>
+						<button type="button" onclick="location.href=/Book/mvcboard/pass.do?mode=delete&idx=${ param.idx}">
+							삭제하기
+						</button>
+						<button type="button" onclick="location.href=/Book/mvcboard/list.do;">
+							목록 바로가기
+						</button>
+					</td>
+				</tr>				
 			</table>
 		</div>
 	</body>
