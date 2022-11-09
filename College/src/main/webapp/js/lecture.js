@@ -65,11 +65,18 @@ function submit(){
 			let lecTime = $('.insertInput input[name=lecTime]').val();
 			let lecClass = $('.insertInput input[name=lecClass]').val();
 			
+			let numChk = /[0-9]/;
+			
 			if(!lecNo){
 				alert('번호를 입력하세요.');
 				$('.insertInput input[name=lecNo]').focus();
 				return;
+			} else if(!numChk.test(lecNo)) {
+				alert('숫자를 입력하세요.');
+				$('.insertInput input[name=lecNo]').focus();
+				return;
 			}
+			
 			if(!lecName){
 				alert('강좌명을 입력하세요.');
 				$('.insertInput input[name=lecName]').focus();

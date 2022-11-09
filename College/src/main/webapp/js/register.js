@@ -95,7 +95,7 @@ function submit(){
 			}
 			
 			
-			// 학번 입력 체크
+			// 학번 및 이름 중복 체크
 			$.ajax({
 				url:'/College/proc/registerListProc.jsp',
 				method: "post",
