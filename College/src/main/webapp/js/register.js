@@ -59,7 +59,7 @@ function submitInputShowHide(){
 	});
 }		
 			
-// 추가 버튼을 누를시 DB에 데이터 추가 및 reload
+// 추가 버튼을 누를시 입력 데이터 검사 및 DB에 데이터 추가
 function submit(){
 	$(function(){
 		$(document).on('click', '.insertBtn', function (e) {
@@ -95,7 +95,7 @@ function submit(){
 			}
 			
 			
-			// 학번 입력 체크 후에 DB에 저장
+			// 학번 입력 체크
 			$.ajax({
 				url:'/College/proc/registerListProc.jsp',
 				method: "post",
@@ -110,6 +110,7 @@ function submit(){
 						return;
 					}
 					
+					// 학번과 이름 검사가 통과되면 DB에 저장
 					$.ajax({
 						url:'/College/proc/registerInsertProc.jsp',
 						method: "post",
@@ -142,8 +143,7 @@ function submit(){
 									break; 	
 								}
 							}
-							console.log('index : ' + index);
-							console.log('regStdNoLength : ' + regStdNoLength);
+							
 							if(index != regStdNoLength){
 								$('.regStdNo').eq(index).parent().before(trTag); // 새로 추가한 번호보다 큰 번호 전에 삽입한다.
 							} else {
@@ -205,7 +205,8 @@ function search(){
 		})
 	});
 }	
-		
+
+// 성적 입력 및 DB 업데이트	
 function scoreInput(){
 	$(function(){
 		// 입력 버튼을 누르면 중간, 기말 시험점수 입력 input창으로 변환
@@ -230,18 +231,31 @@ function scoreInput(){
 		$(document).on('click', '.scoreSubmitBtn', function (e) {
 			let regStdNo = $(this).parent().siblings(':eq(0)').text(); // 학번
 			let regLecNo = $(this).parent().siblings(':eq(3)').text(); // 강좌코드
-			let regMidScore = $(this).parent().siblings(':eq(4)').children('input[name=regMidScore]').val(); // 중간시험 점수
-			let regFinalScore = $(this).parent().siblings(':eq(5)').children('input[name=regFinalScore]').val(); // 기말시험 점수
+			let regMidScoreTdTag = $(this).parent().siblings(':eq(4)'); 
+			let regFinalScoreTdTag = $(this).parent().siblings(':eq(5)');
+			let regMidScoreInputTag = regMidScoreTdTag.children('input[name=regMidScore]'); 
+			let regFinalScoreInputTag = regFinalScoreTdTag.children('input[name=regFinalScore]');
+						
+			let regMidScore = regMidScoreInputTag.val(); // 중간시험 점수
+			let regFinalScore = regFinalScoreInputTag.val(); // 기말시험 점수
 			
+			// 유효성 검사
 			if(!regMidScore){
 				alert('중간시험 점수를 입력해주세요.');
+				return;
+			} else if(!(0<=regMidScore && regMidScore <= 100)){
+				alert('입력 가능한 범위를 벗어났습니다.(0~100)');
 				return;
 			}
 			
 			if(!regFinalScore){
 				alert('기말시험 점수를 입력해주세요.');
 				return;
+			} else if(!(0<=regFinalScore && regFinalScore <= 100)){
+				alert('입력 가능한 범위를 벗어났습니다.(0~100)');
+				return;
 			}
+			
 			
 			let jsonData = {
 					"regStdNo":regStdNo,
@@ -261,7 +275,16 @@ function scoreInput(){
 					}else {
 						alert('등록 실패!');
 					};
-					$('.searchBtn').trigger('click'); // 검색 버튼 강제 클릭
+					
+					// input태그 삭제
+					regMidScoreInputTag.remove(); 
+					regFinalScoreInputTag.remove();
+					
+					// 해당 td태그에 점수 입력
+					regMidScoreTdTag.text(regMidScore);
+					regFinalScoreTdTag.text(regFinalScore);
+					regMidScoreTdTag.siblings(':eq(5)').text(data.regTotalScore); // 총점 입력
+					regMidScoreTdTag.siblings(':eq(6)').text(data.regGrade); // 등급 입력
 				}
 			});
 			

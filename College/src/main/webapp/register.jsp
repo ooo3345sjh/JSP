@@ -21,7 +21,7 @@
 		// 등록/닫기 버튼을 클릭시 강좌 등록 창 보이기/숨기기
 		submitInputShowHide();
 		
-		// 추가 버튼을 누를시 DB에 데이터 추가 및 reload
+		// 추가 버튼을 누를시 DB에 데이터 추가
 		submit();
 		
 		// 검색 버튼을 누를시 검색 조건에 맞는 리스트 출력
@@ -70,7 +70,7 @@
 			<tr>
 				<td>신청강좌</td>
 				<td>
-					<select class="regLecNo">
+					<select class="regLecNo" style="width: 90%">
 					    <option value="none" selected disabled>강좌선택</option>
 					    <option value="167">운영체제론</option>
 					    <option value="159">인지행동심리학</option>

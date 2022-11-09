@@ -134,7 +134,7 @@ function submit(){
 							}
 							$('.closeBtn').trigger('click');
 						}else {
-							alert('등록 실패!');
+							alert('강좌 번호가 중복됩니다.');
 						};
 					}
 			})

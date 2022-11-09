@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>college::lecture</title>
+<style>
+	td {text-align: center;}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="/College/js/lecture.js"></script>
 <script>

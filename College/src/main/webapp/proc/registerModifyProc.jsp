@@ -49,6 +49,8 @@
 	
 	JsonObject json = new JsonObject();
 	json.addProperty("result", result);
+	json.addProperty("regTotalScore", regTotalScore);
+	json.addProperty("regGrade", regGrade);
 	out.print(json.toString());
 	
 %>
