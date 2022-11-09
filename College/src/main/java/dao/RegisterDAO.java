@@ -1,7 +1,10 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DBCP;
 import db.DBHelper;
@@ -82,23 +85,47 @@ public class RegisterDAO extends DBHelper {
 		return lists;
 	}
 	
-	public int insertRegister(RegisterDTO dto) {
+	public Map<String, Object> insertRegister(RegisterDTO dto) {
+		
+		Map<String, Object> map = new HashMap<>();
 		int result = 0;
 		
 		try {
 			con = DBCP.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement selectPsmt = con.prepareStatement(Sql.SELECT_REGISTER_LECNO);
 			psmt = con.prepareStatement(Sql.INSERT_REGISTER);
+			selectPsmt.setString(1, dto.getRegStdNo());
+			selectPsmt.setInt(2, dto.getRegLecNo());
 			psmt.setString(1, dto.getRegStdNo());
 			psmt.setInt(2, dto.getRegLecNo());
 			
 			result = psmt.executeUpdate();
+			rs = selectPsmt.executeQuery();
+			
+			
+			if(rs.next()) {
+				dto.setRegStdNo(rs.getString(1));
+				dto.setRegLecNo(rs.getInt(2));
+				dto.setRegMidScore(rs.getInt(3));
+				dto.setRegFinalScore(rs.getInt(4));
+				dto.setRegTotalScore(rs.getInt(5));
+				dto.setRegGrade(rs.getString(6));
+				dto.setStdName(rs.getString(7));
+				dto.setLecName(rs.getString(8));
+			}
+			con.commit();
+			map.put("result", result);
+			map.put("RegisterDTO", dto);
 			
 			close();
+			selectPsmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("수강 현황 추가중 에러");
 		}
 		
-		return result;
+		return map;
 	}
 	
 	public int updateRegister(RegisterDTO dto) {

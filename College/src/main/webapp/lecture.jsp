@@ -9,7 +9,18 @@
 <script src="/College/js/lecture.js"></script>
 <script>
 	$(function () {
-		lecture();
+		
+		// 강좌 등록 창 숨기기
+		insertInputHide();
+		
+		// 강좌 리스트 목록 출력
+		list();
+		
+		// 등록/닫기 버튼을 클릭시 강좌 등록 창 보이기/숨기기
+		submitInputShowHide();
+		
+		// 강좌 DB추가
+		submit();
 	});
 </script>
 </head>

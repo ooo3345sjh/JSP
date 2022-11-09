@@ -12,7 +12,23 @@
 <script src="/College/js/register.js"></script>
 <script>
 	$(function () {
-		register();
+		// 수강 등록 창 숨기기
+		insertInputHide();
+		
+		// 수강 리스트 목록 출력
+		list();
+		
+		// 등록/닫기 버튼을 클릭시 강좌 등록 창 보이기/숨기기
+		submitInputShowHide();
+		
+		// 추가 버튼을 누를시 DB에 데이터 추가 및 reload
+		submit();
+		
+		// 검색 버튼을 누를시 검색 조건에 맞는 리스트 출력
+		search();
+		
+		// 점수 입력한후 DB에 데이터 업데이트
+		scoreInput();
 	});
 </script>
 </head>

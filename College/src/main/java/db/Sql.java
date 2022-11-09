@@ -6,11 +6,18 @@ public class Sql {
 	public static final String SELECT_STUDENTS = "SELECT * FROM `student`";
 	public static final String SELECT_REGISTERS = "SELECT r.*, s.`stdName`, l.`lecname` FROM `register` r join"
 												+ " `student` s ON r.`regStdNo` = s.`stdNo` JOIN "
-												+ " `lecture` l ON r.regLecNo = l.lecNo";
+												+ " `lecture` l ON r.regLecNo = l.lecNo"
+												+ " ORDER BY s.`stdNo`";
 	public static final String SELECT_REGISTER = "SELECT r.*, s.`stdName`, l.`lecname` FROM `register` r join"
 												+ " `student` s ON r.`regStdNo` = s.`stdNo` JOIN "
 												+ " `lecture` l ON r.regLecNo = l.lecNo"
-												+ " WHERE r.`regStdNo` = ?";
+												+ " WHERE r.`regStdNo` = ?"
+												+ " ORDER BY s.`stdNo`";
+	public static final String SELECT_REGISTER_LECNO = "SELECT r.*, s.`stdName`, l.`lecname` FROM `register` r join"
+													+ " `student` s ON r.`regStdNo` = s.`stdNo` JOIN "
+													+ " `lecture` l ON r.regLecNo = l.lecNo"
+													+ " WHERE r.`regStdNo` = ? and r.`regLecNo`=? "
+													+ " ORDER BY s.`stdNo`";
 	public static final String INSERT_LECTURE = "INSERT INTO `lecture` SET "
 											   + " `lecNo`=?, "
 											   + " `lecname`=?, "
