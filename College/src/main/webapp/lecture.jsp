@@ -70,7 +70,7 @@
 				<td><input type="text" name="lecClass"> </td>
 			</tr>
 			<tr>
-				<td colspan="2" align="right">
+				<td colspan="2" style="text-align: right;">
 					<button type="button" class="insertBtn">추가</button> 
 				</td>
 			</tr>
