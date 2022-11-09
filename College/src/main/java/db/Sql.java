@@ -4,6 +4,7 @@ public class Sql {
 	
 	public static final String SELECT_LECTURES = "SELECT * FROM `lecture`";
 	public static final String SELECT_STUDENTS = "SELECT * FROM `student`";
+	public static final String SELECT_STUDENT = "SELECT * FROM `student` WHERE `stdNo`=?";
 	public static final String SELECT_REGISTERS = "SELECT r.*, s.`stdName`, l.`lecname` FROM `register` r join"
 												+ " `student` s ON r.`regStdNo` = s.`stdNo` JOIN "
 												+ " `lecture` l ON r.regLecNo = l.lecNo"

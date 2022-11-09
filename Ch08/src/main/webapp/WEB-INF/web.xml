@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>Ch08</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+  
+  
+  <!--  서블릿 등록(배치) -->
+  <servlet>
+  	<servlet-name>HelloServlet</servlet-name>
+  	<servlet-class>servlet.HelloServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>HelloServlet</servlet-name>
+  	<url-pattern>/hello.do</url-pattern>
+  </servlet-mapping>
+ 
+  <!-- 필터 배치  -->
+  <!-- 필터 맵핑의 위치에따라 필터 순서가 달라진다. -->
+  <filter>
+  	<filter-name>firstFilter</filter-name>
+  	<filter-class>filter.FirstFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>firstFilter</filter-name>
+  	<url-pattern>/*</url-pattern> <!-- 모든 자원에 대해서 필터 -->
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>secondFilter</filter-name>
+  	<filter-class>filter.SecondFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>secondFilter</filter-name>
+  	<url-pattern>/*</url-pattern> <!-- 모든 자원에 대해서 필터 -->
+  </filter-mapping>
+
+  <filter>
+  	<filter-name>thirdFilter</filter-name>
+  	<filter-class>filter.ThirdFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>thirdFilter</filter-name>
+  	<url-pattern>/hello.do</url-pattern> <!-- hello.do 자원에 대해서 필터 -->
+  </filter-mapping>
+  
+</web-app>

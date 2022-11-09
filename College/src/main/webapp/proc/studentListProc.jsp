@@ -9,10 +9,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	String stdNo = request.getParameter("stdNo");
 	StudentDAO dao = StudentDAO.getInstance();
-
-	List<StudentDTO> lectures = dao.selectStudents();
-	
+	List<StudentDTO> lectures = null;
+	if(stdNo == null || stdNo.equals("")){ // 검색 내용이 없다면
+		lectures = dao.selectStudents();
+	} else {
+		lectures = dao.selectStudent(stdNo);
+	}
 	
 	Gson gson = new Gson();
 	String jsonData = gson.toJson(lectures);

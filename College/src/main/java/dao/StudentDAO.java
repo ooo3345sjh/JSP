@@ -48,6 +48,35 @@ public class StudentDAO extends DBHelper {
 		return lists;
 	}
 	
+	public List<StudentDTO> selectStudent(String stdNo) {
+		List<StudentDTO> lists = null;
+		try{
+			con = DBCP.getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_STUDENT);
+			psmt.setString(1, stdNo);
+			rs = psmt.executeQuery();
+			lists = new ArrayList<>();
+			
+			if(rs.next()) {
+				StudentDTO dto = new StudentDTO();
+				dto.setStdNo(rs.getString(1));
+				dto.setStdName(rs.getString(2));
+				dto.setStdHp(rs.getString(3));
+				dto.setStdYear(rs.getInt(4));
+				dto.setStdAddress(rs.getString(5));
+				
+				lists.add(dto);
+			}
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return lists;
+	}
+	
 	public int insertStudent(StudentDTO dto) {
 		int result = 0;
 		

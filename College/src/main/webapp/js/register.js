@@ -67,6 +67,7 @@ function submit(){
 			let stdName = $('.insertInput input[name=stdName]').val();
 			let regLecNo = $('.regLecNo').val();
 			
+			// 입력 체크
 			if(!regStdNo){
 				alert('학번를 입력하세요.');
 				$('.insertInput input[name=regStdNo]').focus();
@@ -93,6 +94,8 @@ function submit(){
 				"searchVal":regStdNo
 			}
 			
+			
+			// 학번 입력 체크 후에 DB에 저장
 			$.ajax({
 				url:'/College/proc/registerListProc.jsp',
 				method: "post",
@@ -101,7 +104,9 @@ function submit(){
 				success: function (data) {
 					if(data.length == 0){
 						alert('존재하지 않는 학번입니다.');
-						result = fasle;
+						return;
+					} else if(data[0].stdName != stdName){
+						alert('이름이 일치하지않습니다.');
 						return;
 					}
 					
@@ -111,8 +116,6 @@ function submit(){
 						data: jsonData,
 						dataType: "json",
 						success: function (data) {
-							console.log(data);
-							console.log(data.result);
 							if(data.result == 1){
 								alert('등록 완료!');
 								let trTag = "<tr>"
