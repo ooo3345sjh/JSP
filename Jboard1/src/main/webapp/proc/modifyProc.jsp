@@ -32,7 +32,7 @@
 	if(!img.equals("")){ // 이미지 주소 값이 있다면
 		String[] images = img.split("/"); // 이미지 주소값들을 '/'를 기준으로 잘라서 문자열 배열로 반환한다.
 		
-		if(files.exists()){ // 임시 저장소에 파일이 있다면 
+		if(files.exists()){ // 임시 저장소에 파일이 있다면
 			String[] fileNames = files.list(); // 임시 저장소에 저장된 파일들의 이름을 가져온다.
 			boolean[] checking = new boolean[fileNames.length]; // 게시글에 삽입되지 않은 쓰레기 파일을 체크하기위한 변수
 			List<String> saveFile = new ArrayList<>();
