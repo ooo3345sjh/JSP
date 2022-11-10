@@ -98,18 +98,12 @@ function submit(){
 				return;
 			}
 			
-			let jsonData = {
-					"lecNo":lecNo,
-					"lecName":lecName,
-					"lecCredit":lecCredit,
-					"lecTime":lecTime,
-					"lecClass":lecClass
-			}
 			
-			let lecNoLength = $('.lecNo').get().length; // td태그의 배열 길이
-			let index=0; 
+			
 			
 			// 새로 입력한 강좌 번호보다 최초로 큰 번호를 찾는다.
+			let lecNoLength = $('.lecNo').get().length; // td태그의 배열 길이
+			let index=0; 
 			
 			for(i=0; i<lecNoLength; i++, index++){
 				let	no = $('.lecNo').eq(i).text();
@@ -126,6 +120,14 @@ function submit(){
 					  + "<td>" + lecClass + "</td>"
 					  + "</tr>";
 
+			let jsonData = {
+					"lecNo":lecNo,
+					"lecName":lecName,
+					"lecCredit":lecCredit,
+					"lecTime":lecTime,
+					"lecClass":lecClass
+			};
+			
 			$.ajax({
 				url:'/College/proc/lectureInsertProc.jsp',
 					method: "post",

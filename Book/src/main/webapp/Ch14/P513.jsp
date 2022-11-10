@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -50,7 +50,7 @@
 				<!-- 첨부파일 -->
 				<tr>
 					<td>첨부파일</td>
-					<td>
+					<td> 
 						<c:if test="${ not empty dto.ofile }">
 							${ dto.ofile }<a href="/Book/mvcboard/download.do?ofile=${ dto.ofile }
 							&sfile$=${ dto.sfile }&idx=${dto.idx}">
@@ -58,7 +58,7 @@
 						</c:if>
 					</td>
 					<td>다운로드 수</td>
-					<td>${ dto.downcount }</td>
+					<td>${ dto.downCount }</td>
 				</tr>
 				<!-- 하단 메뉴(버튼) -->
 				<tr>
@@ -69,7 +69,7 @@
 						<button type="button" onclick="location.href=/Book/mvcboard/pass.do?mode=delete&idx=${ param.idx}">
 							삭제하기
 						</button>
-						<button type="button" onclick="location.href=/Book/mvcboard/list.do;">
+						<button type="button" onclick="location.href='/Book/mvcboard/list.do'">
 							목록 바로가기
 						</button>
 					</td>
