@@ -121,9 +121,9 @@ public class MVCboardDAO extends DBConnPool { // 커넥션 풀 상속
 	// 주어진 일련번호에 해당하는 게시물을 DTO에 담아 반환합니다.
 	public MVCBoardDTO selectView(String idx) {
 		MVCBoardDTO dto = new MVCBoardDTO(); // DTO 객체 생성
-		String query = "SELECT * FROM `mvcboard` WHERE idx=?"; // 쿼리문 템플릿 준비
+		String sql = "SELECT * FROM `mvcboard` WHERE idx=?"; // 쿼리문 템플릿 준비
 		try {
-			psmt = con.prepareStatement(query); // 쿼리문 준비
+			psmt = con.prepareStatement(sql); // 쿼리문 준비
 			psmt.setString(1, idx); // 인파라미터 설정
 			rs = psmt.executeQuery(); // 쿼리문 실행
 			
@@ -148,18 +148,38 @@ public class MVCboardDAO extends DBConnPool { // 커넥션 풀 상속
 	
 	// 주어진 일련번호에 해당하는 게시물의 조회수를 1 증가시킵니다.
 	public void updateVisitCount(String idx) {
-		String query = "UPDATE `mvcboard` SET "
+		String sql = "UPDATE `mvcboard` SET "
 					 + " `visitcount` =`visitcount` + 1 "
 					 + " WHERE idx=? ";
 		try {
-			psmt = con.prepareStatement(query);
+			psmt = con.prepareStatement(sql);
 			psmt.setString(1, idx);
-			psmt.executeQuery();
+			psmt.executeUpdate();
 			
 		} catch (Exception e) {
 			System.out.println("게시물 조회수 증가 중 예외 발생");
 			e.printStackTrace();
 		}
+	}
+	
+	/* P516 DAO에 메서드 추가 */
+	// 다운로드 횟수를 1증가시킵니다.
+	public void downCountPlus(String idx) {
+		
+		try {
+			
+			String sql = "UPDATE `mvcboard` SET"
+					+ " downcount = downcount + 1"
+					+ " WHERE idx=? ";
+			
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, idx);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("다운로드 횟수 증가 중 오류 발생");
+			e.printStackTrace();
+		}
+				
 	}
 	
 }

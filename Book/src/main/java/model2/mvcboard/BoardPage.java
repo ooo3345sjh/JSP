@@ -18,24 +18,24 @@ public class BoardPage {
 		String pageTags = ""; // 페이지 태그 모음
 		
 		if(pageGroupCurrent > 1) {
-			pageTags = "<a href=\"/Book/mvcboard/list.do?pageNum=" 
+			pageTags = "<a href=\"/Book/Ch14/list.do?pageNum=" 
 		             + prevPage + "\">이전페이지</a>&nbsp;";
 		}
 			
 		
-		for(; pageGroupStart<=pageGroupEnd; pageGroupStart++) {
+		for(int i=pageGroupStart; i<=pageGroupEnd; i++) {
 			
-			if(currentPage == pageGroupStart) { // 현재 페이지와 값이 같다면 링크X 
-				pageTags += String.valueOf(pageGroupStart) + "&nbsp;";
+			if(currentPage == i) { // 현재 페이지와 값이 같다면 링크X 
+				pageTags += String.valueOf(i) + "&nbsp;";
 			} else { // 현재 페이지와 값이 같다면 링크O 
-				pageTags += "<a href=\"/Book/mvcboard/list.do?pageNum=" + pageGroupStart + "\">" 
-								  + String.valueOf(pageGroupStart) + "</a>&nbsp;";
+				pageTags += "<a href=\"/Book/Ch14/list.do?pageNum=" + i + "\">" 
+								  + String.valueOf(i) + "</a>&nbsp;";
 			}
 			
 		}
 		
 		if(pageGroupEnd < lastPageNum ) { // 반복문의 마지막이며 마지막 페이지 번호보다 작을 경우
-			pageTags += "<a href=\"/Book/mvcboard/list.do?pageNum=" 
+			pageTags += "<a href=\"/Book/Ch14/list.do?pageNum=" 
 					+ nextPage + "\">다음페이지</a>"; 
 		}
 		

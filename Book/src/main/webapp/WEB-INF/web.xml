@@ -118,7 +118,7 @@
  </servlet>
  <servlet-mapping>
  	<servlet-name>MVCBoardList</servlet-name> <!-- 서블릿 이름 -->
- 	<url-pattern>/mvcboard/list.do</url-pattern> <!-- 요청명 -->
+ 	<url-pattern>/Ch14/list.do</url-pattern> <!-- 요청명 -->
  </servlet-mapping>
  
  <!-- P498 요청명과 서블릿 매핑 -->
@@ -128,7 +128,7 @@
  </servlet>
  <servlet-mapping>
  	<servlet-name>MVCBoardWrite</servlet-name>
- 	<url-pattern>/mvcboard/write.do</url-pattern>
+ 	<url-pattern>/Ch14/write.do</url-pattern>
  </servlet-mapping>
  
  <!-- P498 첨부 파일 최대 용량 설정 - 1MB -->

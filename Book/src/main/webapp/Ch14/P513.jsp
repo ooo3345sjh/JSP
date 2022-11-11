@@ -52,7 +52,7 @@
 					<td>첨부파일</td>
 					<td> 
 						<c:if test="${ not empty dto.ofile }">
-							${ dto.ofile }<a href="/Book/mvcboard/download.do?ofile=${ dto.ofile }
+							${ dto.ofile }<a href="/Book/Ch14/download.do?ofile=${ dto.ofile }
 							&sfile$=${ dto.sfile }&idx=${dto.idx}">
 							다운로드</a>
 						</c:if>
@@ -63,13 +63,13 @@
 				<!-- 하단 메뉴(버튼) -->
 				<tr>
 					<td colspan="4" align="center">
-						<button type="button" onclick="location.href=/Book/mvcboard/pass.do?mode=edit&idx=${ param.idx}">
+						<button type="button" onclick="location.href='/Book/Ch14/pass.do?mode=edit&idx=${ param.idx}'">
 							수정하기
 						</button>
-						<button type="button" onclick="location.href=/Book/mvcboard/pass.do?mode=delete&idx=${ param.idx}">
+						<button type="button" onclick="location.href='/Book/Ch14/pass.do?mode=delete&idx=${ param.idx}'">
 							삭제하기
 						</button>
-						<button type="button" onclick="location.href='/Book/mvcboard/list.do'">
+						<button type="button" onclick="location.href='/Book/Ch14/list.do'">
 							목록 바로가기
 						</button>
 					</td>

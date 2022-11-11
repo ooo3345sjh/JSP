@@ -53,10 +53,10 @@
 				<tr>
 					<th width='10%'>번호</th>
 					<th width='*'>제목</th>
-					<th width='15%'>작성자</th>
-					<th width='10%'>조회수</th>
+					<th width='11%'>작성자</th>
+					<th width='8%'>조회수</th>
 					<th width='15%'>작성일</th>
-					<th width='8%'>첨부</th>
+					<th width='15%'>첨부</th>
 				</tr>
 			<c:choose>
 				<c:when test="${ empty map.boards }">
@@ -73,7 +73,7 @@
 							${ map.pageStartNum - loop.index }
 						</td>
 						<td align="left"> <!-- 제목(링크) -->
-							<a href="/Book/mvcboard/view.do?idx=${ row.idx }">${ row.title }</a>
+							<a href="/Book/Ch14/view.do?idx=${ row.idx }">${ row.title }</a>
 						</td>
 						<td align="center">${ row.name }</td> <!-- 작성자 -->
  						<td align="center">${ row.visitCount }</td> <!-- 조회수 -->
@@ -96,7 +96,7 @@
 						${ map.pageTags }
 					</td>
 					<td align="center" width='10%'>
-						<button type="button" onclick="location.href='/Book/mvcboard/write.do';">글쓰기</button>
+						<button type="button" onclick="location.href='/Book/Ch14/write.do';">글쓰기</button>
 					</td>
 				</tr>
 			</table>

@@ -13,6 +13,6 @@
 </head>
 <body>
 	<h2>파일 첨부형 게시판</h2>
-	<a href="/Book/mvcboard/list.do">게시판 목록 바로가기</a>
+	<a href="/Book/Ch14/list.do">게시판 목록 바로가기</a>
 </body>
 </html>

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * 이름 : 서정현
  * 내용 : 상세 보기 서블릿 
  */
-@WebServlet("/mvcboard/view.do")
+@WebServlet("/Ch14/view.do")
 public class ViewController  extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
