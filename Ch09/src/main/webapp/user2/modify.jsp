@@ -8,25 +8,25 @@
 	<body>
 		<h3>user1 수정</h3>
 		<a href="#">처음으로</a>
-		<a href="/Ch09/user1/list.do">user1 목록</a>
+		<a href="#">user1 목록</a>
 		
-		<form action="/Ch09/user1/modify.do" method="post">
+		<form action="#" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="uid" readonly value="${ vo.uid }"></td>
+					<td><input type="text" name="uid" readonly value=""></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="name" value="${ vo.name }"> </td>
+					<td><input type="text" name="name" value=""> </td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="hp" value="${ vo.hp }"> </td>
+					<td><input type="text" name="hp" value=""> </td>
 				</tr>
 				<tr>
 					<td>나이</td>
-					<td><input type="text" name="age" value="${ vo.age }"> </td>
+					<td><input type="text" name="age" value=""> </td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right">

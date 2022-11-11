@@ -1,4 +1,4 @@
-package controller;
+package controller.user1;
 
 import java.io.IOException;
 
@@ -9,13 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/*
- *	날짜 : 2022/11/10	
- *	이름 : 서정현
- *	내용 : JSP MVC 모델 실습하기 
- */
-@WebServlet("/greeting.do")
-public class GreetingController extends HttpServlet {
+import dao.User1DAO;
+import vo.User1VO;
+
+@WebServlet("/user1/delete.do")
+public class DeleteController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,8 +23,11 @@ public class GreetingController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/greeting.jsp");
-		dispatcher.forward(req, resp);
+		String uid = req.getParameter("uid");
+		
+		User1DAO.getInstance().deleteUser1(uid);
+		
+		resp.sendRedirect("/Ch09/user1/list.do");
 	}
 	
 	@Override

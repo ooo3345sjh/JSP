@@ -7,10 +7,10 @@
 	</head>
 	<body>
 		<h3>user1 등록</h3>
-		<a href="/Ch09/">처음으로</a>
-		<a href="/Ch09/user1/list.do">user1 목록</a>
+		<a href="#">처음으로</a>
+		<a href="#">user1 목록</a>
 		
-		<form action="/Ch09/user1/register.do" method="post">
+		<form action="#" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>

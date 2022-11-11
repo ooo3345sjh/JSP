@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.CommonService;
-import service.HelloServiceImpl;
-import service.WelcomeServiceImpl;
-
 /*
  *	날짜 : 2022/11/10	
  *	이름 : 서정현
@@ -29,19 +25,11 @@ public class WelcomeController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/welcome.jsp");
+		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
-	}
-	
-	public void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		CommonService service = WelcomeServiceImpl.getInstance();
-		String view = service.requestProc(req, resp);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher(view);
-		dispatcher.forward(req, resp);
 	}
 }
