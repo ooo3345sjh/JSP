@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.jboard1.bean.CommentBean;
 import kr.co.jboard1.db.DBCP;
 import kr.co.jboard1.db.Sql;
@@ -22,8 +25,12 @@ public class CommentDAO {
 		return instance;
 	}
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	// 기본 CRUD
 	public Map<String, Integer> insertComment(CommentBean cb) {
+		
+		logger.info("insertComment");
 		
 		Map<String, Integer> map = null;
 		
@@ -71,6 +78,7 @@ public class CommentDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		map.put("result", result);
@@ -79,6 +87,8 @@ public class CommentDAO {
 	}
 	
 	public List<CommentBean> selectComments(String parent) {
+		
+		logger.info("selectComments");
 		
 		List<CommentBean> comments = null; // 댓글들을 저장하기위한 변수
 		
@@ -114,10 +124,13 @@ public class CommentDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return comments;
 	}
 	public int deleteComment(String no, String commentNo) {
+		
+		logger.info("deleteComment");
 		
 		int result = 0; // 업데이트 결과 성공 여부를 전달하는 변수 성공 : 1 / 실패 : 0
 		
@@ -154,11 +167,14 @@ public class CommentDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return result;
 	}
 	
 	public int updateComment(String comment, String no) {
+		
+		logger.info("updateComment");
 		
 		int result = 0; // 업데이트 결과 성공 여부를 전달하는 변수 성공 : 1 / 실패 : 0
 		
@@ -176,6 +192,7 @@ public class CommentDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return result;

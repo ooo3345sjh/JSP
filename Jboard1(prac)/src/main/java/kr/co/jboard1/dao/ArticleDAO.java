@@ -7,6 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.jboard1.bean.ArticleBean;
 import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
@@ -22,11 +25,13 @@ public class ArticleDAO extends DBHelper{
 		return instance;
 	}
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	private ArticleDAO() {}
 	
 	// 기본 CRUD
 	public int insertArticle(ArticleBean ab) {
-		
+		logger.info("isertArticle");
 		int parent = 0;
 		try{
 			Connection con = DBCP.getConnection();
@@ -58,13 +63,14 @@ public class ArticleDAO extends DBHelper{
 			stmt.close();
 			
 		}catch(Exception e){
-			e.printStackTrace();		
+			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return parent;
 	}
 	
 	public void insertFile(int parent, String newName, String fname) {
-		
+		logger.info("insertFile");
 		try{
 			Connection con = DBCP.getConnection();
 			
@@ -80,11 +86,12 @@ public class ArticleDAO extends DBHelper{
 		
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	public void insertFiles(int parent, String[] fNames) {
-		
+		logger.info("insertFiles");
 		try{
 			con = getConnection();
 			String sql = "INSERT INTO `board_file` (`parent`, `newName`, `oriName`)"
@@ -109,11 +116,12 @@ public class ArticleDAO extends DBHelper{
 			close();
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	public ArticleBean selectArticle(String no) {
-		
+		logger.info("selectArticle");
 		ArticleBean ab = null;
 		try{
 			Connection con = DBCP.getConnection();
@@ -149,13 +157,14 @@ public class ArticleDAO extends DBHelper{
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return ab;
 	}
 	
 	// 모든 게시물의 수를 가져오는 메서드
 	public int selectCountTotal() {
-
+		logger.info("selectCountTotal");
 		int total = 0;
 		try{
 			Connection con = DBCP.getConnection();
@@ -172,13 +181,14 @@ public class ArticleDAO extends DBHelper{
 			
 		} catch(Exception e){
 			e.printStackTrace();	
+			logger.error(e.getMessage());
 		}
 		return total;
 	}
 	
 	// 모든 게시물을 가져오는 메서드
 	public List<ArticleBean> selectArticles(int limitStart) {
-		
+		logger.info("selectArticles");
 		List<ArticleBean> articles = null;
 		
 		try{
@@ -214,11 +224,12 @@ public class ArticleDAO extends DBHelper{
 			
 		} catch(Exception e){
 			e.printStackTrace();	
+			logger.error(e.getMessage());
 		}
 		return articles;
 	}
 	public List<FileBean> selectFile(String parent) {
-		
+		logger.info("selectFile");
 		List<FileBean> files = null;
 		
 		try{
@@ -245,13 +256,14 @@ public class ArticleDAO extends DBHelper{
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return files;
 	}
 	
 	public int updateArticle(String no, String title, String content) {
-		
+		logger.info("updateArticle");
 		int result = 0;
 		
 		try{
@@ -267,13 +279,14 @@ public class ArticleDAO extends DBHelper{
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return result;
 	}
 	
 	public void updateArticleHit(String no) {
-		
+		logger.info("updateArticleHit");
 		try {
 			Connection con = DBCP.getConnection();
 		    PreparedStatement psmt = con.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
@@ -286,12 +299,13 @@ public class ArticleDAO extends DBHelper{
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 	}
 	
 	public void updateFileDownload(int fno) {
-		
+		logger.info("updateFileDownload");
 		try {
 			Connection con = DBCP.getConnection();
 		    PreparedStatement psmt = con.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
@@ -304,12 +318,13 @@ public class ArticleDAO extends DBHelper{
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	// 게시글, 댓글 , 파일 데이터 삭제
 	public void deleteArticleFile(String no) {
-		
+		logger.info("deleteArticleFile");
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.DELETE_ARTICLE_FILE);
@@ -323,12 +338,14 @@ public class ArticleDAO extends DBHelper{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	public void deleteArticle() {}
 	
 	
 	public void deleteSelectedImg(String no, String[] fileNames) {
+		logger.info("deleteSelectedImg");
 		try {
 			con = getConnection();
 			
@@ -358,11 +375,12 @@ public class ArticleDAO extends DBHelper{
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	public List<FileBean> selectImg(String parent) {
-		
+		logger.info("selectImg");
 		List<FileBean> files = null;
 		
 		try{
@@ -389,6 +407,7 @@ public class ArticleDAO extends DBHelper{
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return files;
@@ -396,6 +415,7 @@ public class ArticleDAO extends DBHelper{
 	
 	public void deleteAllImg(String no) {
 		
+		logger.info("deleteAllImg");
 		try {
 			con = getConnection();
 			
@@ -410,6 +430,7 @@ public class ArticleDAO extends DBHelper{
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 }
