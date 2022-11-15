@@ -20,7 +20,7 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		User3DAO.
+	
 		
 		req.getRequestDispatcher("/user2/list.jsp").forward(req, resp);
 	}
