@@ -2,8 +2,7 @@
 <%@ include file="/_header.jsp" %>
 <main id="user">
     <section class="register">
-        <form action="#" method="post">
-
+        <form action="./proc/registerProc.jsp" method="post">
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>
@@ -21,7 +20,7 @@
                 <tr>
                     <td>비밀번호 확인</td>
                     <td>
-                    	<input type="password" name="pass2" placeholder="비밀버호 입력확인">
+                    	<input type="password" name="pass2" placeholder="비밀번호 입력확인">
                     	<span class="passResult"></span>
                     </td>
                 </tr>
@@ -39,7 +38,7 @@
                     <td>별명</td>
                     <td>
                         <input type="text" name="nick" placeholder="별명 입력">
-                        <button type="button" id="btnNickCheck"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"></button>
+                        <button type="button" id="btnNickCheck"><img src="./img/chk_id.gif" alt="중복확인"></button>
                         <span class="nickResult"></span>
                     </td>
                 </tr>

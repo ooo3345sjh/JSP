@@ -1,3 +1,4 @@
+<%@page import="utils.JSFunction"%>
 <%@ page import="model1.board.BoardDAO"%>
 <%@ page import="model1.board.BoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

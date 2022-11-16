@@ -16,7 +16,6 @@ public class BoardDAO extends DBHelper {
 	private BoardDAO() {}
 	
 	public int selectArticleCountTotal(String cate) {
-		cate = "free";
 		int total = 0;
 		
 		try {
@@ -41,7 +40,6 @@ public class BoardDAO extends DBHelper {
 		
 	}
 	public List<ArticleVO> selectArticles(String cate, int limitStart) {
-		cate = "free";
 		List<ArticleVO> articles = null;
 		
 		try {
@@ -50,6 +48,7 @@ public class BoardDAO extends DBHelper {
 					   + " JOIN `board_user` u "
 					   + " ON a.uid = u.uid "
 					   + " WHERE a.cate=? "
+					   + " ORDER BY a.`no` desc"
 					   + " limit ?, 10 ";
 			
 			psmt = con.prepareStatement(sql);
@@ -83,8 +82,125 @@ public class BoardDAO extends DBHelper {
 		}
 		return articles;
 	}
-	public void selectArticle() {}
-	public void insertArticle() {}
-	public void deleteArticle() {}
+	
+	public ArticleVO selectArticle(String no) {
+		
+		ArticleVO vo = null;
+		try {
+			con = getConnection();
+			String sql = "SELECT a.*, f.`oriName` FROM `board_article` a "
+				       + "LEFT JOIN `board_file` f "
+				       + "ON a.`no`= f.`parent` "
+				       + "WHERE `no`=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, no);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setParent(rs.getInt(2));
+				vo.setComment(rs.getInt(3));
+				vo.setCate(rs.getString(4));
+				vo.setTitle(rs.getString(5));
+				vo.setContent(rs.getString(6));
+				vo.setFile(rs.getInt(7));
+				vo.setHit(rs.getInt(8));
+				vo.setUid(rs.getString(9));
+				vo.setRegip(rs.getString(10));
+				vo.setRdate(rs.getString(11));
+				vo.setFname(rs.getString(12));
+			}
+			
+			close();
+		} catch (Exception e) {
+			System.out.println("조건에 해당하는 게시물 조회 중 에러발생");
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	
+	public void insertFile(int parent, String newName, String oriName) {
+		try {
+			con = getConnection();
+			String sql = "INSERT INTO `board_file` SET"
+					   + "	`parent` = ?, "
+					   + "	`newName` = ?, "
+					   + "	`oriName` = ?";
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, parent);
+			psmt.setString(2, newName);
+			psmt.setString(3, oriName);
+			
+			psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			System.out.println("파일 정보 추가 중 에러 발생");
+			e.printStackTrace();
+		}
+	}
+	public int insertArticle(ArticleVO vo) {
+		int no = 0;
+		
+		try {
+			con = getConnection();
+			con.setAutoCommit(false);
+			String sql = "INSERT INTO `board_article` SET "
+					   + " `cate`=?, "
+					   + " `title`=?, "
+					   + " `content`=?, "
+					   + " `uid`=?, "
+					   + " `regip`=?, "
+					   + " `rdate`=NOW() ";
+			
+			String MaxNoSql = "SELECT MAX(`no`) FROM `board_article`";
+			
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, vo.getCate());
+			psmt.setString(2, vo.getTitle());
+			psmt.setString(3, vo.getContent());
+			psmt.setString(4, vo.getFname() == null ? "0":"1");
+			psmt.setString(4, vo.getUid());
+			psmt.setString(5, vo.getRegip());
+			
+			stmt = con.createStatement();
+			
+			psmt.executeUpdate();
+			rs = stmt.executeQuery(MaxNoSql);
+			
+			con.commit();
+			
+			if(rs.next()) {
+				no = rs.getInt(1);
+			}
+			
+			close();
+		} catch (Exception e) {
+			System.out.println("게시물 추가중 에러발생");
+			e.printStackTrace();
+		}
+		return no;
+	}
+	
+	public void deleteArticle(String no) {
+		try {
+			con = getConnection();
+			String sql = "DELETE a.*, f.* FROM `board_article` a "
+					   + "LEFT JOIN `board_file` f "
+					   + "ON a.`no` = f.`parent` "
+					   + "WHERE a.`no`=? or a.`parent`=? ";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			
+			psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("게시물 삭제 중 에러 발생");
+			e.printStackTrace();
+		}
+	}
 	public void updateArticle() {}
 }

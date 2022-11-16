@@ -1,4 +1,29 @@
+<%@page import="kr.co.FarmStory1.vo.UserVO"%>
+<%@page import="kr.co.FarmStory1.utils.JSFunction"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	UserVO user = (UserVO)session.getAttribute("user");
+	String uri = request.getRequestURI();
+	
+	if(uri.contains("register.jsp")){
+		JSFunction.alertLocation("비정상적인 접근입니다.", "/FarmStory1/user/login.jsp", out);
+		return;
+	}
+	
+	if(uri.contains("write.jsp") || uri.contains("modify.jsp") || uri.contains("delete.jsp")){
+		if(user == null){
+			JSFunction.alertLocation("해당 페이지는 로그인이 필요합니다.", "/FarmStory1/user/login.jsp", out);
+			return;
+		}
+	} else if(uri.contains("login.jsp") && user != null){
+		JSFunction.alertLocation("이미 로그인되어있습니다.", "/FarmStory1/index.jsp", out);
+		return;
+	} else if(uri.contains("terms.jsp") && user != null){
+		JSFunction.alertLocation("로그아웃후에 회원가입해주세요.", "/FarmStory1/index.jsp", out);
+		return;
+	}
+
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,7 +41,11 @@
                 </a>
                 <p>
                     <a href="/FarmStory1/index.jsp">HOME |</a>
+                    <% if(user != null){ %>
+                    <a href="/FarmStory1/user/proc/logoutProc.jsp">로그아웃 |</a>
+                    <% } else { %>
                     <a href="/FarmStory1/user/login.jsp">로그인 |</a>
+                    <% } %>
                     <a href="/FarmStory1/user/terms.jsp">회원가입 |</a>
                     <a href="#">고객센터</a>
                 </p>

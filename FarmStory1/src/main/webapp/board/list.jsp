@@ -5,7 +5,7 @@
 <%@ include file="/_header.jsp" %>
 <%
 	request.setCharacterEncoding("utf-8");
-	String pg = request.getParameter("page");
+	String pg = request.getParameter("pg");
 	String group = request.getParameter("group");
 	String cate = request.getParameter("cate");
 	BoardDAO dao = BoardDAO.getInstance();
@@ -67,31 +67,44 @@
 			                    <th>조회</th>
 			                </tr>
 			                <%
-			                for(ArticleVO vo : articles){
+			                if(articles.size() == 0){
+			                %>
+			                <tr>
+			                	<td colspan="5">등록된 글이 없습니다.</td>
+			                </tr>
+			                <%	
+			                }else {
+				                for(ArticleVO vo : articles){
+			                
 			                %>
 				                <tr>
 				                    <td><%= pageStartNum-- %></td>
-				                    <td><a href="#"><%= vo.getTitle() %></a></td>
+				                    <td>
+				                    	<a href="./view.jsp?no=<%= vo.getNo() %>&pg=<%= currentPage %>&group=<%= group %>&cate=<%= cate %>">
+				                    		<%= vo.getTitle() %>
+				                    	</a>
+				                    </td>
 				                    <td><%= vo.getNick() %></td>
-				                    <td><%= vo.getRdate() %></td>
+				                    <td><%= vo.getRdate().substring(2, 10) %></td>
 				                    <td><%= vo.getHit() %></td>
 				                </tr>
 			                <%
+				                }
 			                }
 			                %>
 			            </table>
 			            <div class="page">
 			            <% if(pageGroupStart > 1){ %>
-			                <a href="./list.jsp?pg=<%= pageGroupStart-1 %>" class="prev">이전</a>
+			                <a href="./list.jsp?pg=<%= pageGroupStart-1 %>&group=<%= group %>&cate=<%= cate %>" class="prev">이전</a>
 			            <% }%>
 			            <% for(int i=pageGroupStart; i<=pageGroupEnd; i++){ %>
-			                <a href="/FarmStroy1/list.jsp?pg=<%= i %>" class="num <%= (i == currentPage) ? "current":"off"%>"><%= i %></a>
+			                <a href="./list.jsp?pg=<%= i %>&group=<%= group %>&cate=<%= cate %>" class="num <%= (i == currentPage) ? "current":"off"%>"><%= i %></a>
 			            <% } %>
-			            <%if(pageGroupEnd > lastPageNum){ %>
-			                <a href="list.jsp?pg=<%= pageGroupEnd + 1 %>" class="next">다음</a>
+			            <%if(pageGroupEnd < lastPageNum){ %>
+			                <a href="./list.jsp?pg=<%= pageGroupEnd + 1 %>&group=<%= group %>&cate=<%= cate %>" class="next">다음</a>
 			             <%} %>
 			            </div>
-			            <a href="./write.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnWrite">글쓰기</a>
+			            <a href="./write.jsp?pg=<%= currentPage %>&group=<%= group %>&cate=<%= cate %>" class="btn btnWrite">글쓰기</a>
 			        </form>
 			    </section>
 			</main>

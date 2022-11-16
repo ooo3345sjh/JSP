@@ -1,4 +1,4 @@
-<%@ page import="utils.JSFunction"%>
+<%@page import="utils.JSFunction"%>
 <%@ page import="java.io.FileNotFoundException"%>
 <%@ page import="java.io.FileInputStream"%>
 <%@ page import="java.io.File"%>

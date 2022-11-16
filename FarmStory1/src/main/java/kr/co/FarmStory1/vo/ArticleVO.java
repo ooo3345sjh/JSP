@@ -14,7 +14,22 @@ public class ArticleVO {
 	private String regip;
 	private String rdate;
 	private String nick;
+	private String fname;
+	private int download;
 	
+	
+	public int getDownload() {
+		return download;
+	}
+	public void setDownload(int download) {
+		this.download = download;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
 	public String getNick() {
 		return nick;
 	}

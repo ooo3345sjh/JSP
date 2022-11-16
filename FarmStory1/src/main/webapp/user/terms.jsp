@@ -1,12 +1,17 @@
+<%@page import="java.util.Map"%>
+<%@page import="kr.co.FarmStory1.dao.UserDAO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
+<%
+	Map<String, Object> map = UserDAO.getInstance().selectTerms();
+%>
 <main id="user">
     <section class="terms">
         <table border="1">
             <caption>사이트 이용약관</caption>
             <tr>
                 <td>
-                    <textarea name="terms" readonly></textarea>
+                    <textarea name="terms" readonly><%= map.get("terms") %></textarea>
                     <label><input type="checkbox" class="terms">&nbsp;동의합니다.</label>
                 </td>
             </tr>
@@ -15,7 +20,7 @@
             <caption>개인정보 취급방침</caption>
             <tr>
                 <td>
-                    <textarea name="privacy" readonly></textarea>
+                    <textarea name="privacy" readonly><%= map.get("privacy") %></textarea>
                     <label><input type="checkbox" class="privacy">&nbsp;동의합니다.</label>
                 </td>
             </tr>
