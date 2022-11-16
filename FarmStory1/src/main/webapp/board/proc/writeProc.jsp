@@ -15,7 +15,6 @@
 	MultipartRequest mr = new MultipartRequest(request, savePath, maxSize, 
 						"utf-8", new DefaultFileRenamePolicy());
 	
- 	String pg = mr.getParameter("pg");
  	String group = mr.getParameter("group");
  	String cate = mr.getParameter("cate");
  	String title = mr.getParameter("title");

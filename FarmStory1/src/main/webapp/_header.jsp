@@ -29,10 +29,11 @@
     <head>
         <meta charset="UTF-8">
         <title>팜스토리::메인</title>
+	    <link rel="stylesheet" href="/FarmStory1/css/style.css">
+	    <link rel="stylesheet" href="/FarmStory1/user/css/style.css">
+	    <link rel="stylesheet" href="/FarmStory1/board/css/style.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     </head>
-    <link rel="stylesheet" href="/FarmStory1/css/style.css">
-    <link rel="stylesheet" href="/FarmStory1/user/css/style.css">
-    <link rel="stylesheet" href="/FarmStory1/board/css/style.css">
     <body>
         <div id="wrapper">
             <header>
@@ -45,8 +46,8 @@
                     <a href="/FarmStory1/user/proc/logoutProc.jsp">로그아웃 |</a>
                     <% } else { %>
                     <a href="/FarmStory1/user/login.jsp">로그인 |</a>
-                    <% } %>
                     <a href="/FarmStory1/user/terms.jsp">회원가입 |</a>
+                    <% } %>
                     <a href="#">고객센터</a>
                 </p>
                 <ul class="gnb">

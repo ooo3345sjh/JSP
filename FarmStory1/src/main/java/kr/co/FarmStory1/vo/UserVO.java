@@ -87,4 +87,9 @@ public class UserVO {
 		this.rdate = rdate;
 	}
 	
+	@Override
+	public String toString() {
+		return "uid : " + uid + ", name : " + name;
+	}
+	
 }

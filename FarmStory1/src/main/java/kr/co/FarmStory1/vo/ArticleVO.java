@@ -103,5 +103,10 @@ public class ArticleVO {
 		this.rdate = rdate;
 	}
 	
+	@Override
+	public String toString() {
+		return "no : " + no + " title : " + title + " cate : " + cate;
+	}
+	
 
 }

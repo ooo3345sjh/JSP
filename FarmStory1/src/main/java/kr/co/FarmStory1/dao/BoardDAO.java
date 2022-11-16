@@ -1,10 +1,21 @@
 package kr.co.FarmStory1.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.co.FarmStory1.db.DBHelper;
+import kr.co.FarmStory1.db.Sql;
 import kr.co.FarmStory1.vo.ArticleVO;
+import kr.co.FarmStory1.vo.FileVO;
 
 public class BoardDAO extends DBHelper {
 	
@@ -15,10 +26,13 @@ public class BoardDAO extends DBHelper {
 	}
 	private BoardDAO() {}
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	public int selectArticleCountTotal(String cate) {
 		int total = 0;
 		
 		try {
+			logger.info("selectArticleCountTotal");
 			con = getConnection();
 			String sql = "SELECT COUNT(`no`) FROM `board_article` "
 					   + " WHERE `cate`=? ";
@@ -33,9 +47,9 @@ public class BoardDAO extends DBHelper {
 			close();
 			
 		} catch (Exception e) {
-			System.out.println("전체 게시물 개수 조회 중 에러 발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("total : " + total);
 		return total;
 		
 	}
@@ -43,11 +57,12 @@ public class BoardDAO extends DBHelper {
 		List<ArticleVO> articles = null;
 		
 		try {
+			logger.info("selectArticles");
 			con = getConnection();
 			String sql = "SELECT a.*, u.nick FROM `board_article` a "
 					   + " JOIN `board_user` u "
 					   + " ON a.uid = u.uid "
-					   + " WHERE a.cate=? "
+					   + " WHERE a.cate=? and a.parent=0 "
 					   + " ORDER BY a.`no` desc"
 					   + " limit ?, 10 ";
 			
@@ -77,9 +92,9 @@ public class BoardDAO extends DBHelper {
 			close();
 			
 		} catch (Exception e) {
-			System.out.println("전체 게시물 조회 중 에러 발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("articles : " + articles.size());
 		return articles;
 	}
 	
@@ -87,6 +102,7 @@ public class BoardDAO extends DBHelper {
 		
 		ArticleVO vo = null;
 		try {
+			logger.info("selectArticle");
 			con = getConnection();
 			String sql = "SELECT a.*, f.`oriName` FROM `board_article` a "
 				       + "LEFT JOIN `board_file` f "
@@ -115,14 +131,89 @@ public class BoardDAO extends DBHelper {
 			
 			close();
 		} catch (Exception e) {
-			System.out.println("조건에 해당하는 게시물 조회 중 에러발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("vo : " + vo.toString());
 		return vo;
+	}
+	public FileVO selectFile(String parent) {
+		FileVO vo = null;
+		
+		try {
+			con = getConnection();
+			con.setAutoCommit(false);
+			String sql = "SELECT * FROM `board_file` WHERE `parent`=?";
+			String updateDownloadCount = "UPDATE `board_file` SET "
+									   + " `download` = `download` + 1 "
+									   + "WHERE `parent` = ? ";
+			
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, parent);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new FileVO();
+				vo.setFno(rs.getInt(1));
+				vo.setParent(rs.getInt(2));
+				vo.setNewName(rs.getString(3));
+				vo.setOriName(rs.getString(4));
+				vo.setDownload(rs.getInt(5));
+			}
+			PreparedStatement updatePsmt = con.prepareStatement(updateDownloadCount);
+			updatePsmt.setString(1, parent);
+			updatePsmt.executeUpdate();
+			con.commit();
+			
+			close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("vo : " + vo);
+		return vo;
+	}
+	
+	public List<ArticleVO> selectComments(String parent) {
+		List<ArticleVO> comments = new ArrayList<>();
+		try {
+			logger.info("selectComments");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_COMMENTS);
+			psmt.setString(1, parent);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO ab = new ArticleVO();
+				ab.setNo(rs.getInt("no"));
+				ab.setParent(rs.getInt("parent"));
+				ab.setComment(rs.getInt("comment"));
+				ab.setCate(rs.getString("cate"));
+				ab.setContent(rs.getString("content"));
+				ab.setTitle(rs.getString("title"));
+				ab.setUid(rs.getString("uid"));
+				ab.setRdate(rs.getString("rdate"));
+				ab.setHit(rs.getInt("hit"));
+				ab.setFile(rs.getInt("file"));
+				ab.setRegip(rs.getString("regip"));
+				ab.setNick(rs.getString("nick"));
+				
+				comments.add(ab);
+			}
+			
+			close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+		return comments;
 	}
 	
 	public void insertFile(int parent, String newName, String oriName) {
 		try {
+			logger.info("insertFile");
 			con = getConnection();
 			String sql = "INSERT INTO `board_file` SET"
 					   + "	`parent` = ?, "
@@ -137,14 +228,14 @@ public class BoardDAO extends DBHelper {
 			
 			close();
 		} catch (Exception e) {
-			System.out.println("파일 정보 추가 중 에러 발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	public int insertArticle(ArticleVO vo) {
 		int no = 0;
 		
 		try {
+			logger.info("insertArticle");
 			con = getConnection();
 			con.setAutoCommit(false);
 			String sql = "INSERT INTO `board_article` SET "
@@ -178,14 +269,71 @@ public class BoardDAO extends DBHelper {
 			
 			close();
 		} catch (Exception e) {
-			System.out.println("게시물 추가중 에러발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("no : " + no);
 		return no;
+	}
+	
+	public Map<String, Integer> insertComment(ArticleVO vo) {
+		
+		logger.info("insertComment");
+		
+		Map<String, Integer> map = null;
+		
+		int result = 0; // 업데이트 결과 성공 여부를 전달하는 변수 성공 : 1 / 실패 : 0
+		
+		try{
+			// 1, 2단계 - DB 접속
+			Connection con = getConnection();
+			
+			/*** 트랜잭션 시작 ***/
+			con.setAutoCommit(false);
+			
+			// 3단계 - SQL실행 객체 생성
+			PreparedStatement updatePsmt = con.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUSE);
+			updatePsmt.setInt(1, vo.getParent());
+			
+			PreparedStatement insertPsmt = con.prepareStatement(Sql.INSERT_COMMENT);
+			insertPsmt.setInt(1, vo.getParent());
+			insertPsmt.setString(2, vo.getContent());
+			insertPsmt.setString(3, vo.getUid());
+			insertPsmt.setString(4, vo.getRegip());
+			
+			Statement selectPsmt = con.createStatement();
+				
+			// 4단계 - SQL실행
+			updatePsmt.executeUpdate();
+			result = insertPsmt.executeUpdate();
+			ResultSet rs = selectPsmt.executeQuery(Sql.SELECT_NO);
+			
+			map = new HashMap<>();
+			
+			if(rs.next()) {
+				map.put("no", rs.getInt(1));
+			}
+			
+			con.commit(); 
+			/*** 트랜잭션 종료 ***/
+			
+			// 5단계 - 연결 해제
+			con.close();
+			insertPsmt.close();
+			updatePsmt.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+		map.put("result", result);
+	
+		return map;
 	}
 	
 	public void deleteArticle(String no) {
 		try {
+			logger.info("deleteArticle");
 			con = getConnection();
 			String sql = "DELETE a.*, f.* FROM `board_article` a "
 					   + "LEFT JOIN `board_file` f "
@@ -198,9 +346,99 @@ public class BoardDAO extends DBHelper {
 			psmt.executeUpdate();
 			
 		} catch (Exception e) {
-			System.out.println("게시물 삭제 중 에러 발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
-	public void updateArticle() {}
+	
+	public int deleteComment(String no) {
+		int result = 0;
+		
+		try {
+			logger.info("deleteComment");
+			con = getConnection();
+			
+			con.setAutoCommit(false);
+			
+			PreparedStatement deletePsmt = con.prepareStatement(Sql.UPDATE_COMMENT_MINUS);
+			psmt = con.prepareStatement(Sql.DELETE_COMMENT);
+			
+			deletePsmt.setString(1, no);
+			psmt.setString(1, no);
+			
+			deletePsmt.executeUpdate();
+		    result = psmt.executeUpdate();
+			
+		    con.commit();
+		    
+			close();
+			deletePsmt.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+		return result;
+	}
+	public void updateArticle(String no, String title, String content) {
+		
+		try {
+			con = getConnection();
+			String sql = "UPDATE `board_article` SET "
+						+ " `title`=?,"
+						+ " `content`=?"
+						+ "WHERE `no`=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			
+			psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public void updateArticleHit(String no) {
+		
+		try {
+			logger.info("updateArticleHit");
+			con = getConnection();
+		    psmt = con.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+		    psmt.setString(1, no);
+		    
+		    psmt.executeUpdate();
+		    
+		    close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+	}
+	
+	public int updateComment(String content, String no) {
+		int result = 0;
+		try {
+			logger.info("updateComment");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, no);
+			
+		    result = psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+		return result;
+	}
 }

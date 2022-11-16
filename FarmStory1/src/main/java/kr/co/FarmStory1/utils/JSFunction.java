@@ -26,7 +26,7 @@ public class JSFunction {
 			String script = "" // 삽입할 자바스크립트 코드
 					+ "<script>"
 					+ "	alert('" + msg + "');"
-					+ "	location.back();"
+					+ "	history.back();"
 					+ "</script>";
 			out.print(script);
 		} catch (Exception e) {

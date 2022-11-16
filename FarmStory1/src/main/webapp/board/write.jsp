@@ -12,7 +12,6 @@
 	    <section class="write">
 	        <form action="/FarmStory1/board/proc/writeProc.jsp" method="post" enctype="multipart/form-data">
 	        	<input type="hidden" name="uid" value="<%= user.getUid() %>">
-	        	<input type="hidden" name="pg" value="<%= pg %>">
 	        	<input type="hidden" name="group" value="<%= group %>">
 	        	<input type="hidden" name="cate" value="<%= cate %>">
 	            <table border="0">

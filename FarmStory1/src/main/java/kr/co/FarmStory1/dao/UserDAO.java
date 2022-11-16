@@ -3,9 +3,14 @@ package kr.co.FarmStory1.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.FarmStory1.db.DBHelper;
 import kr.co.FarmStory1.vo.UserVO;
-
+/*
+ * class -> enum으로 바꾸고 INSTANCE; 를 선언하면 싱글톤패턴이 됨.
+ */
 public class UserDAO extends DBHelper {
 	
 	private static UserDAO instance = new UserDAO();
@@ -14,10 +19,12 @@ public class UserDAO extends DBHelper {
 	}
 	private UserDAO() {}
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public UserVO selectUser(String uid, String pass) {
 		UserVO vo = null;	
 		try {
+			logger.info("selectUser...");
 			con = getConnection();
 			String sql = "SELECT * FROM `board_user` WHERE `uid`=? and `pass`=SHA2(?, 256)";
 			psmt = con.prepareStatement(sql);
@@ -33,24 +40,27 @@ public class UserDAO extends DBHelper {
 				vo.setNick(rs.getString(4));
 				vo.setEmail(rs.getString(5));
 				vo.setHp(rs.getString(6));
-				vo.setZip(rs.getString(7));
-				vo.setAddr1(rs.getString(8));
-				vo.setAddr2(rs.getString(9));
-				vo.setRegip(rs.getString(10));
-				vo.setRdate(rs.getString(11));
+				vo.setGrade(rs.getInt(7));
+				vo.setZip(rs.getString(8));
+				vo.setAddr1(rs.getString(9));
+				vo.setAddr2(rs.getString(10));
+				vo.setRegip(rs.getString(11));
+				vo.setRdate(rs.getString(12));
 			}
 			
 			close();
 			
 		} catch (Exception e) {
 			System.out.println("조건에 맞는 회원 조회 중에 에러발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("vo : " + vo);
 		return vo;
 	}
 	public void selectUsers() {}
 	public void insertUser(UserVO vo) {
 		try {
+			logger.info("insertUser...");
 			con = getConnection();
 			String sql = "INSERT INTO `board_user` SET "
 					   + " `uid`=?, "
@@ -81,7 +91,7 @@ public class UserDAO extends DBHelper {
 			close();
 		} catch (Exception e) {
 			System.out.println("User등록 중에 에러발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -89,11 +99,21 @@ public class UserDAO extends DBHelper {
 		Map<String, Object> map = null;
 		
 		try {
+			logger.info("selectTerms...");
 			con = getConnection();
 			stmt = con.createStatement();
 			String sql = "SELECT * FROM `board_terms`";
 			rs = stmt.executeQuery(sql);
-			map = new HashMap<>();
+			
+			map = new HashMap<>() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public String toString() {
+					return "terms : 사이트 이용약관, privacy : 개인정보 취급방침";
+				}
+			};
+			
 			if(rs.next()) {
 				map.put("terms", rs.getString(1));
 				map.put("privacy", rs.getString(2));
@@ -103,9 +123,9 @@ public class UserDAO extends DBHelper {
 			
 		} catch (Exception e) {
 			System.out.println("약관동의를 불러오는 중에 에러 발생");
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
-		
+		logger.debug("map : " + map.toString());
 		return map;
 	}
 	

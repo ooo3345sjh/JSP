@@ -81,7 +81,7 @@
 				                    <td><%= pageStartNum-- %></td>
 				                    <td>
 				                    	<a href="./view.jsp?no=<%= vo.getNo() %>&pg=<%= currentPage %>&group=<%= group %>&cate=<%= cate %>">
-				                    		<%= vo.getTitle() %>
+				                    		<%= vo.getTitle() %>[<%= vo.getComment() %>]
 				                    	</a>
 				                    </td>
 				                    <td><%= vo.getNick() %></td>
