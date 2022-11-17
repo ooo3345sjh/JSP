@@ -57,7 +57,7 @@ public class Sql {
 	
 	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
 	public static final String SELECT_FILE_IMG = "SELECT * FROM `board_file` WHERE `parent`=? and `oriName`='삽입 이미지'";
-	public static final String SELECT_NO = "SELECT MAX(`no`) FROM `board_comment`";
+	public static final String SELECT_NO = "SELECT MAX(`no`) FROM `board_article`";
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` a "
 												+ " JOIN `board_user` b "
 												+ " ON a.uid = b.uid "

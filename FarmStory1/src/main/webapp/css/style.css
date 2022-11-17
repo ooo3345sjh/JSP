@@ -101,8 +101,30 @@ main > div {
     margin-top: 10px;
 }
 main > .slider {
+	position: relative;
     height: 312px;
 }
+
+main > .slider > img {
+    position: absolute;
+    top: 28px;
+    left: 37px;
+}
+main > .slider > .banner {
+	width: 230px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url("../img/main_banner_bg.jpg");
+}
+
+main > .slider > .banner > img {position: absolute;}
+main > .slider > .banner > img:nth-child(1) {top: 10px; right: 10px;}
+main > .slider > .banner > img:nth-child(2) {top: 50px; left: 10px;}
+main > .slider > .banner > img:nth-child(3) {top: 190px; left: 10px;}
+
+
 main > .quick {
     height: 74px;
     overflow: hidden;
@@ -179,7 +201,7 @@ main > .info > div:nth-child(2) {
     border-right: 1px solid #d7d7d7;
     box-sizing: border-box;
 }
-main > .info > div:nth-child(3) {width: 358px;} /* 나중에 360px로 바꿔야함*/
+main > .info > div:nth-child(3) {width: 360px;} /* 나중에 360px로 바꿔야함*/
 
 main > .info > div > .tel {overflow: hidden;}
 main > .info > div > .tel > *{float: left; margin-left: 16px;}
@@ -187,7 +209,27 @@ main > .info > div > .tit {margin-bottom: 16px;}
 main > .info > div > .btns {margin-top: 16px;}
 main > .info > div > .account {line-height: 18px; color: #666;}
 
-
+/* tab부분 */
+main > .info > div:nth-child(3){
+	padding: 0;
+}
+main > .info #tabs {
+	margin-left:10px;
+	border: none;
+}
+main > .info #tabs > ul {
+	background: none; 
+	border: none; 
+	border-bottom: 1px solid #aaaaaa; 
+	border-radius: 0; 
+	padding: 0;
+}
+main > .info #tabs > ul > li {border-radius: 0;}
+main > .info #tabs .txt > li {
+	margin-top: 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #d1d1d1;
+}
 /* 푸터 */
 footer {
     width: 100%;

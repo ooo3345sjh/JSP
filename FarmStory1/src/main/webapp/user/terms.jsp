@@ -5,6 +5,21 @@
 <%
 	Map<String, Object> map = UserDAO.getInstance().selectTerms();
 %>
+<script>
+	// 동의 체크박스 체크가 되어있지 않으면 다음으로 진행 못하게 하는 함수
+	$(function() {
+		$('.btnNext').click(function() {
+			let isChecked1 = $('input[class=terms]').is(':checked');
+			let isChecked2 = $('input[class=privacy]').is(':checked');
+			if(isChecked1 && isChecked2){
+				return true;
+			} else {
+				alert('동의 체크를 하셔야 합니다.');
+				return false;
+			}
+		});
+	});
+</script>
 <main id="user">
     <section class="terms">
         <table border="1">

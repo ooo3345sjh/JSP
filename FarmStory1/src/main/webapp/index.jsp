@@ -1,7 +1,35 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script>
+	$(function () {
+		$('.slide_gallery').bxSlider({
+			controls : false,
+			auto : true,
+			pager : false
+		});
+		
+		$('#tabs').tabs();
+	});
+</script>
 <main>
-    <div class="slider"></div>
+    <div class="slider">
+    	<div class="gallery_wrap">
+    		<ul class="slide_gallery">
+    			<li><img src="./img/main_slide_img1.jpg" alt="슬라이더1"> </li>
+    			<li><img src="./img/main_slide_img2.jpg" alt="슬라이더2"> </li>
+    			<li><img src="./img/main_slide_img3.jpg" alt="슬라이더3"> </li>
+    		</ul>
+    	</div>
+    	<img alt="사람과 자연을 사랑하는 팜스토리" src="./img/main_slide_img_tit.png">
+    	<div class="banner">
+    		<img alt="GRAND OPEN" src="./img/main_banner_txt.png">
+    		<img alt="팜스토리 오픈기념 30% 할인 이벤트" src="./img/main_banner_tit.png">
+    		<img alt="과일" src="./img/main_banner_img.png">
+    	</div>
+    </div>
     <div class="quick">
         <a href="#"><img src="./img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
         <a href="#"><img src="./img/main_banner_sub2_tit.png" alt="나도 요리사"></a>
@@ -171,7 +199,36 @@
                 예 금 주 (주)팜스토리
             </p>
         </div>
-        <div>3</div>
+        <div>
+        	<div id="tabs">
+	            <ul>
+	                <li><a href="#tabs-1">공지사항</a></li>
+	                <li><a href="#tabs-2">1:1 고객문의</a></li>
+	                <li><a href="#tabs-3">자주묻는 질문</a></li>
+	            </ul>
+	            <div id="tabs-1">
+	                <ul class="txt">
+	                    <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
+	                    <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
+	                    <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
+	                </ul>
+	            </div>
+	            <div id="tabs-2">
+	                <ul class="txt">
+	                    <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
+	                    <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
+	                    <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
+	                </ul>
+	            </div>
+	            <div id="tabs-3">
+	                <ul class="txt">
+	                    <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
+	                    <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
+	                    <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
+	                </ul>
+	            </div>
+	        </div>
+        </div>
     </div>
 </main>
 <%@ include file="/_footer.jsp" %>

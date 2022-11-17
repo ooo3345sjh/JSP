@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.co.FarmStory1.db.DBHelper;
+import kr.co.FarmStory1.db.Sql;
 import kr.co.FarmStory1.vo.UserVO;
 /*
  * class -> enum으로 바꾸고 INSTANCE; 를 선언하면 싱글톤패턴이 됨.
@@ -129,6 +130,53 @@ public class UserDAO extends DBHelper {
 		return map;
 	}
 	
+	public int selectCountNick(String nick) {
+		int result = 0;
+		
+		try{
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_COUNT_NICK);
+			psmt.setString(1, nick);
+			
+			rs = psmt.executeQuery() ;
+			
+			
+			if(rs.next()){ 
+				result = rs.getInt(1);
+			}
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();		
+		}	
+		
+		return result;
+	}
+	
+	public int selectCountUid(String uid) {
+		
+		int result = 0;
+		
+		try{
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_COUNT_UID);
+			psmt.setString(1, uid);
+			
+			rs = psmt.executeQuery() ;
+			
+			
+			if(rs.next()){ 
+				result = rs.getInt(1);
+			}
+			
+			close();
+		}catch(Exception e){
+			e.printStackTrace();		
+		}	
+		
+		return result;
+	}
 	public void deleteUser() {}
 	public void updateUser() {}
 	

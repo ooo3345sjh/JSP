@@ -104,7 +104,7 @@ public class BoardDAO extends DBHelper {
 		try {
 			logger.info("selectArticle");
 			con = getConnection();
-			String sql = "SELECT a.*, f.`oriName` FROM `board_article` a "
+			String sql = "SELECT a.*, f.`oriName`, f.`download` FROM `board_article` a "
 				       + "LEFT JOIN `board_file` f "
 				       + "ON a.`no`= f.`parent` "
 				       + "WHERE `no`=?";
@@ -127,6 +127,7 @@ public class BoardDAO extends DBHelper {
 				vo.setRegip(rs.getString(10));
 				vo.setRdate(rs.getString(11));
 				vo.setFname(rs.getString(12));
+				vo.setDownload(rs.getInt(13));
 			}
 			
 			close();

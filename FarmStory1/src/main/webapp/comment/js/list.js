@@ -18,7 +18,7 @@ function list (no, uid) { // 파라미터 - no : 게시글 번호, uid : 로그�
 				
 				for(let comment of data){
 					let article = "<article>"
-								+ " <input type='hidden' id='no' value='" + comment.no + "'/>"
+								+ " <input type='hidden' value='" + comment.no + "'/>"
 								+ " <span class='nick'>" + comment.nick + "</span>"
 				                + " <span class='date'>" + comment.rdate.substr(2, 9) + "</span>" // yy-MM-dd
 								+ " <p class='content'>" + comment.content + "</p>";

@@ -5,11 +5,6 @@
 	UserVO user = (UserVO)session.getAttribute("user");
 	String uri = request.getRequestURI();
 	
-	if(uri.contains("register.jsp")){
-		JSFunction.alertLocation("비정상적인 접근입니다.", "/FarmStory1/user/login.jsp", out);
-		return;
-	}
-	
 	if(uri.contains("write.jsp") || uri.contains("modify.jsp") || uri.contains("delete.jsp")){
 		if(user == null){
 			JSFunction.alertLocation("해당 페이지는 로그인이 필요합니다.", "/FarmStory1/user/login.jsp", out);

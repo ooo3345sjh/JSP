@@ -8,7 +8,6 @@
 	String cate = request.getParameter("cate");
 	String pg = request.getParameter("pg");
 	String no = request.getParameter("no");
-	
 	BoardDAO dao = BoardDAO.getInstance();
 	
 	dao.updateArticleHit(no); // 조회수 올리는 메서드
@@ -19,7 +18,10 @@
 	List<ArticleVO> comments = dao.selectComments(no);
 	dao.close();
 	
+	boolean isLogin = user != null ? true:false;
+	
 	pageContext.include("/board/_" + group + ".jsp");
+	
 %>
 <script src="/FarmStory1/comment/js/write.js"></script>
 <script src="/FarmStory1/comment/js/list.js"></script>
@@ -27,9 +29,17 @@
 <script src="/FarmStory1/comment/js/modify.js"></script>
 <script>
 	$(function () {
-		/******* 댓글 작성 *******/
-		write(<%= no %>); // 파라미터 - no : 게시글 번호
 		
+		/******* 댓글 작성 *******/
+		$(document).on('click', '#write', function (e) { // 작성완료 버튼을 눌렀을때
+			e.preventDefault();
+			if(!<%= isLogin %>){ // 로그인이 안되어있다면
+				alert('로그인이 필요합니다.');
+				$('#cancle').trigger("click");
+				return;
+			}
+			write(<%= no %>); // 파라미터 - no : 게시글 번호, user : 로그인 회원 정보 
+		});
 		
 		$('#comment').on('keydown', function (e) { // ENTER키를 누를때도 댓글 작성완료 버튼을 작동, SHIFT + ENTER 키는 줄바꿈
 			if(e.keyCode == 13){
@@ -157,8 +167,16 @@
 	            
 	        </table>
 	        <div>
+	        	<%
+	        	if(user != null){
+	        		if(user.getUid().equals(vo.getUid())){
+	        	%>
 	            <a href="./proc/deleteProc.jsp?no=<%= no %>&uid=<%= vo.getUid() %>&group=<%= group %>&cate=<%= cate %>" class="btn btnRemove">삭제</a>
 	            <a href="./modify.jsp?no=<%= no %>&group=<%= group %>&cate=<%= cate %>&pg=<%= pg %>" class="btn btnModify">수정</a>
+	            <% 
+	        		}
+	            } 
+	            %>
 	            <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>&pg=<%= pg %>" class="btn btnList">목록</a>
 	        </div>
 	
@@ -174,7 +192,7 @@
 	        <section class="commentForm">
 	            <h3>댓글쓰기</h3>
 	            <form action="#">
-	                <textarea id="comment" name="content">댓글내용 입력</textarea>
+	                <textarea id="comment" name="content" placeholder="내용을 입력해주세요."></textarea>
 	                <div>
 	                    <a href="#" class="btn btnCalcel" id="cancle">취소</a>
 	                    <input type="submit" value="작성완료"  class="btn btnComplete" id="write">
