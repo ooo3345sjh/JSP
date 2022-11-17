@@ -28,6 +28,8 @@
 	    <link rel="stylesheet" href="/FarmStory1/user/css/style.css">
 	    <link rel="stylesheet" href="/FarmStory1/board/css/style.css">
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	    <script type="text/javascript" src="/FarmStory1/board/smartEditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	    <script src="/FarmStory1/board/js/smartEditor.js"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -43,7 +45,7 @@
                     <a href="/FarmStory1/user/login.jsp">로그인 |</a>
                     <a href="/FarmStory1/user/terms.jsp">회원가입 |</a>
                     <% } %>
-                    <a href="#">고객센터</a>
+                    <a href="/FarmStory1/board/list.jsp?group=community&cate=qna">고객센터</a>
                 </p>
                 <ul class="gnb">
                     <li><a href="/FarmStory1/introduction/hello.jsp">팜스토리 소개</a></li>

@@ -1,5 +1,40 @@
+<%@page import="java.util.Map"%>
+<%@page import="kr.co.FarmStory1.vo.ArticleVO"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.co.FarmStory1.dao.BoardDAO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
+<%
+ 	Map<String, List<ArticleVO>> map = BoardDAO.getInstance().selectLatests("grow", "school", "story");
+	List<ArticleVO> grows = map.get("grow"); 
+	List<ArticleVO> storys = map.get("story"); 
+	List<ArticleVO> schools = map.get("school"); 
+%>
+<script>
+	$(function () {
+		
+		// 공지사항 최신글 가져오기
+		getLatest('notice');
+		getLatest('qna');
+		getLatest('faq');
+		
+		function getLatest(cate) {
+			let url = "/FarmStory1/board/proc/getLatest.jsp?cate=" + cate;
+			$.get(url, function(data) {
+				if(data.length != 0){
+					for(let latest of data){
+						$('.txt-'+cate).append("<li><a href='/FarmStory1/board/view.jsp?group=community&cate="
+								+ cate +"&no=" + latest.no + "&pg=1'>" 
+								+ "· "+latest.title 
+								+ "</a></li>");
+					}
+				} else {
+					$('.txt-'+cate).append("<li><a>· 최신 글이 없습니다.</a></li>");
+				}
+			});
+		}
+	});
+</script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
@@ -31,137 +66,93 @@
     	</div>
     </div>
     <div class="quick">
-        <a href="#"><img src="./img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
-        <a href="#"><img src="./img/main_banner_sub2_tit.png" alt="나도 요리사"></a>
+        <a href="/FarmStory1/board/list.jsp?group=community&cate=menu">
+        	<img src="./img/main_banner_sub1_tit.png" alt="오늘의 식단">
+        </a>
+        <a href="/FarmStory1/board/list.jsp?group=community&cate=chef">
+        	<img src="./img/main_banner_sub2_tit.png" alt="나도 요리사">
+        </a>
     </div>
     <div class="latest">
         <div>
-            <a href="#">
+            <a href="/FarmStory1/board/list.jsp?group=croptalk&cate=grow">
                 <img src="./img/main_latest1_tit.png" alt="텃밥 가꾸기">
             </a>
             <img src="./img/main_latest1_img.jpg" alt="이미지">
             <table border="0">
+            	<% 
+            	if(grows.size() != 0){
+            		for(ArticleVO vo : grows){
+            	%>
                 <tr>
                     <td>></td>
                     <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
+                        <a href="/FarmStory1/board/view.jsp?group=croptalk&cate=grow&no=<%= vo.getNo()%>&pg=1"><%= vo.getTitle() %></a>
                     </td>
-                    <td>20-12-22</td>
+                    <td><%= vo.getRdate() %></td>
                 </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
+                <%
+                	}
+            	}else{
+            	%>
+            	<tr>
+            		<td colspan="2" width="200px">> 최신 글이 없습니다.</td>
+            	</tr>
+            	<% } %>
             </table>
         </div>
         <div>
-            <a href="#">
+            <a href="/FarmStory1/board/list.jsp?group=croptalk&cate=school">
                 <img src="./img/main_latest2_tit.png" alt="귀농학교">
             </a>
             <img src="./img/main_latest2_img.jpg" alt="이미지">
             <table border="0">
+            	<% 
+            	if(schools.size() != 0){
+            		for(ArticleVO vo : schools){
+            	%>
                 <tr>
                     <td>></td>
                     <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
+                        <a href="/FarmStory1/board/view.jsp?group=croptalk&cate=grow&no=<%= vo.getNo()%>&pg=1"><%= vo.getTitle() %></a>
                     </td>
-                    <td>20-12-22</td>
+                    <td><%= vo.getRdate() %></td>
                 </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
+                <%
+                	}
+            	}else{
+            	%>
+            	<tr>
+            		<td colspan="2" width="200px">> 최신 글이 없습니다.</td>
+            	</tr>
+            	<% } %>
             </table>
         </div>
         <div>
-            <a href="#">
+            <a href="/FarmStory1/board/list.jsp?group=croptalk&cate=story">
                 <img src="./img/main_latest3_tit.png" alt="농작물 이야기">
             </a>
             <img src="./img/main_latest3_img.jpg" alt="이미지">
             <table border="0">
+            	<% 
+            	if(storys.size() != 0){
+            		for(ArticleVO vo : storys){
+            	%>
                 <tr>
                     <td>></td>
                     <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
+                        <a "/FarmStory1/board/view.jsp?group=croptalk&cate=grow&no=<%= vo.getNo()%>&pg=1"><%= vo.getTitle() %></a>
                     </td>
-                    <td>20-12-22</td>
+                    <td><%= vo.getRdate() %></td>
                 </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td>
-                        <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-                    </td>
-                    <td>20-12-22</td>
-                </tr>
+                <%
+                	}
+            	}else{
+            	%>
+            	<tr>
+            		<td colspan="2" width="200px">> 최신 글이 없습니다.</td>
+            	</tr>
+            	<% } %>
             </table>
         </div>
     </div>
@@ -178,10 +169,10 @@
                 </p>
             </div>
             <div class="btns">
-                <a href="#">
+                <a href="/FarmStory1/board/list.jsp?group=community&cate=qna">
                     <img src="./img/main_sub2_cs_bt1.png" alt="1:1 고객문의">
                 </a>
-                <a href="#">
+                <a href="/FarmStory1/board/list.jsp?group=community&cate=faq">
                     <img src="./img/main_sub2_cs_bt2.png" alt="자주묻는 질문">
                 </a>
                 <a href="#">
@@ -207,25 +198,13 @@
 	                <li><a href="#tabs-3">자주묻는 질문</a></li>
 	            </ul>
 	            <div id="tabs-1">
-	                <ul class="txt">
-	                    <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-	                    <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-	                    <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-	                </ul>
+	                <ul class="txt txt-notice"></ul>
 	            </div>
 	            <div id="tabs-2">
-	                <ul class="txt">
-	                    <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-	                    <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-	                    <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-	                </ul>
+	                <ul class="txt txt-qna"></ul>
 	            </div>
 	            <div id="tabs-3">
-	                <ul class="txt">
-	                    <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-	                    <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-	                    <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-	                </ul>
+	                <ul class="txt txt-faq"></ul>
 	            </div>
 	        </div>
         </div>

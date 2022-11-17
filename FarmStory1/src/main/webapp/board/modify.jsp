@@ -12,6 +12,9 @@
 	
 	pageContext.include("/board/_" + group + ".jsp");
 %>
+<script>
+	smarteditor();
+</script>
 	<main id="board">
 	    <section class="modify">
 	        <form action="./proc/modifyProc.jsp?">
@@ -28,7 +31,9 @@
 	             <tr>
 	                 <th>내용</th>
 	                 <td>
-	                     <textarea name="content" ><%= vo.getContent() %></textarea>
+	                  	<textarea name="editorTxt" id="editorTxt" rows="20" cols="10" 
+                            	laceholder="내용을 입력해주세요" style="width: 100%"><%= vo.getContent() %></textarea>
+	                     <%-- <textarea name="content" ><%= vo.getContent() %></textarea> --%>
 	                 </td>
 	             </tr>
 	           <%-- 수정시 첨부파일도 새로 바꿀 수 있도록 구현 예정

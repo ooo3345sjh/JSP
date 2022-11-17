@@ -25,11 +25,11 @@
 	
 	
 	<appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/logs/FarmStory1/${NAME}.log</file>
+		<file>/var/log/FarmStory1/${NAME}.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">	    
-			<fileNamePattern>/logs/${NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>/var/log/${NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>1MB</maxFileSize>
+				<maxFileSize>100MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 		<encoder>
@@ -37,7 +37,7 @@
 		</encoder>
 	</appender>
 
-	<root level="debug"> <!-- 배포할때는 INFO로 바꾼다. -->
+	<root level="info"> <!-- 배포할때는 INFO로 바꾼다. -->
 		<appender-ref ref="STDOUT"/>
 		<appender-ref ref="ROLLING"/>
 	</root>

@@ -161,7 +161,8 @@
 	            <tr>
 	                <th>내용</th>
 	                <td>
-	                    <textarea name="content" readonly><%= vo.getContent() %></textarea>
+	                <div id='content'><%= vo.getContent() %></div>
+	                    <%-- <textarea name="content" readonly><%= vo.getContent() %></textarea>--%>
 	                </td>
 	            </tr>
 	            

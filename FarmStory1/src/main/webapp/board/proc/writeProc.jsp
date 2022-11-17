@@ -18,7 +18,7 @@
  	String group = mr.getParameter("group");
  	String cate = mr.getParameter("cate");
  	String title = mr.getParameter("title");
- 	String content = mr.getParameter("content");
+ 	String content = mr.getParameter("editorTxt");
  	String fname = mr.getFilesystemName("file");
  	String regip = request.getRemoteAddr();
  	String uid = mr.getParameter("uid");

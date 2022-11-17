@@ -8,6 +8,27 @@
 	
 	pageContext.include("/board/_" + group + ".jsp");
 %>
+<script>
+/*
+	$(function () {
+		$('.btnComplete').click(function (e) {
+			let title = $('input[name=title]');
+			let content = $('textarea[name=content]');
+			if(title.val() == ''){
+				alert('제목을 입력해주세요.');
+				title.focus();
+				return false;
+			}
+			if(content.val() == ''){
+				alert('내용을 입력해주세요.');
+				content.focus();
+				return false;
+			}
+		})
+	});
+	*/
+	smarteditor();
+</script>
 	<main id="board">
 	    <section class="write">
 	        <form action="/FarmStory1/board/proc/writeProc.jsp" method="post" enctype="multipart/form-data">
@@ -23,7 +44,9 @@
 	             <tr>
 	                 <th>내용</th>
 	                 <td>
-	                     <textarea name="content" ></textarea>
+	                     <textarea name="editorTxt" id="editorTxt" rows="20" cols="10" 
+                            placeholder="내용을 입력해주세요" style="width: 100%"></textarea>
+	                     <%-- <textarea name="content" placeholder="내용을 입력하세요." ></textarea>--%>
 	                 </td>
 	             </tr>
 	             <tr>

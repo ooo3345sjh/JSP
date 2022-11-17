@@ -168,7 +168,7 @@ main > .latest > div > img {
 main > .latest > div > table {
     position: absolute;
     right: 0;
-    bottom: 16px;
+    top: 69px;
     color: #6a6a6a;
 }
 main > .latest table tr > td > a {

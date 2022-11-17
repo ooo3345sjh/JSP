@@ -137,6 +137,73 @@ public class BoardDAO extends DBHelper {
 		logger.debug("vo : " + vo.toString());
 		return vo;
 	}
+	
+	public Map<String, List<ArticleVO>> selectLatests(String cate1, String cate2, String cate3){
+		Map<String, List<ArticleVO>> map = new HashMap<>();
+		
+		List<ArticleVO> latestsGrow = new ArrayList<>();
+		List<ArticleVO> latestsSchool = new ArrayList<>();
+		List<ArticleVO> latestsStory = new ArrayList<>();
+		
+		
+		try {
+			logger.info("selectLatests...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_LATESTS);
+			psmt.setString(1, cate1);
+			psmt.setString(2, cate2);
+			psmt.setString(3, cate3);
+			
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				vo.setRdate(rs.getString(3).substring(2, 10));
+				vo.setCate(rs.getString(4));
+				
+				switch(vo.getCate()) {
+					case "grow": latestsGrow.add(vo); break;
+					case "school": latestsSchool.add(vo); break;
+					case "story": latestsStory.add(vo); break;
+				}
+			}
+			map.put("grow", latestsGrow);
+			map.put("school", latestsSchool);
+			map.put("story", latestsStory);
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return map;
+	}
+	
+	public synchronized List<ArticleVO> selectLatests(String cate){
+		List<ArticleVO> latests = new ArrayList<>();
+		
+		try {
+			logger.info("selectLatests(String)...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_LATEST);
+			psmt.setString(1, cate);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				vo.setRdate(rs.getString(3).substring(2, 10));
+				
+				latests.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return latests;
+	}
+	
 	public FileVO selectFile(String parent) {
 		FileVO vo = null;
 		
