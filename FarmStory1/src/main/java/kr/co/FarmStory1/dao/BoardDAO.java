@@ -34,10 +34,7 @@ public class BoardDAO extends DBHelper {
 		try {
 			logger.info("selectArticleCountTotal");
 			con = getConnection();
-			String sql = "SELECT COUNT(`no`) FROM `board_article` "
-					   + " WHERE `cate`=? ";
-			
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.SELECT_COUNT_TOTAL);
 			psmt.setString(1, cate);
 			rs = psmt.executeQuery();
 			
@@ -59,14 +56,8 @@ public class BoardDAO extends DBHelper {
 		try {
 			logger.info("selectArticles");
 			con = getConnection();
-			String sql = "SELECT a.*, u.nick FROM `board_article` a "
-					   + " JOIN `board_user` u "
-					   + " ON a.uid = u.uid "
-					   + " WHERE a.cate=? and a.parent=0 "
-					   + " ORDER BY a.`no` desc"
-					   + " limit ?, 10 ";
 			
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.SELECT_ARTICLES);
 			psmt.setString(1, cate);
 			psmt.setInt(2, limitStart);
 			rs = psmt.executeQuery();
@@ -104,11 +95,7 @@ public class BoardDAO extends DBHelper {
 		try {
 			logger.info("selectArticle");
 			con = getConnection();
-			String sql = "SELECT a.*, f.`oriName`, f.`download` FROM `board_article` a "
-				       + "LEFT JOIN `board_file` f "
-				       + "ON a.`no`= f.`parent` "
-				       + "WHERE `no`=?";
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.SELECT_ARTICLE);
 			psmt.setString(1, no);
 			
 			rs = psmt.executeQuery();
@@ -209,14 +196,11 @@ public class BoardDAO extends DBHelper {
 		List<FileVO> lists = null;
 		
 		try {
+			logger.info("selectFile...");
 			con = getConnection();
 			con.setAutoCommit(false);
-			String sql = "SELECT * FROM `board_file` WHERE `parent`=?";
-			String updateDownloadCount = "UPDATE `board_file` SET "
-									   + " `download` = `download` + 1 "
-									   + "WHERE `parent` = ? ";
 			
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.SELECT_FILE);
 			psmt.setString(1, parent);
 			
 			rs = psmt.executeQuery();
@@ -231,7 +215,7 @@ public class BoardDAO extends DBHelper {
 				vo.setDownload(rs.getInt(5));
 				lists.add(vo);
 			}
-			PreparedStatement updatePsmt = con.prepareStatement(updateDownloadCount);
+			PreparedStatement updatePsmt = con.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
 			updatePsmt.setString(1, parent);
 			updatePsmt.executeUpdate();
 			con.commit();
@@ -282,7 +266,7 @@ public class BoardDAO extends DBHelper {
 		return comments;
 	}
 	
-public List<FileVO> selectImg(String parent) {
+	public List<FileVO> selectImg(String parent) {
 		
 		List<FileVO> files = null;
 		
@@ -321,11 +305,7 @@ public List<FileVO> selectImg(String parent) {
 		try {
 			logger.info("insertFile");
 			con = getConnection();
-			String sql = "INSERT INTO `board_file` SET"
-					   + "	`parent` = ?, "
-					   + "	`newName` = ?, "
-					   + "	`oriName` = ?";
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.INSERT_FILE);
 			psmt.setInt(1, parent);
 			psmt.setString(2, newName);
 			psmt.setString(3, oriName);
@@ -344,28 +324,19 @@ public List<FileVO> selectImg(String parent) {
 			logger.info("insertArticle");
 			con = getConnection();
 			con.setAutoCommit(false);
-			String sql = "INSERT INTO `board_article` SET "
-					   + " `cate`=?, "
-					   + " `title`=?, "
-					   + " `content`=?, "
-					   + " `uid`=?, "
-					   + " `regip`=?, "
-					   + " `rdate`=NOW() ";
 			
-			String MaxNoSql = "SELECT MAX(`no`) FROM `board_article`";
-			
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.INSERT_ARTICLE);
 			psmt.setString(1, vo.getCate());
 			psmt.setString(2, vo.getTitle());
 			psmt.setString(3, vo.getContent());
 			psmt.setString(4, vo.getFname() == null ? "0":"1");
-			psmt.setString(4, vo.getUid());
-			psmt.setString(5, vo.getRegip());
+			psmt.setString(5, vo.getUid());
+			psmt.setString(6, vo.getRegip());
 			
 			stmt = con.createStatement();
 			
 			psmt.executeUpdate();
-			rs = stmt.executeQuery(MaxNoSql);
+			rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
 			
 			con.commit();
 			
@@ -471,11 +442,7 @@ public List<FileVO> selectImg(String parent) {
 		try {
 			logger.info("deleteArticle");
 			con = getConnection();
-			String sql = "DELETE a.*, f.* FROM `board_article` a "
-					   + "LEFT JOIN `board_file` f "
-					   + "ON a.`no` = f.`parent` "
-					   + "WHERE a.`no`=? or a.`parent`=? ";
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.DELETE_ARTICLE);
 			psmt.setString(1, no);
 			psmt.setString(2, no);
 			
@@ -558,9 +525,7 @@ public List<FileVO> selectImg(String parent) {
 			logger.info("deleteImg");
 			con = getConnection();
 			
-			String sql = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'";
-			
-			PreparedStatement psmt = con.prepareStatement(sql);
+			PreparedStatement psmt = con.prepareStatement(Sql.DELETE_ALL_IMG);
 			psmt.setString(1, no);
 			
 			psmt.executeUpdate();
@@ -577,11 +542,7 @@ public List<FileVO> selectImg(String parent) {
 		
 		try {
 			con = getConnection();
-			String sql = "UPDATE `board_article` SET "
-						+ " `title`=?,"
-						+ " `content`=?"
-						+ "WHERE `no`=?";
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.UPDATE_ARTICLE);
 			psmt.setString(1, title);
 			psmt.setString(2, content);
 			psmt.setString(3, no);

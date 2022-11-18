@@ -141,7 +141,7 @@
                 <tr>
                     <td>></td>
                     <td>
-                        <a "/FarmStory1/board/view.jsp?group=croptalk&cate=grow&no=<%= vo.getNo()%>&pg=1"><%= vo.getTitle() %></a>
+                        <a href="/FarmStory1/board/view.jsp?group=croptalk&cate=grow&no=<%= vo.getNo()%>&pg=1"><%= vo.getTitle() %></a>
                     </td>
                     <td><%= vo.getRdate() %></td>
                 </tr>

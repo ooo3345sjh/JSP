@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>
 
 <configuration>
-	<property name="NAME" value="FarmStory1"/>
+	<property name="NAME" value="BookStore2"/>
 	<import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
 	<import class="ch.qos.logback.core.ConsoleAppender"/>
 
@@ -25,9 +25,9 @@
 	
 	
 	<appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/var/log/FarmStory1/${NAME}.log</file>
+		<file>/logs/"BookStore2"/${NAME}.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">	    
-			<fileNamePattern>/var/log/${NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>/logs/${NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>100MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
@@ -37,7 +37,7 @@
 		</encoder>
 	</appender>
 
-	<root level="info"> <!-- 배포할때는 INFO로 바꾼다. -->
+	<root level="debug"> <!-- 배포할때는 INFO로 바꾼다. -->
 		<appender-ref ref="STDOUT"/>
 		<appender-ref ref="ROLLING"/>
 	</root>

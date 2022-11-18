@@ -346,6 +346,16 @@ footer > p > em {
 	color: #91BA15;
 	font-style: normal;
 }
+#sub > section > article > p{
+	margin-top: 10px;
+	line-height: 20px;
+	color: #666;
+}
+#sub > section > article > p > em {
+	font-weight: bold;
+	color: #91BA15;
+	font-style: normal;
+}
 
 
 /* 팜스토리 소개 */

@@ -1,3 +1,5 @@
+<%@page import="org.apache.commons.io.FileUtils"%>
+<%@page import="java.io.File"%>
 <%@page import="kr.co.FarmStory1.vo.ArticleVO"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.FarmStory1.dao.BoardDAO"%>
@@ -49,7 +51,13 @@
 	
 	
 	/* 페이지 End */
-	
+
+	// 리스트에 오면 임시 저장소 삭제 
+	String realPath = application.getRealPath("/");
+	File temp = new File(realPath, "/board/smartEditor/temp");
+	if(temp.exists()){
+		FileUtils.deleteDirectory(temp);
+	}
 	
 	pageContext.include("/board/_" + group + ".jsp");
 	

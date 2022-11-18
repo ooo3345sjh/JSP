@@ -23,6 +23,7 @@ public class Sql {
 	
 	// board
 	public static final String INSERT_ARTICLE = "INSERT INTO `board_article` SET "
+												+ "`cate`=?,"
 												+ "`title`=?,"
 												+ "`content`=?,"
 												+ "`file`=?,"
@@ -31,9 +32,9 @@ public class Sql {
 												+ "`rdate`=NOW()";
 
 	public static final String INSERT_FILE = "INSERT INTO `board_file` SET "
-			+ "`parent`=?,"
-			+ "`newName`=?,"
-			+ "`oriName`=?";
+											+ "`parent`=?,"
+											+ "`newName`=?,"
+											+ "`oriName`=?";
 	
 	public static final String INSERT_COMMENT = "INSERT INTO `board_article` SET "
 												+ "`parent`=?,"
@@ -43,17 +44,19 @@ public class Sql {
 												+ "`rdate`=NOW()";
 
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
-	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article` WHERE `parent`=0";
-	public static final String SELECT_ARTICLES = "SELECT a.*, nick FROM `board_article` a JOIN "
-											  + " `board_user` u on a.uid = u.uid "
-											  + " WHERE `parent`= 0 "
-											  + " order by a.no DESC "
-											  + " LIMIT ?, 10";
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article` "
+			   									  + " WHERE `cate`=? ";
+	public static final String SELECT_ARTICLES = "SELECT a.*, u.nick FROM `board_article` a "
+											   + " JOIN `board_user` u "
+											   + " ON a.uid = u.uid "
+											   + " WHERE a.cate=? and a.parent=0 "
+											   + " ORDER BY a.`no` desc"
+											   + " limit ?, 10 ";
 	
-	public static final String SELECT_ARTICLE = "SELECT a.*, f.fno, f.parent AS pno, f.newName, f.oriName, f.download "
-											  + " FROM `board_article` a LEFT JOIN `board_file` f "
-											  + " ON a.no = f.parent "
-			                                  + " WHERE a.`no`= ?";
+	public static final String SELECT_ARTICLE = "SELECT a.*, f.`oriName`, f.`download` FROM `board_article` a "
+									          + "LEFT JOIN `board_file` f "
+									          + "ON a.`no`= f.`parent` "
+									          + "WHERE `no`=?";
 	
 	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
 	public static final String SELECT_FILE_IMG = "SELECT * FROM `board_file` WHERE `parent`=? and `oriName`='삽입 이미지'";
@@ -83,7 +86,9 @@ public class Sql {
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit`+ 1 WHERE `no` = ?"; 
 	public static final String UPDATE_ARTICLE_COMMENT_PLUSE = "UPDATE `board_article` SET `comment` = `comment`+ 1 WHERE `no`= ?";
-	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download`+ 1 WHERE `fno` = ?"; 
+	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET "
+												    + " `download` = `download` + 1 "
+												    + "WHERE `parent` = ? ";
 	public static final String UPDATE_COMMENT = "UPDATE `board_article` SET "
 											  + " `content`=?, " 
 											  + " `rdate`=NOW() " 
@@ -101,11 +106,15 @@ public class Sql {
 	public static final String DELETE_FILE = "DELETE FROM `board_file` WHERE `parent`=? ";
 	public static final String DELETE_COMMENT = "DELETE FROM `board_article` WHERE `no`=? ";
 
-	public static final String DELETE_ARTICLE = "DELETE FROM `board_article` WHERE `no`=? OR `parent`=? ";
+	public static final String DELETE_ARTICLE = "DELETE a.*, f.* FROM `board_article` a "
+											   + "LEFT JOIN `board_file` f "
+											   + "ON a.`no` = f.`parent` "
+											   + "WHERE a.`no`=? or a.`parent`=? ";
 	public static final String DELETE_ARTICLE_FILE = "DELETE a.*, f.* FROM " 
 												   + " `board_article` AS a "
 												   + " LEFT JOIN " 
 												   + "`board_file` AS f "
 												   + " ON a.no = f.parent "
 												   + " WHERE a.`no`= ?  OR a.`parent`= ?";
+	public static final String DELETE_ALL_IMG = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'";
 }

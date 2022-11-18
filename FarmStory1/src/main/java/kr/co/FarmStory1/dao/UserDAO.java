@@ -27,8 +27,7 @@ public class UserDAO extends DBHelper {
 		try {
 			logger.info("selectUser...");
 			con = getConnection();
-			String sql = "SELECT * FROM `board_user` WHERE `uid`=? and `pass`=SHA2(?, 256)";
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.SELECT_USER);
 			psmt.setString(1, uid);
 			psmt.setString(2, pass);
 			rs = psmt.executeQuery();
@@ -52,30 +51,17 @@ public class UserDAO extends DBHelper {
 			close();
 			
 		} catch (Exception e) {
-			System.out.println("조건에 맞는 회원 조회 중에 에러발생");
 			logger.error(e.getMessage());
 		}
 		logger.debug("vo : " + vo);
 		return vo;
 	}
-	public void selectUsers() {}
+	
 	public void insertUser(UserVO vo) {
 		try {
 			logger.info("insertUser...");
 			con = getConnection();
-			String sql = "INSERT INTO `board_user` SET "
-					   + " `uid`=?, "
-					   + " `pass`=SHA2(?, 256), "
-					   + " `name`=?, "
-					   + " `nick`=?, "
-					   + " `email`=?, "
-					   + " `hp`=?, "
-					   + " `zip`=?, "
-					   + " `addr1`=?, "
-					   + " `addr2`=?, "
-					   + " `regip`=?, "
-					   + " `rdate`=NOW() ";
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(Sql.INSERT_USER);
 			psmt.setString(1, vo.getUid());
 			psmt.setString(2, vo.getPass());
 			psmt.setString(3, vo.getName());
@@ -91,7 +77,6 @@ public class UserDAO extends DBHelper {
 			
 			close();
 		} catch (Exception e) {
-			System.out.println("User등록 중에 에러발생");
 			logger.error(e.getMessage());
 		}
 	}
@@ -104,7 +89,7 @@ public class UserDAO extends DBHelper {
 			con = getConnection();
 			stmt = con.createStatement();
 			String sql = "SELECT * FROM `board_terms`";
-			rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(Sql.SELECT_TERMS);
 			
 			map = new HashMap<>() {
 				private static final long serialVersionUID = 1L;
@@ -123,7 +108,6 @@ public class UserDAO extends DBHelper {
 			close();
 			
 		} catch (Exception e) {
-			System.out.println("약관동의를 불러오는 중에 에러 발생");
 			logger.error(e.getMessage());
 		}
 		logger.debug("map : " + map.toString());
@@ -177,9 +161,4 @@ public class UserDAO extends DBHelper {
 		
 		return result;
 	}
-	public void deleteUser() {}
-	public void updateUser() {}
-	
-	
-
 }
