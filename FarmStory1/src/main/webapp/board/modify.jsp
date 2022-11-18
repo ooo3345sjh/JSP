@@ -22,6 +22,7 @@
 	        	<input type="hidden" name="pg" value="<%= pg %>">
 	        	<input type="hidden" name="group" value="<%= group %>">
 	        	<input type="hidden" name="cate" value="<%= cate %>">
+	        	<input type="hidden" name="img">
 	            <table border="0">
 	             <caption>글수정</caption>
 	             <tr>

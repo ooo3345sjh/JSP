@@ -204,8 +204,9 @@ public class BoardDAO extends DBHelper {
 		return latests;
 	}
 	
-	public FileVO selectFile(String parent) {
-		FileVO vo = null;
+	public List<FileVO> selectFile(String parent) {
+		
+		List<FileVO> lists = null;
 		
 		try {
 			con = getConnection();
@@ -219,14 +220,16 @@ public class BoardDAO extends DBHelper {
 			psmt.setString(1, parent);
 			
 			rs = psmt.executeQuery();
+			lists = new ArrayList<>();
 			
-			if(rs.next()) {
-				vo = new FileVO();
+			while(rs.next()) {
+				FileVO vo = new FileVO();
 				vo.setFno(rs.getInt(1));
 				vo.setParent(rs.getInt(2));
 				vo.setNewName(rs.getString(3));
 				vo.setOriName(rs.getString(4));
 				vo.setDownload(rs.getInt(5));
+				lists.add(vo);
 			}
 			PreparedStatement updatePsmt = con.prepareStatement(updateDownloadCount);
 			updatePsmt.setString(1, parent);
@@ -238,8 +241,8 @@ public class BoardDAO extends DBHelper {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		logger.debug("vo : " + vo);
-		return vo;
+		logger.debug("lists : " + lists);
+		return lists;
 	}
 	
 	public List<ArticleVO> selectComments(String parent) {
@@ -277,6 +280,41 @@ public class BoardDAO extends DBHelper {
 		}
 		
 		return comments;
+	}
+	
+public List<FileVO> selectImg(String parent) {
+		
+		List<FileVO> files = null;
+		
+		try{
+			logger.info("selectImg");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_FILE_IMG);
+			psmt.setString(1, parent);
+			
+			rs = psmt.executeQuery();
+			
+			files = new ArrayList<>();
+			
+			while(rs.next()){
+				FileVO fb = new FileVO();
+				fb.setFno(rs.getInt(1));
+				fb.setParent(rs.getInt(2));
+				fb.setNewName(rs.getString(3));
+				fb.setOriName(rs.getString(4));
+				fb.setDownload(rs.getInt(5));
+				
+				files.add(fb);
+			}
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+		return files;
 	}
 	
 	public void insertFile(int parent, String newName, String oriName) {
@@ -399,6 +437,36 @@ public class BoardDAO extends DBHelper {
 		return map;
 	}
 	
+	public void insertFiles(int parent, String[] fNames) {
+		logger.info("insertFiles");
+		try{
+			con = getConnection();
+			String sql = "INSERT INTO `board_file` (`parent`, `newName`, `oriName`)"
+					+ " VALUES ";
+			for(int i=0; i<fNames.length; i++) {
+				if(i == fNames.length-1) {
+					sql += " (?,?,'삽입 이미지'); ";
+				} else {
+					sql += " (?,?,'삽입 이미지'), ";
+				}
+			}
+			
+			psmt = con.prepareStatement(sql);
+			int num = 1;
+			for(int i=0; i<fNames.length; i++) {
+				psmt.setInt(num++, parent);
+				psmt.setString(num++, fNames[i]);
+			}
+			
+			psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
 	public void deleteArticle(String no) {
 		try {
 			logger.info("deleteArticle");
@@ -448,6 +516,63 @@ public class BoardDAO extends DBHelper {
 		
 		return result;
 	}
+	
+	public void deleteSelectedImg(String no, String[] fileNames) {
+		try {
+			logger.info("deleteSelectedImg");
+			con = getConnection();
+			
+			String sql = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'"
+					   + " and `newName` NOT IN (";
+			
+			for(int i=0; i<fileNames.length; i++) {
+				if(i == fileNames.length-1) {
+					sql += "?)";
+					break;
+				}
+				sql += "?,";
+			}
+			
+			PreparedStatement psmt = con.prepareStatement(sql);
+			
+			psmt.setString(1, no);
+			
+			int num = 2;
+			for(int i=0; i<fileNames.length; i++) {
+				psmt.setString(num++, fileNames[i]);
+			}
+			
+			psmt.executeUpdate();
+			
+		    close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public void deleteAllImg(String no) {
+		
+		try {
+			logger.info("deleteImg");
+			con = getConnection();
+			
+			String sql = "DELETE FROM `board_file` WHERE `parent`=? and `oriName`= '삽입 이미지'";
+			
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setString(1, no);
+			
+			psmt.executeUpdate();
+		 
+			close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
 	public void updateArticle(String no, String title, String content) {
 		
 		try {

@@ -2,7 +2,10 @@
  * {
     margin: 0;
     padding: 0;
-    font: normal 12px '돋움';
+    
+}
+body{
+	font: normal 12px '돋움';
 }
 ul, ol {list-style: none; }
 a {text-decoration: none; color: black;}
@@ -250,6 +253,7 @@ footer > p {
 footer > p > em {
     color: #888;
     font-weight: bold;
+    font-style: normal;
 }
 
 
@@ -340,6 +344,7 @@ footer > p > em {
 #sub > section > article > nav > p > em {
 	font-weight: bold;
 	color: #91BA15;
+	font-style: normal;
 }
 
 

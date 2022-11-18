@@ -9,24 +9,6 @@
 	pageContext.include("/board/_" + group + ".jsp");
 %>
 <script>
-/*
-	$(function () {
-		$('.btnComplete').click(function (e) {
-			let title = $('input[name=title]');
-			let content = $('textarea[name=content]');
-			if(title.val() == ''){
-				alert('제목을 입력해주세요.');
-				title.focus();
-				return false;
-			}
-			if(content.val() == ''){
-				alert('내용을 입력해주세요.');
-				content.focus();
-				return false;
-			}
-		})
-	});
-	*/
 	smarteditor();
 </script>
 	<main id="board">
@@ -35,6 +17,7 @@
 	        	<input type="hidden" name="uid" value="<%= user.getUid() %>">
 	        	<input type="hidden" name="group" value="<%= group %>">
 	        	<input type="hidden" name="cate" value="<%= cate %>">
+	        	<input type="hidden"  name="img">
 	            <table border="0">
 	             <caption>글쓰기</caption>
 	             <tr>

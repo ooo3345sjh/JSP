@@ -36,10 +36,10 @@ public class Sql {
 			+ "`oriName`=?";
 
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article` WHERE `cate`='free'";
-	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article` WHERE `cate`='free'";
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article` WHERE `cate`='free' and `parent`=0";
 	public static final String SELECT_ARTICLES = "SELECT a.*, nick FROM `board_article` a JOIN "
 											  + " `board_user` u on a.uid = u.uid "
-											  + " WHERE a.`cate`='free' "
+											  + " WHERE a.`cate`='free' and a.`parent`= 0 "
 											  + " order by a.no DESC "
 											  + " LIMIT ?, 10";
 	

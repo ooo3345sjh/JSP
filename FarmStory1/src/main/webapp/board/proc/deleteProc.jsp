@@ -1,3 +1,6 @@
+<%@page import="java.io.File"%>
+<%@page import="kr.co.FarmStory1.vo.FileVO"%>
+<%@page import="java.util.List"%>
 <%@page import="kr.co.FarmStory1.utils.JSFunction"%>
 <%@page import="kr.co.FarmStory1.vo.UserVO"%>
 <%@page import="kr.co.FarmStory1.dao.BoardDAO"%>
@@ -24,7 +27,29 @@
 	String cate = request.getParameter("cate");
 	String no = request.getParameter("no");
 	
-	BoardDAO.getInstance().deleteArticle(no);
+	BoardDAO dao = BoardDAO.getInstance();
+	
+	
+	// 파일 이름 가져오기
+		List<FileVO> files = dao.selectFile(no);
+		
+		// 글 삭제 + 댓글 삭제 + 파일 삭제 + 삽입 이미지 삭제
+		dao.deleteArticle(no);
+		
+		// 파일 삭제(디렉터리)
+		if(!files.isEmpty()){
+			String savePath = application.getRealPath("/file");
+			
+			for(FileVO fb : files){
+				String fileName = fb.getNewName(); 
+		
+				File file = new File(savePath, fileName);
+				
+				if(file.exists()){
+					file.delete();
+				}
+			}
+		}
 	
 	response.sendRedirect("/FarmStory1/board/list.jsp?group=" + group + "&cate=" + cate);
 %>

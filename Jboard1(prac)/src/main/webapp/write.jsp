@@ -3,24 +3,7 @@
 <script type="text/javascript" src="/Jboard1/smartEditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script src="/Jboard1/js/smartEditor.js"></script>
 <script>
-
-		smarteditor();
-/*
-	function vaildateForm(form) {
-		if(form.title.value == ""){
-			alert('제목을 입력해주세요.');
-			form.title.focus();
-			return false;
-		}
-		if(form.content.value == ""){
-			alert('내용을 입력해주세요.');
-			form.content.focus();
-			return false;
-		}
-		return true;
-	}
-	
-	*/
+	smarteditor();
 </script>
 	<main id="board">
 	    <section class="write">

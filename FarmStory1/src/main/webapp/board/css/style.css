@@ -87,9 +87,11 @@
      height: 50px;
      background-color: #f5f8f9;
  }
+ 
+ 
  #board .write table td > input {
      width: 400px;
-     height: 24px;
+     height: 25px;
      border: none;
  }
  #board .write table td > textarea {
@@ -177,6 +179,7 @@
     height: 50px;
     background-color: #f5f8f9;
 }
+#board .view table .contentTrTag {height: 250px;}
 #board .view table td > input {
     width: 400px;
     height: 24px;

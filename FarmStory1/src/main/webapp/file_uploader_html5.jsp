@@ -37,7 +37,7 @@
         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
         //파일 기본경로 _ 상세경로
         String filePath = dftFilePath + "file" + File.separator;
-        String tempFilePath = dftFilePath + "smartEditor" + File.separator + "temp" + File.separator; // 임시 저장소 경로
+        String tempFilePath = dftFilePath + "/board/smartEditor" + File.separator + "temp" + File.separator; // 임시 저장소 경로
         File file = new File(filePath);
         if (!file.exists()) {
             file.mkdirs();
