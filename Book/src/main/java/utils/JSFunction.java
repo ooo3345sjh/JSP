@@ -67,7 +67,7 @@ public class JSFunction {
 	// 메시지 알림창을 띄운 후 이전 페이지로 돌아갑니다.
 	public static void alertBack(HttpServletResponse resp, String msg) {
 		try {
-			resp.setContentType("text/html charset=UTF-8");
+			resp.setContentType("text/html; charset=utf-8");
 			PrintWriter writer = resp.getWriter(); 
 			String script = "" 
 					+ "<script>"

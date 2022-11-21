@@ -19,13 +19,6 @@ import kr.co.FarmStory1.vo.FileVO;
 
 public class BoardDAO extends DBHelper {
 	
-	private static BoardDAO instance = new BoardDAO();
-	
-	public static BoardDAO getInstance() {
-		return instance;
-	}
-	private BoardDAO() {}
-	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public int selectArticleCountTotal(String cate) {

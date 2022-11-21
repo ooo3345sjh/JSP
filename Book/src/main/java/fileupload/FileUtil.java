@@ -35,6 +35,7 @@ public class FileUtil {
 	public static void download(HttpServletRequest req, HttpServletResponse resp, String directory, String sfileName, String ofileName) {
 		String sDirectory = req.getServletContext().getRealPath(directory);
 		
+		System.out.println(sfileName + " " + ofileName);
 		try {
 			// 한글 파일명 깨짐 방지
 			String client = req.getHeader("User-Agent");
@@ -77,6 +78,18 @@ public class FileUtil {
 		} catch (Exception e) {
 			System.out.println("예외가 발생했습니다.");
 			e.printStackTrace();
+		}
+		
+	}
+	
+
+	// 지정한 위치의 파일을 삭제합니다.
+	public static void deleteFile(HttpServletRequest req, String directory, 
+			String filename) {
+		String sDirectory = req.getServletContext().getRealPath(directory);
+		File file = new File(sDirectory + File.separator + filename);
+		if(file.exists()) {
+			file.delete();
 		}
 	}
 }

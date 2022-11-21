@@ -192,9 +192,11 @@ public class MVCboardDAO extends DBConnPool { // 커넥션 풀 상속
 			psmt.setString(1, pass);
 			psmt.setString(2, idx);
 			rs = psmt.executeQuery();
-			if(!rs.next()) {
+			rs.next();
+			if(rs.getInt(1) <= 0) {
 				isCorr = false;
-			};
+			}
+			
 		} catch (Exception e) {
 			isCorr = false;
 			e.printStackTrace();
@@ -214,6 +216,41 @@ public class MVCboardDAO extends DBConnPool { // 커넥션 풀 상속
 			
 		} catch (Exception e) {
 			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 게시글 데이터를 받아 DB에 저장되어 있던 내용을 갱신합니다.(파일 업로드 지원)
+	public int updatePost(MVCBoardDTO dto) {
+		int result = 0;
+		
+		try {
+			// 쿼리문 템플리 준비
+			String sql = "UPDATE `mvcboard` SET"
+					   + " `title`=?,"
+					   + " `name`=?,"
+					   + " `content`=?,"
+					   + " `ofile`=?,"
+					   + " `sfile`=?"
+					   + " WHERE `idx`=? AND `pass`=?";
+			
+			// 쿼리문 준비 
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getName());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getOfile());
+			psmt.setString(5, dto.getSfile());
+			psmt.setString(6, dto.getIdx());
+			psmt.setString(7, dto.getPass());
+			
+			// 쿼리문 실행
+			result = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("게시물 수정 중 예외 발생");
 			e.printStackTrace();
 		}
 		

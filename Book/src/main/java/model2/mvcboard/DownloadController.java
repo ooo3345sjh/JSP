@@ -27,8 +27,9 @@ public class DownloadController extends HttpServlet {
 		String sfile = req.getParameter("sfile"); // 저장된 파일명
 		String idx = req.getParameter("idx"); // 게시물 일련번호
 		
+		System.out.println("sfile : " + sfile);
 		// 파일 다운로드
-		FileUtil.download(req, resp, "/Uploads", sfile, ofile);
+		FileUtil.download(req, resp, "/file", sfile, ofile);
 		
 		// 해당 게시물의 다운로드 수 1 증가
 		MVCboardDAO dao = new MVCboardDAO();

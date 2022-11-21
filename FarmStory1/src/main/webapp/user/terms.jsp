@@ -3,7 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
 <%
-	Map<String, Object> map = UserDAO.getInstance().selectTerms();
+	Map<String, Object> map = new UserDAO().selectTerms();
 %>
 <script>
 	// 동의 체크박스 체크가 되어있지 않으면 다음으로 진행 못하게 하는 함수

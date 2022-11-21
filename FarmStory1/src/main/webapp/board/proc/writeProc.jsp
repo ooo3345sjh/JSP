@@ -34,7 +34,7 @@
  	vo.setFname(fname);
  	vo.setUid(uid);
  	
- 	BoardDAO dao = BoardDAO.getInstance();
+ 	BoardDAO dao = new BoardDAO();
  	
  	// 글등록
  	int parent = dao.insertArticle(vo);

@@ -27,7 +27,7 @@
 	String cate = request.getParameter("cate");
 	String no = request.getParameter("no");
 	
-	BoardDAO dao = BoardDAO.getInstance();
+	BoardDAO dao = new BoardDAO();
 	
 	
 	// 파일 이름 가져오기

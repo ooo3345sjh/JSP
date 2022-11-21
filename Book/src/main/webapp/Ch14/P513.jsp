@@ -53,7 +53,7 @@
 					<td> 
 						<c:if test="${ not empty dto.ofile }">
 							${ dto.ofile }<a href="/Book/Ch14/download.do?ofile=${ dto.ofile }
-							&sfile$=${ dto.sfile }&idx=${dto.idx}">
+							&sfile=${ dto.sfile }&idx=${dto.idx}">
 							다운로드</a>
 						</c:if>
 					</td>

@@ -5,7 +5,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
 <%
- 	Map<String, List<ArticleVO>> map = BoardDAO.getInstance().selectLatests("grow", "school", "story");
+ 	Map<String, List<ArticleVO>> map = new BoardDAO().selectLatests("grow", "school", "story");
 	List<ArticleVO> grows = map.get("grow"); 
 	List<ArticleVO> storys = map.get("story"); 
 	List<ArticleVO> schools = map.get("school"); 

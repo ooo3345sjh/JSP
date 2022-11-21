@@ -10,7 +10,7 @@
 	String pg = request.getParameter("pg");
 	String group = request.getParameter("group");
 	String cate = request.getParameter("cate");
-	BoardDAO dao = BoardDAO.getInstance();
+	BoardDAO dao = new BoardDAO();
 	
 	/* 페이지 Start */
 	int limitStart = 0; // 현재 페이지에서 시작하는 게시물 시작값

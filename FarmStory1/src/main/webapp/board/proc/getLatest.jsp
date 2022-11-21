@@ -7,7 +7,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String cate = request.getParameter("cate");
 
-	List<ArticleVO> latests = BoardDAO.getInstance().selectLatests(cate);
+	List<ArticleVO> latests = new BoardDAO().selectLatests(cate);
 	
 	Gson gson = new Gson();
 	String jsonData = gson.toJson(latests);

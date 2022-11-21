@@ -15,7 +15,7 @@
 	String content = request.getParameter("editorTxt");
 	String no = request.getParameter("no");
 	String img = request.getParameter("img");
-	BoardDAO dao = BoardDAO.getInstance();
+	BoardDAO dao = new BoardDAO();
 	dao.updateArticle(no, title, content);
 	
 	/****** 2. 이미지 파일 삽입시 ******/

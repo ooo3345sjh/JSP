@@ -15,7 +15,7 @@
 	String no = request.getParameter("no");
 	
 	// 데이터베이스 작업
-	BoardDAO dao = BoardDAO.getInstance();
+	BoardDAO dao = new BoardDAO();
 	int result = dao.updateComment(comment, no);
 	
 	// JSON 데이터 변환 및 전송

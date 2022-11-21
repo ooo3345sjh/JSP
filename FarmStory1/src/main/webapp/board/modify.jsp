@@ -8,7 +8,7 @@
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
 	
-	ArticleVO vo = BoardDAO.getInstance().selectArticle(no);
+	ArticleVO vo = new BoardDAO().selectArticle(no);
 	
 	pageContext.include("/board/_" + group + ".jsp");
 %>

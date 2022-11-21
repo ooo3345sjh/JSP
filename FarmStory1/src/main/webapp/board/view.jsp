@@ -8,7 +8,7 @@
 	String cate = request.getParameter("cate");
 	String pg = request.getParameter("pg");
 	String no = request.getParameter("no");
-	BoardDAO dao = BoardDAO.getInstance();
+	BoardDAO dao = new BoardDAO();
 	
 	dao.updateArticleHit(no); // 조회수 올리는 메서드
 	ArticleVO vo = dao.selectArticle(no); // 조건에 해당하는 게시물을 가져온다.

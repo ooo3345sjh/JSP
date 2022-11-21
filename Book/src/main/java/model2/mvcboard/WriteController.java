@@ -66,8 +66,8 @@ public class WriteController extends HttpServlet {
 			String newFileName = now + ext; 
 			
 			// 파일명 변경
-			File oldFile = new File(saveDirectory + "/" + newFileName);
-			File newFile = new File(saveDirectory + "/" + fileName);
+			File oldFile = new File(saveDirectory + "/" + fileName);
+			File newFile = new File(saveDirectory + "/" + newFileName);
 			oldFile.renameTo(newFile);
 			
 			dto.setOfile(fileName); // 원래 파일 이름 
@@ -81,9 +81,9 @@ public class WriteController extends HttpServlet {
 		
 		// 성공 or 실패?
 		if(result == 1) {
-			resp.sendRedirect("/Book/mvcboard/list.do");
+			resp.sendRedirect("/Book/Ch14/list.do");
 		} else { // 글쓰기 실패
-			resp.sendRedirect("/Book/mvcboard/write.do");
+			resp.sendRedirect("/Book/Ch14/write.do");
 		}
 		
 	}

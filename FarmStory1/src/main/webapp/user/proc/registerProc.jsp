@@ -26,7 +26,7 @@
 	vo.setAddr2(addr2);
 	vo.setRegip(regip);
 	
-	UserDAO.getInstance().insertUser(vo);
+	new UserDAO().insertUser(vo);
 	
 	response.sendRedirect("/FarmStory1/index.jsp");
 %>

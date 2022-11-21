@@ -14,12 +14,6 @@ import kr.co.FarmStory1.vo.UserVO;
  */
 public class UserDAO extends DBHelper {
 	
-	private static UserDAO instance = new UserDAO();
-	public static UserDAO getInstance() {
-		return instance;
-	}
-	private UserDAO() {}
-	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public UserVO selectUser(String uid, String pass) {

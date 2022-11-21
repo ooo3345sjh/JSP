@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.BufferedOutputStream"%>
@@ -15,7 +16,15 @@
 	String parent = request.getParameter("parent");
 	
 	// 파일 정보 가져오기
-	FileVO vo = BoardDAO.getInstance().selectFile(parent);
+	List<FileVO> files = new BoardDAO().selectFile(parent);
+	
+	FileVO vo = null;
+	
+	for(FileVO file : files){
+		if(!file.getOriName().equals("삽입 이미지")){
+			vo = file;
+		}
+	}
 	
 	// 파일 다운로드 response 헤더수정
 	response.reset();

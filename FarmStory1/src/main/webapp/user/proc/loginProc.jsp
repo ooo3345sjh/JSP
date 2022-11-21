@@ -7,7 +7,7 @@
 	String uid = request.getParameter("uid");
 	String pass = request.getParameter("pass");
 	
-	UserVO user = UserDAO.getInstance().selectUser(uid, pass);
+	UserVO user = new UserDAO().selectUser(uid, pass);
 
 	if(user != null){
 		session.setAttribute("user", user);

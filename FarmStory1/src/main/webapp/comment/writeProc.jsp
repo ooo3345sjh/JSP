@@ -35,7 +35,7 @@
 	vo.setRegip(regip);
 	
 	// CommentDAO 객체 생성
-	BoardDAO dao = BoardDAO.getInstance();
+	BoardDAO dao = new BoardDAO();
 	Map<String, Integer> map = dao.insertComment(vo);
 	
 	int result = map.get("result"); // 결과값
