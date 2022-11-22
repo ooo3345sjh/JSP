@@ -136,4 +136,9 @@
  	<param-name>maxPostSize</param-name>
  	<param-value>1024000</param-value>
  </context-param>
+<!-- P554 채팅 서버에 접속하기 위한 요청 URL -->
+ <context-param>
+ 	<param-name>CHAT_ADDR</param-name>
+ 	<param-value>ws://localhost/Ch15</param-value>
+ </context-param>
 </web-app>
