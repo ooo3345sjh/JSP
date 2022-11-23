@@ -104,6 +104,7 @@ public class UserDAO extends DBHelper {
 	
 	
 	// login
+	// 로그인시 입력한 id, pass와 같은 회원정보를 가져오는 메서드
 	public UserVO selectUser(String uid, String pass) {
 		UserVO vo = null;
 		
@@ -130,6 +131,31 @@ public class UserDAO extends DBHelper {
 				vo.setAddr2(rs.getString(10));
 				vo.setRegip(rs.getString(11));
 				vo.setRdate(rs.getString(12));
+			}
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("vo : " + vo);
+		return vo;
+	}
+	public UserVO selectUserForFindId(String name, String email) {
+		UserVO vo = null;
+		try {
+			logger.info("selectUserForFindId...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.SELECT_USER_FOR_FIND_ID);
+			psmt.setString(1, name);
+			psmt.setString(2, email);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new UserVO();
+				vo.setUid(rs.getString("uid"));
+				vo.setName(rs.getString("name"));
+				vo.setEmail(rs.getString("email"));
+				vo.setRdate(rs.getString("rdate"));
 			}
 			
 			close();

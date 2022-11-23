@@ -53,6 +53,10 @@ public enum UserService {
 		return dao.selectUser(uid, pass);
 	}
 	
+	public UserVO selectUserForFindId(String name, String email) {
+		return dao.selectUserForFindId(name, email);
+	}
+	
 	// 자동로그인시 로그인 회원 정보 가져오는 메서드
 	public UserVO selectUser(String uid) {
 		return dao.selectUser(uid);

@@ -24,6 +24,7 @@ public class EmailAuthController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 		
 		int[] result = service.sendEmailCode(email);

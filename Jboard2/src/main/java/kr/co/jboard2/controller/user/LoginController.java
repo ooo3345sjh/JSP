@@ -24,6 +24,8 @@ public class LoginController  extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String success = req.getParameter("success");
+		req.setAttribute("success", success);
 		
 		Cookie[] cookies = req.getCookies(); // 쿠키 정보 얻기
 		if(cookies != null) { // 쿠키가 있다면
@@ -31,7 +33,7 @@ public class LoginController  extends HttpServlet{
 				String key = cookie.getName();
 				if(key.equals("autoLogin")) { // 쿠키에 key 값이 'auto'가 있다면
 					UserVO vo= service.selectUser(key); // 자동 로그인 회원정보를 가져온다.
-					req.getSession(true).setAttribute("sessUser", vo); // 세션에 회원 정보 저장
+					req.getSession(true).setAttribute("sessUser", vo);   // 세션에 회원 정보 저장
 					resp.sendRedirect(req.getContextPath()+ "/list.do"); // 게시판 리스트 뷰를 보여준다.
 					return;
 				}
@@ -49,16 +51,21 @@ public class LoginController  extends HttpServlet{
 		UserVO vo = service.selectUser(uid, pass);	 // DB에서 입력한 로그인 정보와 일치하는 회원 정보를 가져온다. 
 		
 		if(vo != null) { // 로그인 입력한 정보와 일치한 회원이 있으면
+			
 			req.getSession(true).setAttribute("sessUser", vo); // 세션에 회원 정보 저장
-			if("on".equals(autoLogin)) { // 자동 로그인 체크가 되어있으면 쿠키 저장
-				Cookie cookie = new Cookie("autoLogin", uid);
+			
+			if("on".equals(autoLogin)) { // 자동 로그인 체크가 되어있으면
+				Cookie cookie = new Cookie("autoLogin", uid); // 쿠키 생성
 				cookie.setPath(req.getContextPath()); // 쿠키 경로
 				cookie.setMaxAge(60*60*24); 		  // 쿠키 저장 시간 1일
-				resp.addCookie(cookie);
+				resp.addCookie(cookie);               // 응답 객체에 추가
 			}
+			
+			resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 리스트 뷰로 이동
+		} else { // 입력한 정보와 일치하는 회원이 없으면
+			resp.sendRedirect(req.getContextPath() + "/user/login.do?success=100"); // 게시판 리스트 뷰로 이동
 		}
 		
-		resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 리스트 뷰로 이동
 	}
 
 }

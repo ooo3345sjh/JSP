@@ -522,6 +522,7 @@ footer > p {
     padding: 4px;    
     border: 1px solid #bebebe; 
     text-align: center;
+   	cursor: pointer;
 }
 
 /* 아이디, 비밀번호 찾기 공통 */
@@ -576,4 +577,12 @@ footer > p {
 #user > .find > div {
     float: right;
     margin-top: 10px;
+}
+
+#user > .find .resultEmail {
+	display: block;
+	margin-top: 5px;
+}
+#user > .find #btnEmailConfirm {
+	pointer-events : none;
 }

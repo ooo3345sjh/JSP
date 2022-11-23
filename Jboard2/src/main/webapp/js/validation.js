@@ -184,7 +184,7 @@
 			email = $('input[name=email]').val();
 			
 			if(isClick){ // 중복확인을 이미 한번 누른 상태이면
-				alert('이미 인증번호 받기 버튼을 누르셨습니다.');
+				alert('이미 인증번호가 전송 중입니다. \n전송완료 메시지가 나타나면 입력한 이메일을 확인 해주세요.');
 				return;
 			}
 			
@@ -205,8 +205,6 @@
 						emailCode = data.code;
 						
 						$('.emailResult').text('인증코드를 전송했습니다. 이메일을 확인 하세요.');
-						
-						
 					} else {
 						// 메일발송 실패
 						$('.emailResult').text('이메일을 실패했습니다. 이메일을 확인 후 다시 시도 하시기 바랍니다.');

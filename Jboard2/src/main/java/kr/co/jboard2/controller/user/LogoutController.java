@@ -36,8 +36,9 @@ public class LogoutController  extends HttpServlet{
 			}
 		}
 		
-		req.getSession().invalidate(); // 세션 제거
-		resp.sendRedirect(req.getContextPath() + "/user/login.do"); // 로그인 뷰를 보여준다.
+		req.getSession().removeAttribute("sessUser"); // 회원정보 세션 제거
+		req.getSession().invalidate(); // 모든 세션 제거
+		resp.sendRedirect(req.getContextPath() + "/user/login.do?success=200"); // 로그인 뷰를 보여준다.
 	}
 	
 	@Override
