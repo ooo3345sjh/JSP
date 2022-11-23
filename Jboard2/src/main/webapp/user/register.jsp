@@ -1,16 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" session="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="./_header.jsp"/>
         <main id="user">
             <section class="register">
-
-                <form action="#">
+                <form action='<c:url value="/user/register.do"/>' method="post">
                     <table border="1">
                         <caption>사이트 이용정보 입력</caption>
                         <tr>
                             <td>아이디</td>
                             <td>
                                 <input type="text" name="uid" placeholder="아이디 입력"/>
-                                <button type="button" id="btnIdCheck"><img src="../img/chk_id.gif" alt="중복확인"/></button>
+                                <button type="button" id="btnIdCheck"><img src="${pageContext.servletContext.contextPath}/img/chk_id.gif" alt="중복확인"/></button>
                                 <span class="uidResult"></span>
                             </td>
                         </tr>
@@ -50,11 +50,11 @@
                             <td>
                                 
                                 <input type="email" name="email" placeholder="이메일 입력"/>
-                                <button type="button" id="btnEmailAuth"><img src="../img/chk_auth.gif" alt="인증번호 받기"/></button>
+                                <button type="button" id="btnEmailAuth"><img src="${pageContext.servletContext.contextPath}/img/chk_auth.gif" alt="인증번호 받기"/></button>
                                 
                                 <div class="auth">
                                     <input type="text" name="auth" placeholder="인증번호 입력"/>
-                                    <button type="button" id="btnEmailConfirm"><img src="../img/chk_confirm.gif" alt="확인"/></button>
+                                    <button type="button" id="btnEmailConfirm"><img src="${pageContext.servletContext.contextPath}/img/chk_confirm.gif" alt="확인"/></button>
                                     <br/><span class="emailResult"></span>
                                 </div>
                             </td>
@@ -70,7 +70,7 @@
                             <td>주소</td>
                             <td>
                                 <input type="text" name="zip" id="zip" placeholder="우편번호"/>
-                                <button type="button" onclick="zipcode()"><img src="../img/chk_post.gif" alt="우편번호찾기"/></button>
+                                <button type="button" onclick="zipcode()"><img src="${pageContext.servletContext.contextPath}/img/chk_post.gif" alt="우편번호찾기"/></button>
                                 <input type="text" name="addr1" id="addr1" placeholder="주소 검색"/>
                                 <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
                             </td>
@@ -78,7 +78,7 @@
                     </table>
 
                     <div>
-                        <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
+                        <a href="<c:url value="/user/login.do"/>" class="btn btnCancel">취소</a>
                         <input type="submit" value="회원가입" class="btn btnRegister"/>
                     </div>
 

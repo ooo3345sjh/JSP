@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.jboard2.service.user.UserService;
-import kr.co.jboard2.vo.userVO;
+import kr.co.jboard2.vo.UserVO;
 
 @WebServlet("/user/register.do")
 public class RegisterController extends HttpServlet {
@@ -22,6 +22,12 @@ public class RegisterController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/user/register.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		String uid = req.getParameter("uid");
 		String pass = req.getParameter("pass1");
 		String name = req.getParameter("name");
@@ -31,16 +37,24 @@ public class RegisterController extends HttpServlet {
 		String zip = req.getParameter("zip");
 		String addr1 = req.getParameter("addr1");
 		String addr2 = req.getParameter("addr2");
+		String regip = req.getRemoteAddr();
 		
-		userVO vo = new userVO();
+		UserVO vo = new UserVO();
+		vo.setUid(uid);
+		vo.setPass(pass);
+		vo.setName(name);
+		vo.setNick(nick);
+		vo.setEmail(email);
+		vo.setHp(hp);
+		vo.setZip(zip);
+		vo.setAddr1(addr1);
+		vo.setAddr2(addr2);
+		vo.setRegip(regip);
 		
+		service.insertUser(vo);
 		
+		resp.sendRedirect(req.getContextPath() + "/user/login.do");
 		
-		req.getRequestDispatcher("/user/register.jsp").forward(req, resp);
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
 
 }

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="./_header.jsp"/>
         <main id="board">
             <section class="write">
@@ -13,7 +14,7 @@
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="content"></textarea>
+                                <textarea name="content">${cookie}</textarea>
                             </td>
                         </tr>
                         <tr>
@@ -25,7 +26,7 @@
                     </table>
                     
                     <div>
-                        <a href="./list.html" class="btn btnCancel">취소</a>
+                        <a href='<c:url value="/list.do"/>' class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>

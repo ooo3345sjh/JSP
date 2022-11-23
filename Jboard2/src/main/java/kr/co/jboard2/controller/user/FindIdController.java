@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/user/findid.do")
+@WebServlet("/user/findId.do")
 public class FindIdController extends HttpServlet {
 	@Override
 	public void init() throws ServletException {

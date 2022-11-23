@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" session="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="./_header.jsp"/>
 <script>
 	function isChecked() {
@@ -39,8 +40,8 @@
                 </table>
                 
                 <div>
-                    <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
-                    <a href="/Jboard2/user/register.do" class="btn btnNext" onclick="return isChecked();">다음</a>
+                    <a href="<c:url value='/user/login.do'/>" class="btn btnCancel">취소</a>
+                    <a href="<c:url value='/user/register.do'/>" class="btn btnNext" onclick="return isChecked();">다음</a>
                 </div>
 
             </section>

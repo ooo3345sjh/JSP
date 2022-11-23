@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.co.jboard2.dao.UserDAO;
 import kr.co.jboard2.vo.TermsVO;
-import kr.co.jboard2.vo.userVO;
+import kr.co.jboard2.vo.UserVO;
 
 public enum UserService {
 	
@@ -26,7 +26,12 @@ public enum UserService {
 	private UserService() {
 		dao = new UserDAO();
 	}
-	// register 
+	
+	/*** register ***/
+	// 약관 동의
+	public TermsVO selectTerms() {
+		return dao.selectTerms();
+	}
 	// 아이디 체크
 	public int checkUser(String uid) {
 		return dao.checkUser(uid);
@@ -37,16 +42,21 @@ public enum UserService {
 	}
 	
 	// 회원 등록
-	public void insertUser(userVO vo) {
-		dao.checkNick(null);
-		
+	public void insertUser(UserVO vo) {
+		dao.insertUser(vo);
 	}
 	
-	// login 
-	public TermsVO selectTerms() {
-		return dao.selectTerms();
+	/*** login ***/
+	
+	// 아이디 / 패스워드 확인
+	public UserVO selectUser(String uid, String pass) {
+		return dao.selectUser(uid, pass);
 	}
-	public void selectUser() {}
+	
+	// 자동로그인시 로그인 회원 정보 가져오는 메서드
+	public UserVO selectUser(String uid) {
+		return dao.selectUser(uid);
+	}
 	public void selectUsers() {}
 	
 	

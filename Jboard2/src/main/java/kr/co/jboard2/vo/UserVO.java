@@ -1,6 +1,6 @@
 package kr.co.jboard2.vo;
 
-public class userVO {
+public class UserVO {
 	private String uid;
 	private String pass;
 	private String name;
@@ -86,5 +86,14 @@ public class userVO {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	
+	@Override
+	public String toString() {
+		return "UserVO [uid=" + uid + ", pass=" + pass + ", name=" + name + ", nick=" + nick + ", email=" + email
+				+ ", hp=" + hp + ", grade=" + grade + ", zip=" + zip + ", addr1=" + addr1 + ", addr2=" + addr2
+				+ ", regip=" + regip + ", rdate=" + rdate + "]";
+	}
+	
+	
 	
 }
