@@ -23,18 +23,11 @@ public class LogoutController  extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Cookie[] cookies = req.getCookies(); // 쿠키 정보 얻기
-		if(cookies.length != 0) { // 쿠키가 있다면
-			for(Cookie cookie : cookies) {
-				String key = cookie.getName();
-				if(key.equals("autoLogin")) { // 쿠키에 key 값이 'autoLogin'가 있다면
-					Cookie deleteCookie = new Cookie(key, "");
-					deleteCookie.setMaxAge(0);      // 쿠키 삭제
-					deleteCookie.setPath(req.getContextPath());
-					resp.addCookie(deleteCookie);
-				}
-			}
-		}
+		// 쿠키 삭제
+		Cookie cookie = new Cookie("SESSID", "");
+		cookie.setPath(req.getContextPath());
+		cookie.setMaxAge(0);      
+		resp.addCookie(cookie);
 		
 		req.getSession().removeAttribute("sessUser"); // 회원정보 세션 제거
 		req.getSession().invalidate(); // 모든 세션 제거

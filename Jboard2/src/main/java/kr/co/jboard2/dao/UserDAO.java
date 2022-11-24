@@ -164,14 +164,14 @@ public class UserDAO extends DBHelper {
 	}
 	
 	// 자동 로그인 시 회원정보 가져오는 메서드
-	public UserVO selectUser(String uid) {
+	public UserVO selectUserBySessId(String sessId) {
 		UserVO vo = null;
 		
 		try {
 			logger.info("selectUser...");
 			con = getConnection();
-			psmt = con.prepareStatement(Sql.SELECT_AUTO_LOGIN);
-			psmt.setString(1, uid);
+			psmt = con.prepareStatement(Sql.SELECT_USER_BY_SESSID);
+			psmt.setString(1, sessId);
 			
 			rs = psmt.executeQuery();
 			
@@ -197,6 +197,48 @@ public class UserDAO extends DBHelper {
 		}
 		logger.debug("vo : " + vo);
 		return vo;
+	}
+	public int updateUserForSession(String uid, String sessId) {
+		int result = 0;
+		
+		try {
+			logger.info("updateUserForSession...");
+			
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.UPDATE_USER_FOR_SESSION);
+			psmt.setString(1, sessId);
+			psmt.setString(2, uid);
+			result = psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("reesult : " + result);
+		
+		return result;
+	}
+	
+	public int updateUserForSessLimitDate(String sessId) {
+		int result = 0;
+		
+		try {
+			logger.info("updateUserForSessLimitDate...");
+			
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.UPDATE_USER_FOR_SESS_LIMIT_DATE);
+			psmt.setString(1, sessId);
+			result = psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("reesult : " + result);
+		
+		return result;
 	}
 	
 	// 아이디 찾기

@@ -83,6 +83,7 @@ footer > p {
     margin-bottom: 4px;
     border: 1px solid #e4eaec;
     background: #f7f7f7;
+    text-indent: 5px;
 }
 #user > .login > form > .btnLogin {
     position: absolute;
@@ -92,8 +93,10 @@ footer > p {
     height: 52px;
     background-color: #fdfdfd;
     border: 1px solid #bebebe;
+    cursor: pointer;
 }
 #user > .login > form > label {
+	cursor: pointer;
     position: absolute;
     left: 78px;
     top: 90px;

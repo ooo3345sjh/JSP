@@ -58,8 +58,20 @@ public enum UserService {
 	}
 	
 	// 자동로그인시 로그인 회원 정보 가져오는 메서드
-	public UserVO selectUser(String uid) {
-		return dao.selectUser(uid);
+	public UserVO selectUserBySessId(String sessId) {
+		return dao.selectUserBySessId(sessId);
+	}
+	
+	// 자동로그인시 로그인시 현재 세션 ID와 쿠키 세션ID가 동일하지 않을때 만료일을 연장시키는 메서드
+	public int updateUserForSessLimitDate(String sessId) {
+		return dao.updateUserForSessLimitDate(sessId);
+	}
+	
+	
+	
+	// 자동 로그인 체크 후 로그인시 sessId DB에 저장
+	public int updateUserForSession(String uid, String sessId) {
+		return dao.updateUserForSession(uid, sessId);
 	}
 	
 	/*** 아이디 찾기 ***/
