@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.jboard2.service.user.UserService;
+import kr.co.jboard2.utils.JSFunction;
 import kr.co.jboard2.vo.UserVO;
 
 @WebServlet("/user/login.do")
@@ -24,15 +25,14 @@ public class LoginController  extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String success = req.getParameter("success");
-		req.setAttribute("success", success);
 		
 		Cookie[] cookies = req.getCookies(); // 쿠키 정보 얻기
 		if(cookies != null) { // 쿠키가 있다면
 			for(Cookie cookie : cookies) {
 				String key = cookie.getName();
-				if(key.equals("autoLogin")) { // 쿠키에 key 값이 'auto'가 있다면
-					UserVO vo= service.selectUser(key); // 자동 로그인 회원정보를 가져온다.
+				String value = cookie.getValue();
+				if(key.equals("autoLogin")) { // 쿠키에 key 값이 'autoLogin'가 있다면
+					UserVO vo= service.selectUser(value); // 자동 로그인 회원정보를 가져온다.
 					req.getSession(true).setAttribute("sessUser", vo);   // 세션에 회원 정보 저장
 					resp.sendRedirect(req.getContextPath()+ "/list.do"); // 게시판 리스트 뷰를 보여준다.
 					return;
@@ -63,7 +63,7 @@ public class LoginController  extends HttpServlet{
 			
 			resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 리스트 뷰로 이동
 		} else { // 입력한 정보와 일치하는 회원이 없으면
-			resp.sendRedirect(req.getContextPath() + "/user/login.do?success=100"); // 게시판 리스트 뷰로 이동
+			JSFunction.alertLocation(resp, "입력한 정보와 일치하는 회원이 없습니다. 확인후 다시 시도해주세요.", req.getContextPath() + "/user/login.do"); // 로그인 뷰로 이동
 		}
 		
 	}

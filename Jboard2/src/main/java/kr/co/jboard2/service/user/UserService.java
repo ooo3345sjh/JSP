@@ -40,6 +40,10 @@ public enum UserService {
 	public int checkNick(String nick) {
 		return dao.checkNick(nick);
 	}
+	// 이메일 체크
+	public int checkEmail(String email) {
+		return dao.checkEmail(email);
+	}
 	
 	// 회원 등록
 	public void insertUser(UserVO vo) {
@@ -53,14 +57,26 @@ public enum UserService {
 		return dao.selectUser(uid, pass);
 	}
 	
-	public UserVO selectUserForFindId(String name, String email) {
-		return dao.selectUserForFindId(name, email);
-	}
-	
 	// 자동로그인시 로그인 회원 정보 가져오는 메서드
 	public UserVO selectUser(String uid) {
 		return dao.selectUser(uid);
 	}
+	
+	/*** 아이디 찾기 ***/
+	public UserVO selectUserForFindId(String name, String email) {
+		return dao.selectUserForFindId(name, email);
+	}
+	
+	/*** 비밀번호 찾기 ***/
+	public int selectUserForFindPw(String uid, String email) {
+		return dao.selectUserForFindPw(uid, email);
+	}
+	
+	/*** 비밀번호 변경 ***/
+	public int updateUserPw(String uid, String pass) {
+		return dao.updateUserPw(uid, pass);
+	}
+	
 	public void selectUsers() {}
 	
 	

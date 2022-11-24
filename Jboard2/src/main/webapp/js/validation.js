@@ -4,7 +4,8 @@
    내용 : 사용자 회원가입 검증
  */
  
- 
+  	let contextRoot = location.pathname.split('/')[1]; // 컨택트루트 ex) Jboard2
+  	
 	// 데이터 검증에 사용하는 정규표현식
 	let reUid   = /^[a-z]+[a-z0-9]{5,19}$/g;
 	let rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
@@ -12,6 +13,7 @@
 	let reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
 	let reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 	let reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+	let reAuth  = /^[0-9]+$/;
 	
 	// 폼 데이터 검증 결과 상태변수
 	let isUidok = false;
@@ -54,7 +56,7 @@
 			
 			setTimeout(function() {
 				$.ajax({
-					url:'/Jboard2/user/checkUid.do',
+					url:'/' + contextRoot + '/user/checkUid.do',
 					method: 'get',
 					data: jsonData,
 					dataType: 'json',
@@ -64,7 +66,7 @@
 							$('.uidResult').css('color', 'green').text('사용 가능한 아이디입니다.');
 						}else{
 							isUidok = false;
-							$('.uidResult').css('color', 'red').text('이미 사용중이 아이디입니다.');
+							$('.uidResult').css('color', 'red').text('이미 사용중인 아이디입니다.');
 						}
 					}
 				});
@@ -139,7 +141,7 @@
 			
 			setTimeout(function() {
 				$.ajax({
-					url:'/Jboard2/user/checkNick.do',
+					url:'/' + contextRoot + '/user/checkNick.do',
 					method: 'get',
 					data: jsonData,
 					dataType: 'json',
@@ -149,7 +151,7 @@
 							$('.nickResult').css('color', 'green').text('사용 가능한 별명입니다.');
 						}else{
 							isUidok = false;
-							$('.nickResult').css('color', 'red').text('이미 사용중이 별명입니다.');
+							$('.nickResult').css('color', 'red').text('이미 사용중인 별명입니다.');
 						}
 					}
 				});
@@ -160,7 +162,7 @@
 		
 		// 이메일 검사하기
 		let email;
-		let emailCode = 0;
+		let emailCode = -999999999;
 		let isClick = false;
 		
 		$('input[name=email]').focusout(function () {
@@ -179,6 +181,16 @@
 			}
 		});
 		
+		// 인증번호 숫자 유효성 체크
+		$('input[name=auth]').keyup(function () {
+			authNumber = $(this).val();
+			if(!authNumber.match(reAuth)){
+				$(this).val('');
+				alert('숫자만 입력해주세요.');
+				return;
+			} 
+		});
+		
 		// 이메일 인증 검사하기
 		$('#btnEmailAuth').click(function () {
 			email = $('input[name=email]').val();
@@ -194,7 +206,7 @@
 			$('.emailResult').css('color', 'black').text('...'); // 중복확인 클릭시 로딩중을 표시
 			
 			$.ajax({
-				url: '/Jboard2/user/emailAuth.do',
+				url: '/' + contextRoot + '/user/emailAuth.do',
 				method:'get',
 				data: {"email":email},
 				dataType:'json',
@@ -207,7 +219,7 @@
 						$('.emailResult').text('인증코드를 전송했습니다. 이메일을 확인 하세요.');
 					} else {
 						// 메일발송 실패
-						$('.emailResult').text('이메일을 실패했습니다. 이메일을 확인 후 다시 시도 하시기 바랍니다.');
+						$('.emailResult').css("color", "red").text('이미 사용중인 이메일입니다.');
 						isClick = false;
 					}
 				}
@@ -221,6 +233,9 @@
 			if(code == emailCode){
 				isEmailAuthok = true;
 				$('.emailResult').css('color', 'green').text('이메일이 인증 되었습니다.');
+			} else {
+				isEmailAuthok = false;
+				$('.emailResult').css('color', 'red').text('인증번호가 일치하지 않습니다.');
 			}
 		});
 		

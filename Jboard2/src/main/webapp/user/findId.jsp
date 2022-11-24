@@ -4,8 +4,10 @@
 <script src="${pageContext.servletContext.contextPath}/js/emailAuth.js"></script>
 <script>
 	function isChecked() {
+		
 		if(!isEmailAuthok){
 			alert("이메일 인증 후에 다시 시도해주세요.");
+			$('input[name=auth]').select();
 			return false;
 		}
 		
@@ -22,9 +24,8 @@
 			data: jsonData,
 			dataType:'json',
 			success: function (data) {
-				// console.log(data);
 				if(data.result == 1){ // 입력한 정보와 일치하는 회원이 있음
-					location.href = "/" + contextRoot + "/user/findIdResult.do";
+					$('form').submit();
 				} else {
 					alert('일치하는 회원정보가 없습니다.\n입력하신 정보가 회원정보와 일치하는지 확인해 주세요.');
 				} 
@@ -36,7 +37,8 @@
 
         <main id="user">
             <section class="find findId">
-                <form action='<c:url value="/user/findId.do"/>'>
+                <form action='<c:url value="/user/findIdResult.do"/>' method="post">
+                	<input type="hidden" name="findId_Pw" value="true">
                     <table border="0">
                         <caption>아이디 찾기</caption>
                         <tr>

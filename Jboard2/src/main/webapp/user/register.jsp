@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="./_header.jsp"/>
+<script src="${pageContext.servletContext.contextPath}/js/validation.js"></script>
+<script src="${pageContext.servletContext.contextPath}/js/zipcode.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- 우편번호 찾기 오픈 API -->
         <main id="user">
             <section class="register">
                 <form action='<c:url value="/user/register.do"/>' method="post">

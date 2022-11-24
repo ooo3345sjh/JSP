@@ -24,15 +24,28 @@ public class EmailAuthController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String name = req.getParameter("name");
 		String email = req.getParameter("email");
+		String findId_Pw = req.getParameter("findId_Pw");
 		
-		int[] result = service.sendEmailCode(email);
+		int checkEmail = service.checkEmail(email);
+		int[] result = null;
+		
+		if(checkEmail != 1) {
+			result = service.sendEmailCode(email);
+		}
+		
+		if("true".equals(findId_Pw)) {
+			result = service.sendEmailCode(email);
+		}
 		
 		// JSON 출력
 		JsonObject json = new JsonObject();
-		json.addProperty("status", result[0]);
-		json.addProperty("code", result[1]);
+		if(result != null) {
+			json.addProperty("status", result[0]);
+			json.addProperty("code", result[1]);
+		} else {
+			json.addProperty("status", 0);
+		}
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
 	}

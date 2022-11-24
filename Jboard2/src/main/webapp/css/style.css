@@ -217,6 +217,7 @@ footer > p {
 #user > .register table button {
     border: none;
     vertical-align: bottom;
+    cursor: pointer;
 }
 
 #user > .register > form > div {
@@ -498,6 +499,7 @@ footer > p {
     padding: 8px;    
     border: 1px solid #bebebe; 
     text-align: center;    
+    cursor: pointer;
 }
 .btnCancel {}
 .btnNext { background: #e9e9e9; }
