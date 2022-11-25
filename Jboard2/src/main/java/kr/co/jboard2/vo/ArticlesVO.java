@@ -3,7 +3,7 @@ package kr.co.jboard2.vo;
 public class ArticlesVO {
 	private int no;
 	private int parent;
-	private int commment;
+	private int comment;
 	private String cate;
 	private String title;
 	private String content;
@@ -13,6 +13,15 @@ public class ArticlesVO {
 	private String regip;
 	private String rdate;
 	
+	// user 필드
+	private String nick;
+	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 	public int getNo() {
 		return no;
 	}
@@ -25,11 +34,11 @@ public class ArticlesVO {
 	public void setParent(int parent) {
 		this.parent = parent;
 	}
-	public int getCommment() {
-		return commment;
+	public int getComment() {
+		return comment;
 	}
-	public void setCommment(int commment) {
-		this.commment = commment;
+	public void setComment(int comment) {
+		this.comment = comment;
 	}
 	public String getCate() {
 		return cate;

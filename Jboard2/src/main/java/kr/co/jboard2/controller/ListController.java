@@ -75,16 +75,22 @@ public class ListController extends HttpServlet {
 		
 		/* 페이지 처리 end */
 		
-		service.deleteArticle();
+		map = service.selectListPage(map);
 		
+		/* 페이지 태그 가져오기 start */
+		map.put("pageGroupStart", pageGroupStart);
+		map.put("pageGroupEnd", pageGroupEnd);
+		map.put("pageGroupCurrent", pageGroupCurrent);
+		map.put("currentPage", currentPage);
+		map.put("lastPageNum", lastPageNum);
+		map.put("request", req);
+		map.put("pageStartNum", pageStartNum);
 		
+		String pageTags = service.getPageTags(map);
+		map.put("pageTags", pageTags);
 		
-		
-		
-		
-		
-		
-		
+		/* 페이지 태그 가져오기 End */
+		req.setAttribute("map", map);
 		req.getRequestDispatcher("/list.jsp").forward(req, resp);
 	}
 	

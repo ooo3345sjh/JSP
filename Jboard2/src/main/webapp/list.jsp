@@ -16,7 +16,7 @@
                 <table border="0">
                     <caption>글목록</caption>
                     <tr>
-                        <th>번호</th>
+                        <th>${map.}</th>
                         <th>제목</th>
                         <th>글쓴이</th>
                         <th>날짜</th>
