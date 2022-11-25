@@ -69,7 +69,7 @@ public class LoginCheckFilter implements Filter {
 			} 
 			
 			/*** a-2.로그인 되어 있다면 ***/
-			else { 			
+			else {			
 				
 				/*** List 컬렉션에 포함되지 않고, ['logout.do' 'style.css']도 아닌 경우에 ***/
 				if(!uriList.contains(uri) && !uri.equals("logout.do") && !uri.equals("style.css")) { 
@@ -81,7 +81,17 @@ public class LoginCheckFilter implements Filter {
 		} 
 		
 		/*** B.세션이 null이면 ***/
-		else { 			   
+		else {
+			
+			String fromUrl = req.getHeader("referer"); // 요청을 하는 uri
+			String toUrl = req.getRequestURI(); 	   // 요청을 받는 uri 
+			
+			if(fromUrl != null && fromUrl.contains("login.do") && toUrl.contains("list.do")) { 
+				if(req.getSession(false) == null) {
+					JSFunction.alertBack(resp, "현재 사용하시는 인터넷 브라우저의 쿠키 설정이 차단되어 로그인이 되지 않았습니다. 설정 변경 후 다시 로그인해 주세요.");
+					return;
+				}
+			}
 			
 			if(uriList.contains(uri)) { // List 컬렉션에 포함된 uri라면 (로그인 후에 이용가능)
 				JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/user/login.do");

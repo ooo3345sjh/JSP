@@ -159,8 +159,8 @@ footer > p {
     padding: 2px;
     box-sizing: border-box;
 }
-#user > .terms > table tr > td > label {float: right;}
-#user > .terms > table tr > td > label > input[type=checkbox] {}
+#user > .terms > table tr > td > label {float: right; margin-top: 3px;}
+#user > .terms > table tr > td > label > input[type=checkbox] {vertical-align: text-bottom;}
 
 #user > .terms > div {
     float: right;
@@ -257,7 +257,7 @@ footer > p {
 }
 #board > .list > form > select[name=searchField]{
     width: 59px;
-    height: 26px;
+    height: 28px;
     text-indent: 1px;
     border: 1px solid #d7d7d7;
 }
@@ -266,6 +266,7 @@ footer > p {
     background: #f2f2f2; 
     color: #111;
     padding: 6px;
+    cursor: pointer;
 }
 #board > .list > table {
     width: 100%;

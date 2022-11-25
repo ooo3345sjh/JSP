@@ -2,6 +2,7 @@ package kr.co.jboard2.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,14 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.jboard2.service.board.ArticleService;
 import kr.co.jboard2.service.user.UserService;
+import kr.co.jboard2.utils.JSFunction;
+import kr.co.jboard2.vo.ArticlesVO;
 
 @WebServlet("/list.do")
 public class ListController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.INSTANCE;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void init() throws ServletException {
@@ -25,6 +32,7 @@ public class ListController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("ListController...");
 		// 뷰에 전달할 매개변수 저장용 맵 생성
 		Map<String, Object> map = new HashMap<>();
 		
@@ -63,7 +71,11 @@ public class ListController extends HttpServlet {
 		if(pageGroupEnd > lastPageNum) pageGroupEnd = lastPageNum;
 		
 		// 게시판에 표시할 시작 번호 계산
+		pageStartNum = totalCount - limitStart;
 		
+		/* 페이지 처리 end */
+		
+		service.deleteArticle();
 		
 		
 		

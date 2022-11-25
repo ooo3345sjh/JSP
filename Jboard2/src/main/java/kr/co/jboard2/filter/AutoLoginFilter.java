@@ -31,11 +31,11 @@ public class AutoLoginFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
-		HttpSession sess = req.getSession(false);
+		HttpSession sess1 = req.getSession(false);
 		
 		/****** 로그인 여부 확인 ******/
-		if(sess != null) { 
-			UserVO sessUser = (UserVO)sess.getAttribute("sessUser"); // 로그인 회원정보를 가져온다.
+		if(sess1 != null) { 
+			UserVO sessUser = (UserVO)sess1.getAttribute("sessUser"); // 로그인 회원정보를 가져온다.
 			
 			if(sessUser != null) { 				   // 로그인 회원정보가 있다면?(이미 로그인되어있는 상태)
 				chain.doFilter(request, response); // 다음 필터 실행 
@@ -58,14 +58,12 @@ public class AutoLoginFilter implements Filter {
 					UserVO vo = service.selectUserBySessId(value); // 자동 로그인 회원정보를 가져온다.
 					
 					if(vo != null) { // 회원정보가 있다면
-						if(sess.getId() != value) {       // 현재 세션ID와 쿠키의 세션ID가 동일하지 않다면
-							cookie.setMaxAge(60*60*24*3); // 쿠키 저장 시간 3일 연장
-							resp.addCookie(cookie);       // 응답 객체에 추가
-							service.updateUserForSessLimitDate(value); // 데이터 베이스 sessId 만료일 3일 연장
-						}
+						HttpSession sess2 = req.getSession(true); // 세션 생성
+						sess2.setAttribute("sessUser", vo); 	  // 세션에 회원정보 추가
 						
-						sess.setAttribute("sessUser", vo); // 세션에 회원정보 추가
-						
+						cookie.setMaxAge(60*60*24*3); // 쿠키 저장 시간 3일 연장
+						resp.addCookie(cookie);       // 응답 객체에 추가
+						service.updateUserForSessLimitDate(value); // 데이터 베이스 sessId 만료일 3일 연장
 					}
 				}
 				
