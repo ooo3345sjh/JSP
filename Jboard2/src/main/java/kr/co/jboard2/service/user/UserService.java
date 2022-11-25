@@ -89,9 +89,15 @@ public enum UserService {
 		return dao.updateUserPw(uid, pass);
 	}
 	
+	/*** logout ***/
+	public void updateUserForSessionOut(String uid) {
+		dao.updateUserForSessionOut(uid);
+	}
+	
+	
+	
+	
 	public void selectUsers() {}
-	
-	
 	public void updateUser() {}
 	public void deleteUser() {}
 	

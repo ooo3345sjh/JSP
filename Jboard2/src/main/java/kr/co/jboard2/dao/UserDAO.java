@@ -241,6 +241,22 @@ public class UserDAO extends DBHelper {
 		return result;
 	}
 	
+	//logout
+	public void updateUserForSessionOut(String uid) {
+		try {
+			logger.info("updateUserForSessionOut...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.UPDATE_USER_FOR_SESSION_OUT);
+			psmt.setString(1, uid);
+			psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	
 	// 아이디 찾기
 	// 이름, 이메일로 회원정보 확인
 	public UserVO selectUserForFindId(String name, String email) {

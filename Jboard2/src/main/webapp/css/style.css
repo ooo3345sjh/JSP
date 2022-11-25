@@ -249,10 +249,16 @@ footer > p {
             margin-bottom: -14px;
 }
 
-#board > .list > form > input[name=search]{
+#board > .list > form > input[name=searchWord]{
     width: 200px;
     height: 26px;
     text-indent: 6px;
+    border: 1px solid #d7d7d7;
+}
+#board > .list > form > select[name=searchField]{
+    width: 59px;
+    height: 26px;
+    text-indent: 1px;
     border: 1px solid #d7d7d7;
 }
 #board > .list > form > input[type=submit]{

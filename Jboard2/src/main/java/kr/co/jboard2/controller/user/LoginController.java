@@ -27,27 +27,6 @@ public class LoginController  extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Cookie[] cookies = req.getCookies(); // 쿠키 정보 얻기
-		if(cookies != null) { 				 // 쿠키가 있다면
-			for(Cookie cookie : cookies) {
-				String key = cookie.getName();
-				String value = cookie.getValue();
-				
-				if(key.equals("SESSID")) {   // 쿠키에 key 값이 'SESSID'가 있다면
-					UserVO vo= service.selectUserBySessId(value); // 자동 로그인 회원정보를 가져온다.
-					
-					if(vo != null) {         // 회원정보가 있다면
-						cookie.setMaxAge(60*60*24*3); // 쿠키 저장 시간 3일 갱신
-						resp.addCookie(cookie);       // 응답 객체에 추가
-						
-						req.getSession(true).setAttribute("sessUser", vo);   // 세션에 회원 정보 저장
-						resp.sendRedirect(req.getContextPath()+ "/list.do"); // 게시판 리스트 뷰를 보여준다.
-						return;
-					}
-				}
-			}
-		}
-		
 		req.getRequestDispatcher("/user/login.jsp").forward(req, resp); // 로그인 뷰를 보여준다.
 	}
 	

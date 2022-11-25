@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.jboard2.utils.JSFunction;
 import kr.co.jboard2.vo.UserVO;
 
 public class LoginCheckFilter implements Filter {
@@ -45,21 +46,48 @@ public class LoginCheckFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
-		String[] tmp = req.getRequestURI().split("/");
-		String uri = tmp[tmp.length-1];
+		HttpSession sess = req.getSession(false);
 		
-		System.out.println(uri);
+		String[] uriArr = req.getRequestURI().split("/"); // ex) {Jboard2, list.do} 
+		String uri = uriArr[uriArr.length-1]; // ex) list.do
 		
-		if(uriList.contains(uri)) {
-			logger.debug("uriList : " + uriList);
-			HttpSession sess = req.getSession();
-			UserVO vo = (UserVO)sess.getAttribute("sessUser");
+		UserVO vo = null;
+		
+		/*** A.세션이 null이 아니면 ***/
+		if(sess != null) {   
 			
-			if(vo == null) {
-				resp.sendRedirect(req.getContextPath() + "/user/login.do");
+			vo = (UserVO)sess.getAttribute("sessUser");
+			
+			/*** a-1.로그인이 되어있지 않다면 ***/
+			if(vo == null) { 
+				
+				/*** List 컬렉션에 포함된 uri라면 (로그인 후에 접속가능) ***/
+				if(uriList.contains(uri)) { // 
+					JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/user/login.do"); // 로그인 뷰로 이동
+					return;
+				} 
+			} 
+			
+			/*** a-2.로그인 되어 있다면 ***/
+			else { 			
+				
+				/*** List 컬렉션에 포함되지 않고, ['logout.do' 'style.css']도 아닌 경우에 ***/
+				if(!uriList.contains(uri) && !uri.equals("logout.do") && !uri.equals("style.css")) { 
+					resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 목록 뷰로 이동
+					return;
+				}
+			}
+			
+		} 
+		
+		/*** B.세션이 null이면 ***/
+		else { 			   
+			
+			if(uriList.contains(uri)) { // List 컬렉션에 포함된 uri라면 (로그인 후에 이용가능)
+				JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/user/login.do");
 				return;
 			} 
-		} 
+		}
 		
 		// 다음 필터 실행 
 		chain.doFilter(request, response);

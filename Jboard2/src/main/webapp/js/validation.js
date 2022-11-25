@@ -195,6 +195,16 @@
 		$('#btnEmailAuth').click(function () {
 			email = $('input[name=email]').val();
 			
+			if(!email){
+				alert('이메일 주소를 입력 해주세요.');
+				return;
+			}
+			
+			if(!isEmailok){
+				alert('유효하지 않은 이메일입니다.');
+				return;
+			}
+			
 			if(isClick){ // 중복확인을 이미 한번 누른 상태이면
 				alert('이미 인증번호가 전송 중입니다. \n전송완료 메시지가 나타나면 입력한 이메일을 확인 해주세요.');
 				return;
@@ -216,7 +226,7 @@
 						// 메일발송 성공
 						emailCode = data.code;
 						
-						$('.emailResult').text('인증코드를 전송했습니다. 이메일을 확인 하세요.');
+						$('.emailResult').css("color", "black").text('인증코드를 전송했습니다. 이메일을 확인 하세요.');
 					} else {
 						// 메일발송 실패
 						$('.emailResult').css("color", "red").text('이미 사용중인 이메일입니다.');

@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.jboard2.service.user.UserService;
+import kr.co.jboard2.utils.JSFunction;
 import kr.co.jboard2.vo.UserVO;
 
 @WebServlet("/user/register.do")
 public class RegisterController extends HttpServlet {
 	
+	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
 	
 	@Override
@@ -22,7 +24,20 @@ public class RegisterController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/user/register.jsp").forward(req, resp);
+		
+		String requestUrl = req.getHeader("referer");
+		
+		if(requestUrl == null) { // 주소창에 직접 입력한 경우
+			JSFunction.alertBack(resp, "비정상적인 접근입니다.");
+			return;
+		} else {
+			if(requestUrl.contains("terms.do")) {
+				req.getRequestDispatcher("/user/register.jsp").forward(req, resp);
+			} else {
+				JSFunction.alertBack(resp, "비정상적인 접근입니다.");
+				return;
+			}
+		}
 	}
 	
 	@Override
