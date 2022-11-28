@@ -6,7 +6,6 @@
     <title>로그인</title>
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    
 </head>
 <body>
     <div id="wrapper">

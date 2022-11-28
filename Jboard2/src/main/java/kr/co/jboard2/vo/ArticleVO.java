@@ -1,6 +1,6 @@
 package kr.co.jboard2.vo;
 
-public class ArticlesVO {
+public class ArticleVO {
 	private int no;
 	private int parent;
 	private int comment;
@@ -16,6 +16,22 @@ public class ArticlesVO {
 	// user 필드
 	private String nick;
 	
+	// file 필드
+	private String fileName;
+	private int download;
+	
+	public int getDownload() {
+		return download;
+	}
+	public void setDownload(int download) {
+		this.download = download;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public String getNick() {
 		return nick;
 	}
@@ -27,6 +43,9 @@ public class ArticlesVO {
 	}
 	public void setNo(int no) {
 		this.no = no;
+	}
+	public void setNo(String no) {
+		this.no = Integer.parseInt(no);
 	}
 	public int getParent() {
 		return parent;

@@ -36,6 +36,8 @@ public class LoginCheckFilter implements Filter {
 		uriList.add("write.do");
 		uriList.add("modify.do");
 		uriList.add("view.do");
+		uriList.add("download.do");
+		uriList.add("delete.do");
 		
 	}
 	
@@ -50,7 +52,6 @@ public class LoginCheckFilter implements Filter {
 		
 		String[] uriArr = req.getRequestURI().split("/"); // ex) {Jboard2, list.do} 
 		String uri = uriArr[uriArr.length-1]; // ex) list.do
-		
 		UserVO vo = null;
 		
 		/*** A.세션이 null이 아니면 ***/

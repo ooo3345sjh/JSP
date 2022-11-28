@@ -36,8 +36,8 @@ public class AutoLoginFilter implements Filter {
 		/****** 로그인 여부 확인 ******/
 		if(sess1 != null) { 
 			UserVO sessUser = (UserVO)sess1.getAttribute("sessUser"); // 로그인 회원정보를 가져온다.
-			
 			if(sessUser != null) { 				   // 로그인 회원정보가 있다면?(이미 로그인되어있는 상태)
+				request.setAttribute("reqUser", sessUser);
 				chain.doFilter(request, response); // 다음 필터 실행 
 				return;
 			}

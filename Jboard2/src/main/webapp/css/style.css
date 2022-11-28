@@ -281,7 +281,6 @@ footer > p {
     margin-bottom: 6px;
 }
 #board > .list > table tr > th {
-    width: auto;
     height: 40px;
     background: #e5ecef;
     border-bottom: 1px solid #d1dee2;
