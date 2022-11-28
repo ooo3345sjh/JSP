@@ -1,4 +1,4 @@
-package kr.co.jboard2.service.board;
+package kr.co.farmStory2.service.board;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import kr.co.jboard2.dao.ArticleDAO;
-import kr.co.jboard2.vo.ArticleVO;
-import kr.co.jboard2.vo.FileVO;
+import kr.co.farmStory2.dao.ArticleDAO;
+import kr.co.farmStory2.vo.ArticleVO;
+import kr.co.farmStory2.vo.FileVO;
 
 public enum ArticleService {
 	INSTANCE;

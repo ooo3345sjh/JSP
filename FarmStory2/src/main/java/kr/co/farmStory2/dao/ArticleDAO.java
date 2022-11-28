@@ -1,4 +1,4 @@
-package kr.co.jboard2.dao;
+package kr.co.farmStory2.dao;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -10,10 +10,10 @@ import org.apache.tomcat.util.buf.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.co.jboard2.db.DBHelper;
-import kr.co.jboard2.db.Sql;
-import kr.co.jboard2.vo.ArticleVO;
-import kr.co.jboard2.vo.FileVO;
+import kr.co.farmStory2.db.DBHelper;
+import kr.co.farmStory2.db.Sql;
+import kr.co.farmStory2.vo.ArticleVO;
+import kr.co.farmStory2.vo.FileVO;
 
 public class ArticleDAO extends DBHelper {
 	
