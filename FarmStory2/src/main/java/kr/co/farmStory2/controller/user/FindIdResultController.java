@@ -34,7 +34,7 @@ public class FindIdResultController extends HttpServlet {
 		
 		req.setAttribute("user", vo);
 		
-		req.getRequestDispatcher("/user/findIdResult.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/user/findIdResult.jsp").forward(req, resp);
 	}
 
 }

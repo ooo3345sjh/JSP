@@ -11,8 +11,10 @@
 </script>
         <main id="board">
             <section class="list">                
-                <form action="#">
-                	<input type="hidden" name="isSearch" value="true"> <!-- 삭제 예정 -->
+                <form action='<c:url value='/board/list.do'/>'>
+                	<!--  <input type="hidden" name="isSearch" value="true"> 삭제 예정 -->
+                	<input type="hidden" name='group' value='${group}'>
+                	<input type="hidden" name='cate' value='${cate}'>
     	            <select name="searchField">
 						<option value="title">제목</option>
 						<option value="content">내용</option>
@@ -57,7 +59,7 @@
                 	${map.pageTags}
                 </div>
 
-                <a href='<c:url value="/write.do"/>' class="btn btnWrite">글쓰기</a>
+                <a href='<c:url value="/board/write.do?group=${group}&cate=${cate}"/>' class="btn btnWrite">글쓰기</a>
                 
             </section>
         </main>

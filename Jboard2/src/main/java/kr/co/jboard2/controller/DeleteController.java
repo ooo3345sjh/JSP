@@ -45,7 +45,9 @@ public class DeleteController extends HttpServlet {
 		String newName = (String)map.get("newName");
 		
 		if(result > 0) { // 게시물 삭제 성공
-			service.deleteFile(req, "/file", newName);
+			if(newName != null) {
+				service.deleteFile(req, "/file", newName);
+			}
 			resp.sendRedirect(req.getContextPath() + "/list.do");
 			return;
 			

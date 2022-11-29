@@ -32,11 +32,21 @@
                 </table>
                 
                 <div>
-                	<c:if test="${reqUser.uid eq map.board.uid}">
+                	<c:if test="${reqUser.uid eq map.board.uid}"> <!-- 로그인 회원 정보와 게시글 작성 회원 정보가 같으면 실행 -->
 	                    <a href='<c:url value="/delete.do?no=${map.board.no}"/>' class="btn btnRemove" onclick="return realDelete();">삭제</a>
 	                    <a href='<c:url value="/modify.do?no=${map.board.no}&title=${map.board.title}&content=${map.board.content}&fname=${map.board.fileName}"/>' class="btn btnModify">수정</a>
                 	</c:if>
-                    <a href='<c:url value="/list.do?${pageContext.request.getQueryString()}"/>' class="btn btnList">목록</a>
+                	<c:choose>
+                		<c:when test="${not empty searchField and not empty searchWord}"><!-- 검색 필드 및 검색 단어가 있다면 실행 -->
+                    		<a href='<c:url value="/list.do?${pageContext.request.getQueryString()}"/>' class="btn btnList">목록</a>
+                		</c:when>
+                		<c:when test="${not empty pageNum}"> <!-- 페이지 번호가 있다면 실행 -->
+                    		<a href='<c:url value="/list.do?pageNum=${pageNum}"/>' class="btn btnList">목록</a>
+                		</c:when>
+                		<c:otherwise>
+                    		<a href='<c:url value="/list.do"/>' class="btn btnList">목록</a>
+                		</c:otherwise>
+                	</c:choose>
                 </div>
 
                 <!-- 댓글목록 -->

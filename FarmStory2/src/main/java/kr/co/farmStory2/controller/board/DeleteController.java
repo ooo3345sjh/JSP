@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/board/delete.do")
-public class deleteController extends HttpServlet {
+public class DeleteController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	

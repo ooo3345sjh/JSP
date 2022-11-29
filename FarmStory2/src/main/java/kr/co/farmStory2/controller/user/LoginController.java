@@ -59,8 +59,7 @@ public class LoginController  extends HttpServlet{
 				// sessId 데이터베이스 저장
 				service.updateUserForSession(uid, sessId);
 			}
-			
-			resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 리스트 뷰로 이동
+			resp.sendRedirect(req.getContextPath()); // 에인 뷰로 이동
 		} else { // 입력한 정보와 일치하는 회원이 없으면
 			JSFunction.alertLocation(resp, "입력한 정보와 일치하는 회원이 없습니다. 확인후 다시 시도해주세요.", req.getContextPath() + "/user/login.do"); // 로그인 뷰로 이동
 		}

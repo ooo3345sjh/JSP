@@ -35,7 +35,7 @@ public class FindPwChangeController extends HttpServlet {
 				String uid = req.getParameter("uid");
 				req.setAttribute("uid", uid);
 				
-				req.getRequestDispatcher("/user/findPwChange.jsp").forward(req, resp);
+				req.getRequestDispatcher("/board/user/findPwChange.jsp").forward(req, resp);
 			} else {
 				JSFunction.alertBack(resp, "비정상적인 접근입니다.");
 				return;

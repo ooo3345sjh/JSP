@@ -11,7 +11,6 @@
         <main id="board">
             <section class="list">                
                 <form action="#">
-                	<input type="hidden" name="isSearch" value="true"> <!-- 삭제 예정 -->
     	            <select name="searchField">
 						<option value="title">제목</option>
 						<option value="content">내용</option>

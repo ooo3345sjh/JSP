@@ -27,6 +27,9 @@ public class ViewController extends HttpServlet {
 		Map<String, Object> map = service.selectArticle(no);
 		
 		req.setAttribute("no", no);
+		req.setAttribute("searchField", req.getParameter("searchField"));
+		req.setAttribute("searchWord", req.getParameter("searchWord"));
+		req.setAttribute("pageNum", req.getParameter("pageNum"));
 		req.setAttribute("map", map);
 		req.getRequestDispatcher("/view.jsp").forward(req, resp);
 	}

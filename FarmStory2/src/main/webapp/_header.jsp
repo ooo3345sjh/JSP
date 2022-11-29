@@ -22,9 +22,9 @@
             });
 
             $('#tabs').tabs();
+            
         });
     </script>
-
 </head>
 <body>
     <div id="wrapper">
@@ -32,8 +32,15 @@
             <a href='<c:url value='/'/>' class="logo"><img src="<c:url value='/img/logo.png'/>" alt="로고"/></a>
             <p>
                 <a href='<c:url value='/'/>'>HOME |</a>
-                <a href='<c:url value='/user/login.do'/>'>로그인 |</a>
-                <a href='<c:url value='/user/terms.do'/>'>회원가입 |</a>
+               	<c:choose>
+               		<c:when test="${not empty sessUser}">
+		                <a href='<c:url value='/user/logout.do'/>'>로그아웃 |</a>
+               		</c:when>
+               		<c:otherwise>
+		                <a href='<c:url value='/user/login.do'/>'>로그인 |</a>
+		                <a href='<c:url value='/user/terms.do'/>'>회원가입 |</a>
+               		</c:otherwise>
+               	</c:choose>
                 <a href='<c:url value='/board/list.do?group=community&cate=4'/>'>고객센터</a>
             </p>
             <img src="<c:url value='/img/head_txt_img.png'/>" alt="3만원 이상 무료배송"/>

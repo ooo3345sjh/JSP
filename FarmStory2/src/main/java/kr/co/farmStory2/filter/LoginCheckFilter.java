@@ -1,4 +1,4 @@
-package kr.co.jboard2.filter;
+package kr.co.farmStory2.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,8 +17,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.co.jboard2.utils.JSFunction;
-import kr.co.jboard2.vo.UserVO;
+import kr.co.farmStory2.utils.JSFunction;
+import kr.co.farmStory2.vo.UserVO;
 
 public class LoginCheckFilter implements Filter {
 
@@ -49,10 +48,6 @@ public class LoginCheckFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		HttpSession sess = req.getSession(false);
-		String fromUrl = req.getHeader("referer"); // 요청을 하는 uri
-		String toUrl = req.getRequestURI(); 	   // 요청을 받는 uri 
-		System.out.println("fromeUrl : " + fromUrl);
-		System.out.println("toUrl : " + toUrl);
 		
 		String[] uriArr = req.getRequestURI().split("/"); // ex) {Jboard2, list.do} 
 		String uri = uriArr[uriArr.length-1]; // ex) list.do
@@ -68,7 +63,7 @@ public class LoginCheckFilter implements Filter {
 				
 				/*** List 컬렉션에 포함된 uri라면 (로그인 후에 접속가능) ***/
 				if(uriList.contains(uri)) { // 
-					JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/user/login.do"); // 로그인 뷰로 이동
+					JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/board/user/login.do"); // 로그인 뷰로 이동
 					return;
 				} 
 			} 
@@ -78,7 +73,7 @@ public class LoginCheckFilter implements Filter {
 				
 				/*** List 컬렉션에 포함되지 않고, ['logout.do' 'style.css']도 아닌 경우에 ***/
 				if(!uriList.contains(uri) && !uri.equals("logout.do") && !uri.equals("style.css")) { 
-					resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 목록 뷰로 이동
+					resp.sendRedirect(req.getContextPath() + "/board/list.do"); // 게시판 목록 뷰로 이동
 					return;
 				}
 			}
@@ -88,8 +83,8 @@ public class LoginCheckFilter implements Filter {
 		/*** B.세션이 null이면 ***/
 		else {
 			
-			fromUrl = req.getHeader("referer"); // 요청을 하는 uri
-			toUrl = req.getRequestURI(); 	   // 요청을 받는 uri 
+			String fromUrl = req.getHeader("referer"); // 요청을 하는 uri
+			String toUrl = req.getRequestURI(); 	   // 요청을 받는 uri 
 			
 			if(fromUrl != null && fromUrl.contains("login.do") && toUrl.contains("list.do")) { 
 				if(req.getSession(false) == null) {
@@ -99,7 +94,7 @@ public class LoginCheckFilter implements Filter {
 			}
 			
 			if(uriList.contains(uri)) { // List 컬렉션에 포함된 uri라면 (로그인 후에 이용가능)
-				JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/user/login.do");
+				JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/board/user/login.do");
 				return;
 			} 
 		}

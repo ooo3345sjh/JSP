@@ -126,11 +126,12 @@ public class ArticleDAO extends DBHelper {
 			
 			con.setAutoCommit(false);
 			psmt = con.prepareStatement(Sql.INSERT_ARTICLE);
-			psmt.setString(1, aVo.getTitle());
-			psmt.setString(2, aVo.getContent());
-			psmt.setInt(3, aVo.getFile());
-			psmt.setString(4, aVo.getUid());
-			psmt.setString(5, aVo.getRegip());
+			psmt.setString(1, aVo.getCate());
+			psmt.setString(2, aVo.getTitle());
+			psmt.setString(3, aVo.getContent());
+			psmt.setInt(4, aVo.getFile());
+			psmt.setString(5, aVo.getUid());
+			psmt.setString(6, aVo.getRegip());
 			
 			result = psmt.executeUpdate();
 			

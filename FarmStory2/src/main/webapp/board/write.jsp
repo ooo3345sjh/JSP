@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="./_header.jsp"/>
+<jsp:include page="/_header.jsp"/>
+<jsp:include page="/${group}.jsp"/>
 <script>
 	function validateForm(form) {
 		if(!form.title.value){
@@ -32,7 +33,7 @@
         <main id="board">
             <section class="write">
 
-                <form action='<c:url value="/write.do"/>' method="post" enctype="multipart/form-data" onsubmit="return validateForm(this);">
+                <form action='<c:url value="/board/write.do"/>' method="post" enctype="multipart/form-data" onsubmit="return validateForm(this);">
                     <table border="0">
                         <caption>글쓰기</caption>
                         <tr>
@@ -62,4 +63,7 @@
 
             </section>
         </main>
-<jsp:include page="./_footer.jsp"/>
+        </article>
+	</section>
+</div>
+<jsp:include page="/_footer.jsp"/>
