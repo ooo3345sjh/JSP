@@ -34,6 +34,8 @@
             <section class="write">
 
                 <form action='<c:url value="/board/write.do"/>' method="post" enctype="multipart/form-data" onsubmit="return validateForm(this);">
+                	<input type="hidden" name="group" value="${group}">
+                	<input type="hidden" name="cate" value="${cate}">
                     <table border="0">
                         <caption>글쓰기</caption>
                         <tr>

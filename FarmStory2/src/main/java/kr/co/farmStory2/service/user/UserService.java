@@ -112,6 +112,7 @@ public enum UserService {
 		String password = "lquirlsdppjprekj";
 		
 		String title = "Jboard2 인증코드 입니다.";
+		
 		String content = "<h1>인증코드는 " + code + "입니다.</h1>";
 		
 		// Gmail SMTP 서버설정
@@ -135,7 +136,8 @@ public enum UserService {
 		int status = 0;
 		try {
 			logger.info("메일 전송 시작...");
-			message.setFrom(new InternetAddress(sender, "관리자", "UTF-8"));
+			title = new String(title.getBytes("UTF-8"), "utf-8");
+			message.setFrom(new InternetAddress(sender, "관리자", "utf-8"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
 			message.setSubject(title);
 			message.setContent(content, "text/html;charset=utf-8");

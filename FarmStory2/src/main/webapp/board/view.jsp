@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="./_header.jsp"/>
-<%-- <jsp:include page="./commentScript.jsp"/> --%>
+<jsp:include page="/_header.jsp"/>
+<jsp:include page="/${group}.jsp"/>
 <script src='<c:url value='/js/comment.js'/>'></script>
 <script>
 
@@ -24,9 +24,18 @@
 		modify();
 	})
 	
-	// download +1
+	// download 로그인체크 후 download 횟수 +1
 	$(function () {
-		$('#down > a').click(function () {
+		let loginUser = '${reqUser.uid}';
+		
+		$('#down > a').click(function (e) {
+			
+			if(!loginUser){
+				alert('로그인 후에 다운로드 가능합니다.');
+				e.preventDefault();
+				return;
+			}
+			
 			let totalDown = $('#down > span').text();
 			totalDown = parseInt(totalDown) + 1;
 			$('#down > span').text(totalDown);
@@ -46,7 +55,7 @@
                     <c:if test="${map.board.file ne 0}">
 	                    <tr>
 	                        <th>파일</th>
-	                        <td id="down"><a href='<c:url value="/download.do?no=${map.board.no}"/>'>${map.board.fileName}</a>&nbsp;<span>${map.board.download}</span>회 다운로드</td>
+	                        <td id="down"><a href='<c:url value="/board/download.do?no=${map.board.no}"/>'>${map.board.fileName}</a>&nbsp;<span>${map.board.download}</span>회 다운로드</td>
 	                    </tr>
                     </c:if>
                     <tr>
@@ -59,20 +68,10 @@
                 
                 <div>
                 	<c:if test="${reqUser.uid eq map.board.uid}">
-	                    <a href='<c:url value="/delete.do?no=${map.board.no}"/>' class="btn btnRemove" onclick="return realDelete();">삭제</a>
-	                    <a href='<c:url value="/modify.do?no=${map.board.no}&title=${map.board.title}&content=${map.board.content}&fname=${map.board.fileName}"/>' class="btn btnModify">수정</a>
+	                    <a href='<c:url value="/board/delete.do?${queryString}"/>' class="btn btnRemove" onclick="return realDelete();">삭제</a>
+	                    <a href='<c:url value="/board/modify.do?${queryString}&title=${map.board.title}&content=${map.board.content}&fname=${map.board.fileName}"/>' class="btn btnModify">수정</a>
                 	</c:if>
-                    <c:choose>
-                		<c:when test="${not empty searchField and not empty searchWord}"><!-- 검색 필드 및 검색 단어가 있다면 실행 -->
-                    		<a href='<c:url value="/list.do?${pageContext.request.getQueryString()}"/>' class="btn btnList">목록</a>
-                		</c:when>
-                		<c:when test="${not empty pageNum}"> <!-- 페이지 번호가 있다면 실행 -->
-                    		<a href='<c:url value="/list.do?pageNum=${pageNum}"/>' class="btn btnList">목록</a>
-                		</c:when>
-                		<c:otherwise>
-                    		<a href='<c:url value="/list.do"/>' class="btn btnList">목록</a>
-                		</c:otherwise>
-                	</c:choose>
+               		<a href='<c:url value="/board/list.do?${joiner}"/>' class="btn btnList">목록</a>
                 </div>
 
                 <!-- 댓글목록 -->
@@ -106,7 +105,14 @@
                 <section class="commentForm">
                     <h3>댓글쓰기</h3>
                     <form action="#">
-                        <textarea name="comment" placeholder="내용을 입력 해주세요."></textarea>
+                    	<c:choose>
+							<c:when test="${empty reqUser}">
+		                        <textarea name="comment" placeholder="로그인 후 입력 가능합니다." readonly></textarea>
+							</c:when>
+							<c:otherwise>
+		                        <textarea name="comment" placeholder="내용을 입력 해주세요."></textarea>
+							</c:otherwise>
+                    	</c:choose>
                         <div>
                             <a href="#" class="btn btnCancel">취소</a>
                             <input type="submit" value="작성완료" class="btn btnComplete"/>
@@ -119,4 +125,4 @@
         </article>
 	</section>
 </div>
-<jsp:include page="./_footer.jsp"/>    
+<jsp:include page="/_footer.jsp"/>    

@@ -34,6 +34,15 @@
  	<filter-name>LoginCheckFilter</filter-name>
  	<url-pattern>/board/*</url-pattern>
  </filter-mapping>
+
+  <filter>
+ 	<filter-name>LogoutCheckFilter</filter-name>
+ 	<filter-class>kr.co.farmStory2.filter.LogoutCheckFilter</filter-class>
+ </filter>
+ <filter-mapping>
+ 	<filter-name>LogoutCheckFilter</filter-name>
+ 	<url-pattern>/user/*</url-pattern>
+ </filter-mapping>
   
    <!-- 인코딩 설정 --> 
   <filter>

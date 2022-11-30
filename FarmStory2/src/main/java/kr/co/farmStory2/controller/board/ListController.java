@@ -46,6 +46,7 @@ public class ListController extends HttpServlet {
 		map.put("pageTags", service.getPageTags(map)); // 페이지 버튼을 출력하는 pageTags 문자열 추가 
 		
 		
+		req.setAttribute("queryString", req.getQueryString());
 		req.setAttribute("map", map);
 		req.setAttribute("group", group);
 		req.setAttribute("cate", cate);

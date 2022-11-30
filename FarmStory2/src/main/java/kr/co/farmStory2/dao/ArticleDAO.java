@@ -29,16 +29,18 @@ public class ArticleDAO extends DBHelper {
 			
 			String searchField = (String)map.get("searchField");
 			String searchWord = (String)map.get("searchWord");
+			String group = (String)map.get("group");
+			String cate = (String)map.get("cate");
 		
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT COUNT(a.`no`) FROM `board_article` a JOIN `board_user` u "
 						+ "ON a.`uid` = u.`uid` "
-						+ "WHERE `parent` = 0 ");
+						+ "WHERE `parent` = 0  AND `cate` = '" + group + cate + "'");
 			if(searchWord != null) {                                // 검색 단어가 있을 경우
 				if("nick".equals(searchField)) { 					// 검색 필드가 nick인 경우
-					sql.append("AND u.`" + searchField  + "` ");
+					sql.append(" AND u.`" + searchField  + "` ");
 				} else {											// 검색 필드가 title, content인 경우
-					sql.append("AND a.`" + searchField  + "` ");
+					sql.append(" AND a.`" + searchField  + "` ");
 				}
 				
 				sql.append("LIKE '%" + searchWord   + "%'");  
@@ -66,16 +68,19 @@ public class ArticleDAO extends DBHelper {
 	public Map<String, Object> selectListPage(Map<String, Object> map){
 		List<ArticleVO> lists = null;
 		
+		String group = (String)map.get("group");
+		String cate = (String)map.get("cate");
+		
 		String sql = "SELECT a.*, u.`nick` FROM `board_article` a JOIN "
 				   + "`board_user` u ON a.`uid` = u.`uid` "
-				   + "WHERE `parent`=0 ";
+				   + "WHERE `parent`=0   AND `cate` = '" + group + cate + "'";
 		
 		// 검색 조건이 있다면 WHERE절 추가
 		if(map.get("searchField") != null) {
-			sql += "AND `" + map.get("searchField") + "` LIKE '%" + map.get("searchWord") + "%' ";
+			sql += " AND `" + map.get("searchField") + "` LIKE '%" + map.get("searchWord") + "%' ";
 		}
 		
-		sql += "ORDER BY `no` desc  LIMIT ?, 10";
+		sql += " ORDER BY `no` desc  LIMIT ?, 10";
 		
 		try {
 			logger.info("selectListPage...");
@@ -125,11 +130,12 @@ public class ArticleDAO extends DBHelper {
 			
 			con.setAutoCommit(false);
 			psmt = con.prepareStatement(Sql.INSERT_ARTICLE);
-			psmt.setString(1, aVo.getTitle());
-			psmt.setString(2, aVo.getContent());
-			psmt.setInt(3, aVo.getFile());
-			psmt.setString(4, aVo.getUid());
-			psmt.setString(5, aVo.getRegip());
+			psmt.setString(1, aVo.getCate());
+			psmt.setString(2, aVo.getTitle());
+			psmt.setString(3, aVo.getContent());
+			psmt.setInt(4, aVo.getFile());
+			psmt.setString(5, aVo.getUid());
+			psmt.setString(6, aVo.getRegip());
 			
 			result = psmt.executeUpdate();
 			

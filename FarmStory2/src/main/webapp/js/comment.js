@@ -11,14 +11,19 @@ function write(user){
 		let textarea = $('textarea[name=comment]');
 		let comment = textarea.val().replace(/(?:\r\n|\r|\n)/g, '<br />'); // 줄바꿈을 적용해준다.
 		
-		if(comment == ''){
-			alert("댓글을 작성하세요");
-			return;
-		}
 
 		let no = user.no;
 		let nick = user.nick;
 		let	uid = user.uid;
+		
+		if(!uid){
+			alert("로그인 후 작성가능합니다.");
+			return;
+		}
+		if(comment == ''){
+			alert("댓글을 작성하세요");
+			return;
+		}
 		
 		let jsonData = {
 				"no" : no,

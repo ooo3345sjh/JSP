@@ -64,7 +64,7 @@
                 	</c:if>
                     <c:choose>
                 		<c:when test="${not empty searchField and not empty searchWord}"><!-- 검색 필드 및 검색 단어가 있다면 실행 -->
-                    		<a href='<c:url value="/list.do?${pageContext.request.getQueryString()}"/>' class="btn btnList">목록</a>
+                    		<a href='<c:url value="/list.do?${queryString}"/>' class="btn btnList">목록</a>
                 		</c:when>
                 		<c:when test="${not empty pageNum}"> <!-- 페이지 번호가 있다면 실행 -->
                     		<a href='<c:url value="/list.do?pageNum=${pageNum}"/>' class="btn btnList">목록</a>

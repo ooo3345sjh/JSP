@@ -37,17 +37,6 @@ public class LoginController  extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("LoginController...");
 		
-		
-		String fromUrl = req.getHeader("referer"); // 요청을 하는 uri
-		String toUrl = req.getRequestURI(); 	   // 요청을 받는 uri 
-		
-		if(fromUrl != null && fromUrl.contains("login.do") && toUrl.contains("list.do")) { 
-			if(req.getSession(false) == null) {
-				JSFunction.alertBack(resp, "현재 사용하시는 인터넷 브라우저의 쿠키 설정이 차단되어 로그인이 되지 않았습니다. 설정 변경 후 다시 로그인해 주세요.");
-				return;
-			}
-		}
-		
 		String uid = req.getParameter("uid"); 		 // 회원 아이디
 		String pass = req.getParameter("pass"); 	 // 회원 패스워드
 		String auto = req.getParameter("auto"); 	 // 자동 로그인 체크 여부
@@ -70,7 +59,7 @@ public class LoginController  extends HttpServlet{
 				// sessId 데이터베이스 저장
 				service.updateUserForSession(uid, sessId);
 			}
-			resp.sendRedirect(req.getContextPath()); // 메인 뷰로 이동
+			resp.sendRedirect(req.getContextPath() + "/index.do"); // 메인 뷰로 이동
 		} else { // 입력한 정보와 일치하는 회원이 없으면
 			JSFunction.alertLocation(resp, "입력한 정보와 일치하는 회원이 없습니다. 확인후 다시 시도해주세요.", req.getContextPath() + "/user/login.do"); // 로그인 뷰로 이동
 		}

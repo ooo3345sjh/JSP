@@ -7,7 +7,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,14 +30,16 @@ public class AutoLoginFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
-		HttpSession sess1 = req.getSession();
+		HttpSession sess1 = req.getSession(false);
 		
 		/****** 로그인 여부 확인 ******/
-		UserVO sessUser = (UserVO)sess1.getAttribute("sessUser"); // 로그인 회원정보를 가져온다.
-		if(sessUser != null) { 				   // 로그인 회원정보가 있다면?(이미 로그인되어있는 상태)
-			request.setAttribute("reqUser", sessUser);
-			chain.doFilter(request, response); // 다음 필터 실행 
-			return;
+		if(sess1 != null) { 
+			UserVO sessUser = (UserVO)sess1.getAttribute("sessUser"); // 로그인 회원정보를 가져온다.
+			if(sessUser != null) { 				   // 로그인 회원정보가 있다면?(이미 로그인되어있는 상태)
+				request.setAttribute("reqUser", sessUser);
+				chain.doFilter(request, response); // 다음 필터 실행 
+				return;
+			}
 		}
 		
 		
@@ -58,7 +59,7 @@ public class AutoLoginFilter implements Filter {
 					if(vo != null) { // 회원정보가 있다면
 						HttpSession sess2 = req.getSession(true); // 세션 생성
 						sess2.setAttribute("sessUser", vo); 	  // 세션에 회원정보 추가
-						
+						request.setAttribute("reqUser", vo);	  // request객체에 회원정보 추가
 						cookie.setMaxAge(60*60*24*3); // 쿠키 저장 시간 3일 연장
 						resp.addCookie(cookie);       // 응답 객체에 추가
 						service.updateUserForSessLimitDate(value); // 데이터 베이스 sessId 만료일 3일 연장
@@ -66,7 +67,7 @@ public class AutoLoginFilter implements Filter {
 				}
 				
 			} // for문 종료
-		}
+		} 
 		
 		// 다음 필터 실행 
 		chain.doFilter(request, response);

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +33,7 @@
             <p>
                 <a href='<c:url value='/'/>'>HOME |</a>
                	<c:choose>
-               		<c:when test="${not empty sessUser}">
+               		<c:when test="${not empty reqUser}">
 		                <a href='<c:url value='/user/logout.do'/>'>로그아웃 |</a>
                		</c:when>
                		<c:otherwise>

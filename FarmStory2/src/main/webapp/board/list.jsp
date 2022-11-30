@@ -45,7 +45,7 @@
 			                    <tr>
 			                        <td>${map.pageStartNum - loop.index}</td>
 			                        <td>
-			                        	<a href='<c:url value="/board/view.do?no=${row.no}&${pageContext.request.getQueryString()}"/>'>
+			                        	<a href='<c:url value="/board/view.do?no=${row.no}&${queryString}"/>'>
 			                        		${row.title}
 			                        		<c:if test="${row.comment ne 0}">
 				                        		<span>[${row.comment}]</span>

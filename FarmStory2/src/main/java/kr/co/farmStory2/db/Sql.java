@@ -49,6 +49,7 @@ public class Sql {
 	// 게시글 등록
 	public static final String INSERT_ARTICLE = "INSERT INTO "
 											  + " `board_article` SET "
+											  + "	`cate`=?, "
 		                                      + "	`title`=?, "
 		                                      + "	`content`=?, "
 		                                      + "	`file`=?, "

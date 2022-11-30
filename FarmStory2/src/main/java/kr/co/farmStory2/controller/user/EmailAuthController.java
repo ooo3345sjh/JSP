@@ -38,6 +38,8 @@ public class EmailAuthController extends HttpServlet {
 			result = service.sendEmailCode(email);
 		}
 		
+		resp.setContentType("text/html;charset=UTF-8");
+		
 		// JSON 출력
 		JsonObject json = new JsonObject();
 		if(result != null) {

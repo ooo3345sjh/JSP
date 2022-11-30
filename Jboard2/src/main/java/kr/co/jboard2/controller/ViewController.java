@@ -2,6 +2,7 @@ package kr.co.jboard2.controller;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,16 @@ public class ViewController extends HttpServlet {
 		Map<String, Object> map = service.selectArticle(no);
 		service.plusHit(no);
 		
+		// no=xxx 쿼리스트링을 제거하는 작업
+		String queryString = req.getQueryString();
+		String[] arr = queryString.split("&");
+		StringJoiner joiner = new StringJoiner("&");
+		for(int i=1; i<arr.length; i++) {
+			joiner.add(arr[i]);
+		}
+		
 		req.setAttribute("no", no);
+		req.setAttribute("queryString", joiner.toString());
 		req.setAttribute("searchField", req.getParameter("searchField"));
 		req.setAttribute("searchWord", req.getParameter("searchWord"));
 		req.setAttribute("pageNum", req.getParameter("pageNum"));

@@ -45,6 +45,7 @@ public class WriteController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("WriteController doPost...");
+		
 		// 1. 파일 업로드 처리
 		// 업로드 디렉터리의 물리적 경로 확인
 		String savePath = getServletContext().getRealPath("/file");
@@ -63,6 +64,9 @@ public class WriteController extends HttpServlet {
 			JSFunction.alertBack(resp, "첨부 파일이 제한 용량을 초과합니다.");
 			return;
 		}
+		
+		String group = mr.getParameter("group");
+		String cate = mr.getParameter("cate");
 		
 		// 2. 파일 업로드 외 처리
 		// 폼값을 VO에 저장
@@ -103,7 +107,7 @@ public class WriteController extends HttpServlet {
 		int result = service.insertArticleAndFile(aVo, fVo);
 		
 		if(result > 0) { // 글 및 파일 등록 성공시
-			resp.sendRedirect(req.getContextPath() + "/list.do");
+			resp.sendRedirect(req.getContextPath() + "/board/list.do?group=" + group + "&cate=" + cate);
 			return;
 		} else {
 			JSFunction.alertBack(resp, "글 등록에 실패 했습니다.");

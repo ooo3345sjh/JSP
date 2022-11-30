@@ -170,15 +170,20 @@ public enum ArticleService {
 		int nextPage = pageGroupEnd + 1;      // 다음 페이지
 		String contextPath = ((HttpServletRequest)map.get("request")).getContextPath();
 		
+		String group = (String)map.get("group");
+		String cate = (String)map.get("cate");
+		
 		// 이전 페이지 tag 
 		if(pageGroupCurrent > 1) {
 			
-			String uri = "<a href=\"" + contextPath + "/list.do?pageNum=" 
-					   + prevPage + "\" class=\"prev\">이전</a>";
+			String uri = "<a href=\"" + contextPath + "/board/list.do?pageNum=" + prevPage
+					   + "&group=" + group + "&cate=" + cate;
 			
 			if(searchWord != null) {
 				uri += "&searchField=" + searchField + "&searchWord=" + searchWord; 
 			}
+			
+			uri += "\" class=\"prev\">이전</a>";
 
 			pageTags.append(uri);
 		}
@@ -187,7 +192,8 @@ public enum ArticleService {
 			if(currentPage == i) { // 현재 페이지와 값이 같다면 링크X
 				pageTags.append("<a href=\"#\" class=\"num current\">" + String.valueOf(i) + "</a>");
 			} else {
-				String uri = "<a href=\"" + contextPath + "/list.do?pageNum=" + i;
+				String uri = "<a href=\"" + contextPath + "/board/list.do?pageNum=" + i
+						   + "&group=" + group + "&cate=" + cate;
 				
 				if(searchWord != null) {
 					uri += "&searchField=" + searchField + "&searchWord=" + searchWord; 
@@ -200,7 +206,9 @@ public enum ArticleService {
 		}
 		
 		if(pageGroupEnd < lastPageNum) { // 반복문의 마지막이며 마지막 페이지 번호보다 작을 경우
-			String uri = "<a href=\"" + contextPath + "/list.do?pageNum=" + nextPage;
+			String uri = "<a href=\"" + contextPath + "/board/list.do?pageNum=" + nextPage
+					   + "&group=" + group + "&cate=" + cate;
+			
 			if(searchWord != null) {
 				uri += "&searchField=" + searchField + "&searchWord=" + searchWord;
 			}
