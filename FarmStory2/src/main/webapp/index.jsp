@@ -39,7 +39,7 @@
 		                    	<c:forEach  items="${map.croptalk2}" end="3" var="row" varStatus="loop">
 			                        <tr>
 			                            <td>></td>
-			                            <td><a href='<c:url value='/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
+			                            <td><a href='<c:url value='/board/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
 			                            <td>${row.rdate}</td>
 			                        </tr>
 		                    	</c:forEach>
@@ -62,7 +62,7 @@
 		                    	<c:forEach  items="${map.croptalk3}" end="4" var="row" varStatus="loop">
 			                        <tr>
 			                            <td>></td>
-			                            <td><a href='<c:url value='/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
+			                            <td><a href='<c:url value='/board/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
 			                            <td>${row.rdate}</td>
 			                        </tr>
 		                    	</c:forEach>
@@ -85,7 +85,7 @@
 		                    	<c:forEach  items="${map.croptalk1}" end="3" var="row" varStatus="loop">
 			                        <tr>
 			                            <td>></td>
-			                            <td><a href='<c:url value='/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
+			                            <td><a href='<c:url value='/board/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
 			                            <td>${row.rdate}</td>
 			                        </tr>
 		                    	</c:forEach>
@@ -109,8 +109,8 @@
                         </p>
                     </div>
                     <div class="btns">
-                        <a href="#"><img src='<c:url value='/img/main_sub2_cs_bt1.png'/>' alt="1:1 고객문의"></a>
-                        <a href="#"><img src='<c:url value='/img/main_sub2_cs_bt2.png'/>' alt="자주묻는질문"></a>
+                        <a href='<c:url value='/board/list.do?group=community&cate=4'/>'><img src='<c:url value='/img/main_sub2_cs_bt1.png'/>' alt="1:1 고객문의"></a>
+                        <a href='<c:url value='/board/list.do?group=community&cate=5'/>'><img src='<c:url value='/img/main_sub2_cs_bt2.png'/>' alt="자주묻는질문"></a>
                         <a href="#"><img src='<c:url value='/img/main_sub2_cs_bt3.png'/>' alt="배송조회"></a>
                     </div>
                 </div>
