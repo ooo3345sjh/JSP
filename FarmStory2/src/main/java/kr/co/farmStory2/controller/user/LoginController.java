@@ -30,12 +30,13 @@ public class LoginController  extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("LoginController doGet...");
 		req.getRequestDispatcher("/board/user/login.jsp").forward(req, resp); // 로그인 뷰를 보여준다.
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		logger.info("LoginController...");
+		logger.info("LoginController doPost...");
 		
 		String uid = req.getParameter("uid"); 		 // 회원 아이디
 		String pass = req.getParameter("pass"); 	 // 회원 패스워드

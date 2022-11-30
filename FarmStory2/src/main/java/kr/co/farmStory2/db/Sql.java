@@ -92,6 +92,12 @@ public class Sql {
 	// 조건에 해당하는 파일 삭제
 	public static final String DELETE_FILE = "DELETE FROM `board_file` WHERE `parent`=?";
 	
+	/* index */
+	// 조건에 해당하는 게시물 조회
+	public static final String SELECT_ARTICLES = "SELECT * FROM(SELECT *, "
+											   + "ROW_NUMBER() OVER(PARTITION BY `cate` ORDER BY `no` DESC) a FROM `board_article`) rankrow "
+											   + "WHERE	rankrow.a <=5 AND `cate` IN ('croptalk1', 'croptalk2', 'croptalk3', "
+											   + "'community1', 'community4', 'community5')";
 	
 	/*** comment ***/
 	// 댓글 등록

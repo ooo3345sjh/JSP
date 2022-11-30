@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @WebServlet("/introduction/hello.do")
 public class HelloController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public void init() throws ServletException {
@@ -19,6 +23,7 @@ public class HelloController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("HelloController...");
 		req.getRequestDispatcher("/introduction/hello.jsp").forward(req, resp);
 	}
 	

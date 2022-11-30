@@ -32,15 +32,18 @@ public class WriteController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("WriteController doGet...");
 		JSFunction.alertBack(resp, "비정상적인 접근입니다.");
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String no = req.getParameter("no");
-		String uid = req.getParameter("uid");
-		String comment = req.getParameter("comment");
-		String regip = req.getRemoteAddr();
+		logger.info("WriteController doPost...");
+		
+		String no = req.getParameter("no"); 			// 게시글 번호
+		String uid = req.getParameter("uid");			// 회원 ID
+		String comment = req.getParameter("comment");  	// 댓글 내용
+		String regip = req.getRemoteAddr();				// 회원 IP
 		
 		ArticleVO vo = new ArticleVO();
 		vo.setNo(no);
@@ -48,15 +51,15 @@ public class WriteController extends HttpServlet {
 		vo.setContent(comment);
 		vo.setRegip(regip);
 		
-		Map<String, Object> map = service.insertComment(vo);
-		service.plusComment(no);
+		Map<String, Object> map = service.insertComment(vo); // 댓글을 DB에 등록하는 서비스
+		service.plusComment(no);							 // 댓글 갯수 +1
 		
 		JsonObject json = new JsonObject();
-		json.addProperty("result", (int)map.get("result"));
-		json.addProperty("no", (int)map.get("no"));
-		json.addProperty("rdate", (String)map.get("rdate"));
+		json.addProperty("result", (int)map.get("result"));	 // 등록 결과 성공 유무 결과값 전송(1:성공 0:실패)
+		json.addProperty("no", (int)map.get("no"));			 // 댓글 번호
+		json.addProperty("rdate", (String)map.get("rdate")); // 댓글 등록 날짜
 		
 		PrintWriter writer = resp.getWriter();
-		writer.print(json.toString());
+		writer.print(json.toString());						 // JSON 데이터 전송
 	}
 }

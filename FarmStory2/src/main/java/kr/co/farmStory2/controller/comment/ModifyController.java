@@ -31,19 +31,21 @@ public class ModifyController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("ModifyController doGet...");
 		JSFunction.alertBack(resp, "비정상적인 접근입니다.");
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		logger.info("ModifyController...");
-		String no = req.getParameter("commentNo");
-		String comment = req.getParameter("comment");
-		int result = service.updateComment(no, comment);
+		logger.info("ModifyController doPost...");
+		
+		String no = req.getParameter("commentNo");			// 댓글 번호
+		String comment = req.getParameter("comment");		// 댓글 내용
+		int result = service.updateComment(no, comment);	// 댓글 내용을 수정하는 서비스
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);
 		PrintWriter writer = resp.getWriter();
-		writer.print(json.toString());
+		writer.print(json.toString());						// JSON 데이터 전송
 	}
 }

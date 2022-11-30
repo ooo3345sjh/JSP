@@ -10,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,10 +137,9 @@ public enum UserService {
 		int status = 0;
 		try {
 			logger.info("메일 전송 시작...");
-			title = new String(title.getBytes("UTF-8"), "utf-8");
 			message.setFrom(new InternetAddress(sender, "관리자", "utf-8"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
-			message.setSubject(title);
+			message.setSubject(MimeUtility.encodeText(title, "utf-8", "B"));
 			message.setContent(content, "text/html;charset=utf-8");
 			Transport.send(message);
 			

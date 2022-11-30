@@ -37,12 +37,12 @@ public class ModifyController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("ModifyController doGet...");
 		
-		req.setAttribute("no", req.getParameter("no"));
-		req.setAttribute("title", req.getParameter("title"));
-		req.setAttribute("content", req.getParameter("content"));
-		req.setAttribute("fname", req.getParameter("fname"));
-		req.setAttribute("group", req.getParameter("group"));
-		req.setAttribute("cate", req.getParameter("cate"));
+		req.setAttribute("no", req.getParameter("no"));				// 게시글 번호
+		req.setAttribute("title", req.getParameter("title"));		// 게시글 제목
+		req.setAttribute("content", req.getParameter("content"));   // 게시글 내
+		req.setAttribute("fname", req.getParameter("fname"));       // 파일 이름
+		req.setAttribute("group", req.getParameter("group"));  	    // 그룹
+		req.setAttribute("cate", req.getParameter("cate"));         // 카테고리
 		
 		
 		req.getRequestDispatcher("/board/modify.jsp").forward(req, resp);
@@ -71,12 +71,12 @@ public class ModifyController extends HttpServlet {
 			return;
 		}
 		
-		int no = Integer.parseInt(mr.getParameter("no"));
-		String title = mr.getParameter("title");
-		String content = mr.getParameter("content");
-		String oriName = mr.getFilesystemName("oriName");
-		String regip = req.getRemoteAddr();
-		String uid = ((UserVO)req.getAttribute("reqUser")).getUid();
+		int no = Integer.parseInt(mr.getParameter("no"));				// 게시글 번호
+		String title = mr.getParameter("title");						// 게시글 제목
+		String content = mr.getParameter("content");					// 게시글 내용
+		String oriName = mr.getFilesystemName("oriName");				// 파일명
+		String regip = req.getRemoteAddr();								// 회원 IP주소
+		String uid = ((UserVO)req.getAttribute("reqUser")).getUid();    // 회원 ID
 		
 		// 2. 파일 업로드 외 처리
 		// 폼값을 VO에 저장
@@ -92,8 +92,9 @@ public class ModifyController extends HttpServlet {
 		/*** 원본 파일명과 저장된 파일 이름 설정 ***/
 		String newName = "";
 		FileVO fVo = null;
-		String changeFile = mr.getParameter("changeFile");
-		String currentFile = mr.getParameter("currentFile");
+		String changeFile = mr.getParameter("changeFile");   // 수정 파일 true or false
+		String currentFile = mr.getParameter("currentFile"); // 수정 전 저장되어 있는 파일명 (없으면 null)
+		
 		boolean newSave = false;
 		if(oriName != null && "true".equals(changeFile)) { // 첨부 파일이 있고 changeFile == true일 경우
 			
@@ -123,12 +124,12 @@ public class ModifyController extends HttpServlet {
 		}
 		
 		
-		// 작성 글 등록
-		int result = 0;
-		result = service.updateArticle(aVo, fVo, newSave);
 		
-		String group = req.getParameter("group");
-		String cate = req.getParameter("cate");
+		int result = 0; 								   // 결과 변수
+		result = service.updateArticle(aVo, fVo, newSave); // 작성 글 등록
+		
+		String group = req.getParameter("group"); // 그룹
+		String cate = req.getParameter("cate");   // 카테고리
 		
 		if(result > 0) { // 글 및 파일 등록 성공시
 			resp.sendRedirect(req.getContextPath() + "/board/view.do?no=" + no + "&group=" + group + "&cate=" + cate);

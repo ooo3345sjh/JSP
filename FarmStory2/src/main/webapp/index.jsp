@@ -19,102 +19,78 @@
             </div>
 
             <div class="quick">
-                <a href="#"><img src='<c:url value='/img/main_banner_sub1_tit.png'/>' alt="오늘의 식단"></a>
-                <a href="#"><img src='<c:url value='/img/main_banner_sub2_tit.png'/>' alt="나도 요리사"></a>                
+                <a href='<c:url value='/board/list.do?group=community&cate=2'/>'><img src='<c:url value='/img/main_banner_sub1_tit.png'/>' alt="오늘의 식단"></a>
+                <a href='<c:url value='/board/list.do?group=community&cate=3'/>'><img src='<c:url value='/img/main_banner_sub2_tit.png'/>' alt="나도 요리사"></a>                
             </div>
 
             <div class="latest">
                 <div>
-                    <a href="#"><img src='<c:url value='/img/main_latest1_tit.png'/>' alt="텃밭 가꾸기"/></a>
+                    <a href='<c:url value='/board/list.do?group=croptalk&cate=2'/>'><img src='<c:url value='/img/main_latest1_tit.png'/>' alt="텃밭 가꾸기"/></a>
                     <img src='<c:url value='/img/main_latest1_img.jpg'/>' alt="이미지"/>
                     <table border="0">
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
+                    	<c:choose>
+                    		<c:when test="${empty map.croptalk2}">
+                    			<tr>
+                    				<td>></td>
+                    				<td colspan="2" width="195px"><a>최신 글이 없습니다</a><td>
+                    			</tr>
+                    		</c:when>
+                    		<c:otherwise>
+		                    	<c:forEach  items="${map.croptalk2}" end="3" var="row" varStatus="loop">
+			                        <tr>
+			                            <td>></td>
+			                            <td><a href='<c:url value='/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
+			                            <td>${row.rdate}</td>
+			                        </tr>
+		                    	</c:forEach>
+                    		</c:otherwise>
+                    	</c:choose>
                     </table>
                 </div>
                 <div>
-                    <a href="#"><img src='<c:url value='/img/main_latest2_tit.png'/>' alt="귀농학교"/></a>
+                    <a href='<c:url value='/board/list.do?group=croptalk&cate=3'/>'><img src='<c:url value='/img/main_latest2_tit.png'/>' alt="귀농학교"/></a>
                     <img src='<c:url value='/img/main_latest2_img.jpg'/>' alt="이미지"/>
                     <table border="0">
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
+                        <c:choose>
+                    		<c:when test="${empty map.croptalk3}">
+                    			<tr>
+                    				<td>></td>
+                    				<td colspan="2" width="195px"><a>최신 글이 없습니다</a><td>
+                    			</tr>
+                    		</c:when>
+                    		<c:otherwise>
+		                    	<c:forEach  items="${map.croptalk3}" end="4" var="row" varStatus="loop">
+			                        <tr>
+			                            <td>></td>
+			                            <td><a href='<c:url value='/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
+			                            <td>${row.rdate}</td>
+			                        </tr>
+		                    	</c:forEach>
+                    		</c:otherwise>
+                    	</c:choose>
                     </table>
                 </div>
                 <div>
-                    <a href="#"><img src='<c:url value='/img/main_latest3_tit.png'/>' alt="농작물 이야기"/></a>
+                    <a href='<c:url value='/board/list.do?group=croptalk&cate=1'/>'><img src='<c:url value='/img/main_latest3_tit.png'/>' alt="농작물 이야기"/></a>
                     <img src='<c:url value='/img/main_latest3_img.jpg'/>' alt="이미지"/>
                     <table border="0">
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
+                        <c:choose>
+                    		<c:when test="${empty map.croptalk1}">
+                    			<tr>
+                    				<td>></td>
+                    				<td colspan="2" width="195px"><a>최신 글이 없습니다</a><td>
+                    			</tr>
+                    		</c:when>
+                    		<c:otherwise>
+		                    	<c:forEach  items="${map.croptalk1}" end="3" var="row" varStatus="loop">
+			                        <tr>
+			                            <td>></td>
+			                            <td><a href='<c:url value='/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
+			                            <td>${row.rdate}</td>
+			                        </tr>
+		                    	</c:forEach>
+                    		</c:otherwise>
+                    	</c:choose>
                     </table>
                 </div>
                 
@@ -157,23 +133,44 @@
                         </ul>
                         <div id="tabs-1">
                             <ul class="txt">
-                                <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                                <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                                <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
+	                            <c:choose>
+		                    		<c:when test="${empty map.community1}">
+		                                <li><a href="#">· 최신 글이 없습니다</a></li>
+		                    		</c:when>
+		                    		<c:otherwise>
+				                    	<c:forEach  items="${map.community1}" end="2" var="row" varStatus="loop">
+		                               		<li><a href="#">· ${row.title}</a></li>
+				                    	</c:forEach>
+		                    		</c:otherwise>
+	                    		</c:choose>
                             </ul>
                         </div>
                         <div id="tabs-2">
                             <ul class="txt">
-                                <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                                <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                                <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
+                                <c:choose>
+		                    		<c:when test="${empty map.community3}">
+		                                <li><a href="#">· 최신 글이 없습니다</a></li>
+		                    		</c:when>
+		                    		<c:otherwise>
+				                    	<c:forEach  items="${map.community3}" end="2" var="row" varStatus="loop">
+		                               		<li><a href="#">· ${row.title}</a></li>
+				                    	</c:forEach>
+		                    		</c:otherwise>
+	                    		</c:choose>
                             </ul>
                         </div>
                         <div id="tabs-3">
                             <ul class="txt">
-                                <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                                <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                                <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
+                                <c:choose>
+		                    		<c:when test="${empty map.community4}">
+		                                <li><a href="#">· 최신 글이 없습니다</a></li>
+		                    		</c:when>
+		                    		<c:otherwise>
+				                    	<c:forEach  items="${map.community4}" end="2" var="row" varStatus="loop">
+		                               		<li><a href="#">· ${row.title}</a></li>
+				                    	</c:forEach>
+		                    		</c:otherwise>
+	                    		</c:choose>
                             </ul>
                         </div>
                     </div>

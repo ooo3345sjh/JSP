@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.farmStory2.service.user.UserService;
 
 @WebServlet("/user/logout.do")
@@ -17,6 +20,7 @@ public class LogoutController  extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void init() throws ServletException {
@@ -24,8 +28,9 @@ public class LogoutController  extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("LogoutController doGet...");
 		
-		String uid = req.getParameter("uid");
+		String uid = req.getParameter("uid"); // 회원 ID
 		
 		// 모든 쿠키 삭제
 		Cookie[] cookies = req.getCookies();

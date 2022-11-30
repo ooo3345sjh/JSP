@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.farmStory2.service.user.UserService;
 import kr.co.farmStory2.utils.JSFunction;
 import kr.co.farmStory2.vo.UserVO;
@@ -16,6 +19,7 @@ import kr.co.farmStory2.vo.UserVO;
 public class FindIdResultController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE; 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void init() throws ServletException {
@@ -23,14 +27,17 @@ public class FindIdResultController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("FindIdResultController doGet...");
 		JSFunction.alertBack(resp, "비정상적인 접근입니다.");
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String email = req.getParameter("email");
-		String name = req.getParameter("name");
-		UserVO vo = service.selectUserForFindId(name, email);
+		logger.info("FindIdResultController doPost...");
+	
+		String email = req.getParameter("email");			  // 입력한 이메일
+		String name = req.getParameter("name");				  // 입력한 이름
+		UserVO vo = service.selectUserForFindId(name, email); // 입력한 이메일과 이름에 해당하는 회원정보를 반환 
 		
 		req.setAttribute("user", vo);
 		

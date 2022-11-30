@@ -38,8 +38,7 @@ public class DownloadController extends HttpServlet {
 		
 		int no = Integer.parseInt(req.getParameter("no"));
 		FileVO vo = service.selectFile(no); // 파일 정보를 가져온다.
-		System.out.println("download - no : " + no);
-		service.plusDownload(no);
+		service.plusDownload(no);           // 다운로드 횟수 +1
 		service.downloadFile(req, resp, "/file", vo.getNewName(), vo.getOriName()); // 파일을 다운로드한다.
 	}
 	

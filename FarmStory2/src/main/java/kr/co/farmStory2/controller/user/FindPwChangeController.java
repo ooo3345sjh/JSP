@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.JsonObject;
 
 import kr.co.farmStory2.service.user.UserService;
@@ -19,6 +22,7 @@ public class FindPwChangeController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void init() throws ServletException {
@@ -26,8 +30,10 @@ public class FindPwChangeController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String requestUrl = req.getHeader("referer");
-		if(requestUrl == null) { // 주소창에 직접 입력한 경우
+		logger.info("FindPwChangeController doGet...");
+		
+		String requestUrl = req.getHeader("referer");  // 요청하는 uri
+		if(requestUrl == null) { 					   // 주소창에 직접 입력한 경우
 			JSFunction.alertBack(resp, "비정상적인 접근입니다.");
 			return;
 		} else {
@@ -45,11 +51,13 @@ public class FindPwChangeController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String uid = req.getParameter("uid");
-		String pass = req.getParameter("pass1");
+		logger.info("FindPwChangeController doPost...");
+		
+		String uid = req.getParameter("uid");	 // 입력한 ID
+		String pass = req.getParameter("pass1"); // 입력한 PW
 		
 		
-		int result = service.updateUserPw(uid, pass);
+		int result = service.updateUserPw(uid, pass); // 입력한 ID에 해당하는 회원의 PW를 변경하는 서비스
 		
 		// JSON 출력
 		JsonObject json = new JsonObject();

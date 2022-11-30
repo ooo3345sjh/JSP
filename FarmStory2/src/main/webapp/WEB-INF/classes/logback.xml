@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>
 
 <configuration>
-	<property name="NAME" value="Jboard1"/>
+	<property name="NAME" value="FarmStory2"/>
 	<import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
 	<import class="ch.qos.logback.core.ConsoleAppender"/>
 
@@ -37,7 +37,7 @@
 		</encoder>
 	</appender>
 
-	<root level="debug">
+	<root level="info">
 		<appender-ref ref="STDOUT"/>
 		<appender-ref ref="ROLLING"/>
 	</root>

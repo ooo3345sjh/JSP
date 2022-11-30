@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.farmStory2.service.board.ArticleService;
 
 
@@ -18,16 +21,18 @@ public class ViewController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.INSTANCE;
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void init() throws ServletException {}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("ViewController...");
 		
-		int no = Integer.parseInt(req.getParameter("no"));
-		Map<String, Object> map = service.selectArticle(no);
-		service.plusHit(no);
+		int no = Integer.parseInt(req.getParameter("no"));   // 게시글 번호
+		Map<String, Object> map = service.selectArticle(no); // 게시글 정보를 가져오는 서비스
+		service.plusHit(no);								 // 게시글 조회수 +1
 		
 		// no=xxx 쿼리스트링을 제거하는 작업
 		String queryString = req.getQueryString();
@@ -37,15 +42,15 @@ public class ViewController extends HttpServlet {
 			joiner.add(arr[i]);
 		}
 		
-		req.setAttribute("no", no);
-		req.setAttribute("joiner", joiner.toString());
-		req.setAttribute("queryString", req.getQueryString());
-		req.setAttribute("group", req.getParameter("group"));
-		req.setAttribute("cate", req.getParameter("cate"));
-		req.setAttribute("searchField", req.getParameter("searchField"));
-		req.setAttribute("searchWord", req.getParameter("searchWord"));
-		req.setAttribute("pageNum", req.getParameter("pageNum"));
-		req.setAttribute("map", map);
+		req.setAttribute("no", no);											// 게시글 번호
+		req.setAttribute("joiner", joiner.toString());						// no=xxx를 제거한 쿼리스트링
+		req.setAttribute("queryString", req.getQueryString());  			// no를 포함한 전체 쿼리스트링
+		req.setAttribute("group", req.getParameter("group"));   			// 그룹
+		req.setAttribute("cate", req.getParameter("cate"));    				// 카테고리
+		req.setAttribute("searchField", req.getParameter("searchField"));	// 검색 필드
+		req.setAttribute("searchWord", req.getParameter("searchWord"));		// 검색 단어
+		req.setAttribute("pageNum", req.getParameter("pageNum"));			// 페이지 번호
+		req.setAttribute("map", map);										// 게시글 정보를 담고 있는 map 
 		req.getRequestDispatcher("/board/view.jsp").forward(req, resp);
 	}
 	

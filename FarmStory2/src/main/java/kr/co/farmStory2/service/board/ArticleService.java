@@ -26,11 +26,10 @@ import kr.co.farmStory2.vo.FileVO;
 public enum ArticleService {
 	INSTANCE;
 	private ArticleDAO dao;
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private ArticleService() {
 		dao = new ArticleDAO();
 	}
-	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	//====== list ======//
 	/*** 검색 조건에 해당하는 게시판 전체 개수 구하는 서비스 ***/
 	public int countArticles(Map<String, Object> map) {
@@ -48,11 +47,6 @@ public enum ArticleService {
 	public int insertArticleAndFile(ArticleVO aVo, FileVO fVo) {
 		return dao.insertArticleAndFile(aVo, fVo);
 	}
-	
-	/*** 파일을 등록하는 서비스 ***/
-	/*public int insertFile(FileVO vo) {
-		return dao.insertFile(vo);
-	}*/
 	
 	//====== view ======//
 	/*** 조건에 해당하는 게시물을 가져오는 서비스 ***/
@@ -89,13 +83,11 @@ public enum ArticleService {
 		return dao.updateArticleAndFile(aVo, fVo, newSave);
 	}
 	
-	/*
-	public Map<String, Object> deleteFile(int parent) {
-		return dao.deleteFile(parent);
-	}*/
-
-	public void selectArticles() {}
-	
+	//====== index ======//
+	// 조건에 해당하는 게시물 조회
+	public Map<String, Object> selectArticles() {
+		return dao.selectArticles();
+	}
 	
 	//===== 추가 서비스 =====//
 	/*** 페이징 처리 ***/

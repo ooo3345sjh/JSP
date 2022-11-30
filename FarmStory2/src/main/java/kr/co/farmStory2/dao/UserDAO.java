@@ -33,6 +33,7 @@ public class UserDAO extends DBHelper {
 			logger.error(e.getMessage());
 		}
 		
+		logger.debug("vo : " + vo);
 		return vo;
 	}
 	
@@ -323,9 +324,4 @@ public class UserDAO extends DBHelper {
 		logger.debug("result : " + result);
 		return result;
 	}
-	
-	
-	public void selectUsers() {}
-	public void updateUser() {}
-	public void deleteUser() {}
 }

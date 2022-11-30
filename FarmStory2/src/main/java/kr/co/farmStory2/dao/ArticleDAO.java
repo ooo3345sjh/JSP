@@ -161,28 +161,6 @@ public class ArticleDAO extends DBHelper {
 		return result;
 	};
 	
-	/*** 파일을 등록하는 메서드 ***/
-	/*public int insertFile(FileVO vo) {
-		int result = 0;
-		try {
-			logger.info("insertFile...");
-			con = getConnection();
-			psmt = con.prepareStatement(Sql.INSERT_FILE);
-			psmt.setInt(1, vo.getParent());
-			psmt.setString(2, vo.getNewName());
-			psmt.setString(3, vo.getOriName());
-			
-			result = psmt.executeUpdate();
-			
-			close();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		logger.debug("result : " + result);
-		return result;
-	};*/
-	
-	
 	//====== view ======//
 	/*** 조건에 해당하는 게시물을 가져오는 메서드 ***/
 	public Map<String, Object> selectArticle(int no) {
@@ -337,7 +315,6 @@ public class ArticleDAO extends DBHelper {
 	};
 	
 	//====== update ======//
-	// 조건에 해당하는 게시물 수정
 	/*** 글을 수정하는 메서드 ***/
 	public int updateArticleAndFile(ArticleVO aVo, FileVO fVo, boolean newSave) {
 		int result = 0;
@@ -390,41 +367,82 @@ public class ArticleDAO extends DBHelper {
 		logger.debug("result : " + result);
 		return result;
 	};
-	/*
-	// 조건에 해당하는 파일 삭제
-	public Map<String, Object> deleteFile(int parent) {
+	
+	//====== index ======//
+	/*** 글을 수정하는 메서드 ***/
+	public Map<String, Object> selectArticles() {
 		Map<String, Object> map = null;
-		int result = 0;
-		String newName = null;
+		List<ArticleVO> croptalk1 = null;
+		List<ArticleVO> croptalk2 = null;
+		List<ArticleVO> croptalk3 = null;
+		List<ArticleVO> community1 = null;
+		List<ArticleVO> community4 = null;
+		List<ArticleVO> community5 = null;
+		
 		try {
-			logger.info("deleteFile...");
+			logger.info("insertArticles...");
 			con = getConnection();
-			con.setAutoCommit(false);
-			
-			PreparedStatement selectPsmt = con.prepareStatement(Sql.SELECT_FILE);
-			selectPsmt.setInt(1, parent);
-			
-			rs = selectPsmt.executeQuery();
-			if(rs.next()) {
-				newName = rs.getString("newName");
+			stmt = con.createStatement();
+			map = new HashMap<>();
+			rs = stmt.executeQuery(Sql.SELECT_ARTICLES);
+			croptalk1 = new ArrayList<>();
+			croptalk2 = new ArrayList<>();
+			croptalk3 = new ArrayList<>();
+			community1 = new ArrayList<>();
+			community4 = new ArrayList<>();
+			community5 = new ArrayList<>();
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt("no"));
+				String cate = rs.getString("cate");
+				System.out.println(cate);
+				vo.setCate(removeString(cate));
+				vo.setGroup(removeNumber(cate));
+				vo.setTitle(rs.getString("title"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				switch(cate) {
+					case "croptalk1": 
+						croptalk1.add(vo); break;
+					case "croptalk2": 
+						croptalk2.add(vo); break;
+					case "croptalk3": 
+						croptalk3.add(vo); break;
+					case "community1": 
+						community1.add(vo); break;
+					case "community4": 
+						community4.add(vo); break;
+					case "community5": 
+						community5.add(vo); break;
+				}
+				
 			}
 			
-			psmt = con.prepareStatement(Sql.DELETE_FILE);
-			psmt.setInt(1, parent);
-			result = psmt.executeUpdate();
+			map.put("croptalk1", croptalk1);
+			map.put("croptalk2", croptalk2);
+			map.put("croptalk3", croptalk3);
+			map.put("community1", community1);
+			map.put("community4", community4);
+			map.put("community5", community5);
 			
-			con.commit();
-			map = new HashMap<>();
-			map.put("result", result);
-			map.put("newName", newName);
-			
-			selectPsmt.close();
 			close();
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		logger.debug("map : " + map);
 		return map;
-	};*/
-	public void selectArticle() {};
+	}
+	
+	public String removeNumber(String str){
+        String match = "[0-9]";
+        str = str.replaceAll(match, "");
+        return str;
+    }
+	
+	public String removeString(String str){
+		String match = "[^0-9]";
+        str = str.replaceAll(match, "");
+        return str;
+    }
+	
 }

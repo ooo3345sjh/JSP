@@ -40,7 +40,8 @@ public class DeleteController extends HttpServlet {
 		String newName = (String)map.get("newName");
 		
 		if(result > 0) { // 게시물 삭제 성공
-			if(newName != null) {
+			
+			if(newName != null) { // 파일이 있다면
 				service.deleteFile(req, "/file", newName);
 			}
 			

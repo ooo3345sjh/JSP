@@ -37,8 +37,9 @@ public class WriteController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("WriteController doGet...");
-		req.setAttribute("group", req.getParameter("group"));
-		req.setAttribute("cate", req.getParameter("cate"));
+		
+		req.setAttribute("group", req.getParameter("group")); // 그룹
+		req.setAttribute("cate", req.getParameter("cate"));	  // 카테고리
 		req.getRequestDispatcher("/board/write.jsp").forward(req, resp);
 	}
 	

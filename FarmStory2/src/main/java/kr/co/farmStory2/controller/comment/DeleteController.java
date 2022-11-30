@@ -37,14 +37,13 @@ public class DeleteController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("DeleteController...");
-		String no = req.getParameter("commentNo");
-		System.out.println("댓글 번호 - no : " + no);
-		service.minusComment(no);
-		int result = service.deleteComment(no);
+		String no = req.getParameter("commentNo");	// 댓글 번호
+		service.minusComment(no);					// 댓글 갯수 -1
+		int result = service.deleteComment(no);		// 댓글 삭제하는 서비스
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);
 		PrintWriter writer = resp.getWriter();
-		writer.print(json.toString());
+		writer.print(json.toString());				// JSON 데이터 전송
 	}
 }
