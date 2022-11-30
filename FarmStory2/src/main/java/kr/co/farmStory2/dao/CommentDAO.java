@@ -87,4 +87,34 @@ public class CommentDAO extends DBHelper {
 		logger.debug("result : " + result);
 		return result;
 	}
+	
+	public void plusComment(String no) {
+		try {
+			logger.info("plusComment...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.PLUS_COMMENT);
+			psmt.setString(1, no);
+			
+			psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public void minusComment(String no) {
+		try {
+			logger.info("minusComment...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.MINUS_COMMENT);
+			psmt.setString(1, no);
+			
+			psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 }

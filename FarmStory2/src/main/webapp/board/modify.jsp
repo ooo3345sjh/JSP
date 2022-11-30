@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="./_header.jsp"/>
+<jsp:include page="/_header.jsp"/>
 <script>
 	function validateForm(form) {
 		if(!form.title.value){
@@ -71,11 +71,14 @@
                     </table>
                     
                     <div>
-                        <a href="<c:url value='view.do?no=${no}'/>" class="btn btnCancel">취소</a>
+                        <a href="javascript:history.back();" class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>
 
             </section>
         </main>
-<jsp:include page="./_footer.jsp"/>
+        </article>
+	</section>
+</div>
+<jsp:include page="/_footer.jsp"/>

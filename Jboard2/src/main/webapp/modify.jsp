@@ -14,7 +14,6 @@
 			return false;
 		}
 	}
-	
 	$(function () {
 		$(document).ready(function () {
 			$('input[name=title]').focus();
@@ -72,7 +71,7 @@
                     </table>
                     
                     <div>
-                        <a href="javascript:history.back()" class="btn btnCancel">취소</a>
+                        <a href="javascript:history.back();" class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>

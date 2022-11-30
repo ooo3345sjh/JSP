@@ -60,11 +60,23 @@ public enum ArticleService {
 		return dao.selectArticle(no);
 	}
 	
+	
+	/*** 조건에 해당하는 게시물 조회수를 올리는 서비스 ***/
+	public void plusHit(int no) {
+		dao.plusHit(no);
+	}
+	
+	//====== view-download ======//
 	/*** 조건에 해당하는 파일을 가져오는 서비스 ***/
 	public FileVO selectFile(int no) {
 		return dao.selectFile(no);
 	}
 	
+	/*** 파일 다운로드 수 +1 ***/
+	public void plusDownload(int no) {
+		dao.plusDownload(no);
+	}
+
 	//====== delete ======//
 	/*** 조건에 해당하는 게시판 및 관련 파일, 댓글을 삭제하는 서비스 ***/
 	public Map<String, Object> deleteArticle(int no) {
@@ -163,6 +175,10 @@ public enum ArticleService {
 			
 			String uri = "<a href=\"" + contextPath + "/list.do?pageNum=" 
 					   + prevPage + "\" class=\"prev\">이전</a>";
+			
+			if(searchWord != null) {
+				uri += "&searchField=" + searchField + "&searchWord=" + searchWord; 
+			}
 
 			pageTags.append(uri);
 		}
@@ -255,6 +271,7 @@ public enum ArticleService {
 	
 	/*** 지정한 위치의 파일을 삭제 서비스 ***/
 	public void deleteFile(HttpServletRequest req, String directory, String newName) {
+		logger.info("deleteFile...");
 		String sDirectory = req.getServletContext().getRealPath(directory);
 		File file = new File(sDirectory, newName);
 		if(file.exists()) file.delete();

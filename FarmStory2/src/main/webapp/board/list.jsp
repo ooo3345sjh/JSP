@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/_header.jsp"/>
 <jsp:include page="/${group}.jsp"/>
@@ -11,10 +11,9 @@
 </script>
         <main id="board">
             <section class="list">                
-                <form action='<c:url value='/board/list.do'/>'>
-                	<!--  <input type="hidden" name="isSearch" value="true"> 삭제 예정 -->
-                	<input type="hidden" name='group' value='${group}'>
-                	<input type="hidden" name='cate' value='${cate}'>
+                <form action="#">
+                	<input type="hidden" name="group" value="${group}">
+                	<input type="hidden" name="cate" value="${cate}">
     	            <select name="searchField">
 						<option value="title">제목</option>
 						<option value="content">내용</option>
@@ -45,7 +44,13 @@
 		                    <c:forEach items="${map.articles}" var="row" varStatus="loop">
 			                    <tr>
 			                        <td>${map.pageStartNum - loop.index}</td>
-			                        <td><a href='<c:url value="/view.do?no=${row.no}&${pageContext.request.getQueryString()}"/>'>${row.title}</a></td>
+			                        <td>
+			                        	<a href='<c:url value="/board/view.do?no=${row.no}&${pageContext.request.getQueryString()}"/>'>
+			                        		${row.title}
+			                        		<c:if test="${row.comment ne 0}">
+				                        		<span>[${row.comment}]</span>
+			                        		</c:if>
+			                        	</a></td>
 			                        <td>${row.nick}</td>
 			                        <td>${row.rdate}</td>
 			                        <td>${row.hit}</td>
@@ -63,7 +68,7 @@
                 
             </section>
         </main>
-		</article>
+       </article>
 	</section>
 </div>
 <jsp:include page="/_footer.jsp"/>

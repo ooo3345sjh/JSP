@@ -11,6 +11,7 @@
         <main id="board">
             <section class="list">                
                 <form action="#">
+                	<!--  <input type="hidden" name="isSearch" value="true"> -->
     	            <select name="searchField">
 						<option value="title">제목</option>
 						<option value="content">내용</option>
@@ -41,7 +42,13 @@
 		                    <c:forEach items="${map.articles}" var="row" varStatus="loop">
 			                    <tr>
 			                        <td>${map.pageStartNum - loop.index}</td>
-			                        <td><a href='<c:url value="/view.do?no=${row.no}&${pageContext.request.getQueryString()}"/>'>${row.title}</a></td>
+			                        <td>
+			                        	<a href='<c:url value="/view.do?no=${row.no}&${pageContext.request.getQueryString()}"/>'>
+			                        		${row.title}
+			                        		<c:if test="${row.comment ne 0}">
+				                        		<span>[${row.comment}]</span>
+			                        		</c:if>
+			                        	</a></td>
 			                        <td>${row.nick}</td>
 			                        <td>${row.rdate}</td>
 			                        <td>${row.hit}</td>

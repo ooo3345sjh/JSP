@@ -49,6 +49,7 @@ public class WriteController extends HttpServlet {
 		vo.setRegip(regip);
 		
 		Map<String, Object> map = service.insertComment(vo);
+		service.plusComment(no);
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("result", (int)map.get("result"));

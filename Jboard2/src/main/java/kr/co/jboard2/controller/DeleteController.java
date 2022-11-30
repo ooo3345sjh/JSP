@@ -48,6 +48,7 @@ public class DeleteController extends HttpServlet {
 			if(newName != null) {
 				service.deleteFile(req, "/file", newName);
 			}
+			
 			resp.sendRedirect(req.getContextPath() + "/list.do");
 			return;
 			

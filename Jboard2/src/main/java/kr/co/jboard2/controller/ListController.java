@@ -39,6 +39,7 @@ public class ListController extends HttpServlet {
 		// 뷰에 전달할 매개변수 저장용 맵 생성
 		Map<String, Object> map = new HashMap<>();
 		
+		//map.put("isSearch", req.getParameter("isSearch"));       
 		map.put("searchField", req.getParameter("searchField"));
 		map.put("searchWord", req.getParameter("searchWord"));
 		map.put("response", resp);

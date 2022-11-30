@@ -25,6 +25,7 @@ public class ViewController extends HttpServlet {
 		
 		int no = Integer.parseInt(req.getParameter("no"));
 		Map<String, Object> map = service.selectArticle(no);
+		service.plusHit(no);
 		
 		req.setAttribute("no", no);
 		req.setAttribute("searchField", req.getParameter("searchField"));

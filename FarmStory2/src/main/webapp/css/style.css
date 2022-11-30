@@ -92,13 +92,14 @@ footer {
     border-top: 1px solid #d1cab2;
     box-sizing: border-box;
 }
-
+footer > img {
+	width: 157px;
+}
 footer > p {
     float: right;
     font-size: 11px;
     color: #585858;
     margin-top: 26px;
-    margin-right: 16px;
     line-height: 18px;
 }
 footer > p > em {

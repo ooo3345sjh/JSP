@@ -229,6 +229,22 @@ public class ArticleDAO extends DBHelper {
 		return map;
 	};
 	
+	/*** 조건에 해당하는 게시물 조회수를 올리는 메서드 ***/
+	public void plusHit(int no) {
+		try {
+			logger.info("plusHit...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.PLUS_HIT);
+			psmt.setInt(1, no);
+			psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	//====== view - download ======//
 	/*** 조건에 해당하는 파일을 가져오는 메서드 ***/
 	public FileVO selectFile(int no) {
 		FileVO vo = null;
@@ -256,6 +272,22 @@ public class ArticleDAO extends DBHelper {
 		}
 		logger.debug("vo : " + vo);
 		return vo;
+	}
+	
+	/*** 파일 다운로드 수 +1 ***/
+	public void plusDownload(int no) {
+		try {
+			logger.info("plusDownload...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.PLUS_DOWNLOAD);
+			psmt.setInt(1, no);
+			
+			psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 	
 	//====== delelte ======//

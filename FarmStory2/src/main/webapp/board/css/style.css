@@ -1,3 +1,4 @@
+
 /* 로그인 */
 #user > .login {
     position: relative;
@@ -240,8 +241,8 @@
 #board > .list > table tr > td:nth-child(5) {}
 
 #board > .list > .page {
-	margin-top: 10px;
     text-align: center;
+    margin-top: 10px;
     height: 32px;
 }
 #board > .list > .page > a {

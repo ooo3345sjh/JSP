@@ -39,6 +39,8 @@ public class DeleteController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("DeleteController...");
 		String no = req.getParameter("commentNo");
+		System.out.println("댓글 번호 - no : " + no);
+		service.minusComment(no);
 		int result = service.deleteComment(no);
 		
 		JsonObject json = new JsonObject();

@@ -49,7 +49,6 @@ public class Sql {
 	// 게시글 등록
 	public static final String INSERT_ARTICLE = "INSERT INTO "
 											  + " `board_article` SET "
-											  + "	`cate`=?, "
 		                                      + "	`title`=?, "
 		                                      + "	`content`=?, "
 		                                      + "	`file`=?, "
@@ -70,8 +69,13 @@ public class Sql {
 			                                  + "LEFT JOIN `board_file` f  ON a.`no` = f.`parent` "
 			                                  + "WHERE a.`no` = ? OR a.`parent`=?";
 	
+	public static final String PLUS_HIT = "UPDATE `board_article` SET `hit`= `hit`+1 WHERE `no`=?";
+	/* view - download */
 	// 파일 다운
 	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE parent=?";
+	
+	// 파일 다운로드 수 +1
+	public static final String PLUS_DOWNLOAD = "UPDATE `board_file` SET `download` = `download`+1 WHERE `parent`=? ";
 
 	/* delete */
 	// 조건에 해당하는 게시물 및 관련 파일 댓글 삭제
@@ -108,5 +112,12 @@ public class Sql {
 	public static final String UPDATE_COMMENT = "UPDATE `board_article` SET "
 											  + "`content`=?, rdate=NOW()  WHERE `no`=?";
 	
+	// 댓글 +1
+	public static final String PLUS_COMMENT = "UPDATE `board_article` SET `comment`= `comment`+1 WHERE `no`=? ";
+	
+	// 댓글 -1
+	public static final String MINUS_COMMENT = "UPDATE `board_article` SET `comment`= `comment`-1 WHERE `no` IN "
+											 + "(SELECT t.parent FROM "
+											 + "(SELECT `parent` FROM `board_article` WHERE `no`=? ) AS t)";
 	
 }

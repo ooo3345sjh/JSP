@@ -17,18 +17,23 @@ public enum CommentService {
 	}
 	
 	public Map<String, Object> insertComment(ArticleVO vo) {
-		logger.info("insertComment...");
 		return dao.insertComment(vo);
 	}
 	
 	public int deleteComment(String no) {
-		logger.info("deleteComment...");
 		return dao.deleteComment(no);
 	}
 	
 	public int updateComment(String no, String comment) {
-		logger.info("updateComment...");
 		return dao.updateComment(no, comment);
+	}
+	
+	public void plusComment(String no) {
+		dao.plusComment(no);
+	}
+	
+	public void minusComment(String no) {
+		dao.minusComment(no);
 	}
 	
 	
