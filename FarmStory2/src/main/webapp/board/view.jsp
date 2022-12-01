@@ -50,7 +50,7 @@
                     <caption>글보기</caption>
                     <tr>
                         <th>제목</th>
-                        <td><input type="text" name="title" value="${map.board.title}" readonly/></td>
+                        <td><p class="title">${map.board.title}</p></td>
                     </tr>
                     <c:if test="${map.board.file ne 0}">
 	                    <tr>
@@ -61,7 +61,7 @@
                     <tr>
                         <th>내용</th>
                         <td>
-                            <textarea name="content" readonly>${map.board.content}</textarea>
+                            <p class="content">${map.board.content}</p>
                         </td>
                     </tr>                    
                 </table>

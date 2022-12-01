@@ -17,7 +17,7 @@
 	}
 	$(function () {
 		$(document).ready(function () {
-			$('input[name=title]').focus();
+			$('textarea[name=title]').focus();
 		})
 		
 		$('.upload').click(function () {
@@ -32,6 +32,28 @@
 			$('input[name=changeFile]').val('true');
 		})
 	});
+	
+	$(document).ready(function () {
+		let textarea = $('textarea[name=title]');
+		let textareaHeight = textarea.prop('scrollHeight') + 5;
+		textarea.css('height', textareaHeight);
+		
+		
+		textarea.keydown(function (e) {
+			let length = textarea.val().length;
+			textarea[0].style.height = 'auto';
+			let textareaHeight = textarea.prop('scrollHeight') + 5;
+			textarea.css('height', textareaHeight);
+			
+			if(length >= 100){
+				alert('제목은 최대 100자까지 입력할 수 있습니다.');
+				textarea.val(textarea.val().substring(0, 99));
+				return;
+			}
+		})
+	})
+	
+		
 </script>
         <main id="board">
             <section class="modify">
@@ -41,12 +63,15 @@
                         <caption>글수정</caption>
                         <tr>
                             <th>제목</th>
-                            <td><input type="text" name="title" placeholder="제목을 입력하세요." value="${title}" /></td>
+                            <td>
+                            	<textarea name="title" placeholder="제목을 입력하세요.">${title}</textarea>
+                            </td>
+                            
                         </tr>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="content" placeholder="내용을 입력하세요.">${content}</textarea>
+                                <textarea name="content" placeholder="내용을 입력하세요." >${content}</textarea>
                             </td>
                         </tr>
                         <tr>

@@ -56,8 +56,8 @@ public enum ArticleService {
 	
 	
 	/*** 조건에 해당하는 게시물 조회수를 올리는 서비스 ***/
-	public void plusHit(int no) {
-		dao.plusHit(no);
+	public int plusHit(int no) {
+		return dao.plusHit(no);
 	}
 	
 	//====== view-download ======//

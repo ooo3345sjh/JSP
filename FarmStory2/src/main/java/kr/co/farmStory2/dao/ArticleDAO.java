@@ -213,18 +213,21 @@ public class ArticleDAO extends DBHelper {
 	};
 	
 	/*** 조건에 해당하는 게시물 조회수를 올리는 메서드 ***/
-	public void plusHit(int no) {
+	public int plusHit(int no) {
+		int result = 0;
 		try {
 			logger.info("plusHit...");
 			con = getConnection();
 			psmt = con.prepareStatement(Sql.PLUS_HIT);
 			psmt.setInt(1, no);
-			psmt.executeUpdate();
+			result = psmt.executeUpdate();
 			
 			close();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+		
+		return result;
 	}
 	
 	//====== view - download ======//

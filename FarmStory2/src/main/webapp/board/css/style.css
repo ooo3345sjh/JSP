@@ -240,6 +240,22 @@
 #board > .list > table tr > td:nth-child(4) {}
 #board > .list > table tr > td:nth-child(5) {}
 
+#board > .list > table tr > td:nth-child(2) a {
+	display: inline-block;
+    max-width: 370px;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 18px;
+}
+#board > .list > table tr > td:nth-child(2) > span {
+    vertical-align: super;
+}
+#board > .list > table tr > td:nth-child(2) img {
+	width: 21px;
+    vertical-align: bottom;
+}
 #board > .list > .page {
     text-align: center;
     margin-top: 10px;
@@ -296,9 +312,12 @@
 }
 #board > .write table td > textarea {
     width: 100%;
-    height: 280px;
+    height: auto;
     resize: none;
     border: none;
+}
+#board > .write table td > textarea[name=content] {
+    height: 280px;
 }
 
 #board > .write > form > div {
@@ -334,13 +353,14 @@
     padding: 10px;
     box-sizing: border-box;
     border-bottom: 1px solid #e9e9e9;
+    word-break: break-all;
 }
 #board > .view table td > input {
     width: 400px;
     height: 24px;
     border: none;
 }
-#board > .view table td > textarea {
+#board > .view table td > p.content {
     width: 100%;
     height: 280px;
     resize: none;
@@ -462,9 +482,12 @@
 }
 #board > .modify table td > textarea {
     width: 100%;
-    height: 280px;
+    height: auto;
     resize: none;
     border: none;
+}
+#board > .modify table td > textarea[name=content] {
+    height: 280px;
 }
 
 #board > .modify > form > div {

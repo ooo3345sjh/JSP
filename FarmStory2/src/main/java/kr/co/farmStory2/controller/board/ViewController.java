@@ -1,6 +1,7 @@
 package kr.co.farmStory2.controller.board;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
 
 import kr.co.farmStory2.service.board.ArticleService;
 
@@ -32,7 +35,6 @@ public class ViewController extends HttpServlet {
 		
 		int no = Integer.parseInt(req.getParameter("no"));   // 게시글 번호
 		Map<String, Object> map = service.selectArticle(no); // 게시글 정보를 가져오는 서비스
-		service.plusHit(no);								 // 게시글 조회수 +1
 		
 		// no=xxx 쿼리스트링을 제거하는 작업
 		String queryString = req.getQueryString();
@@ -56,5 +58,13 @@ public class ViewController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int no = Integer.parseInt(req.getParameter("no"));
+		int result = service.plusHit(no); // 게시글 조회수 +1					
+		
+		resp.setContentType("json/application;charset=UTF-8");
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
 	}
 }
