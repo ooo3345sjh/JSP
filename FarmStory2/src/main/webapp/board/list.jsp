@@ -17,35 +17,12 @@
 			$.post(contextPath + '/board/view.do', {"no":no}, function(data){});
 		})
 	})
-	// 검색어 하이라이트(참고 사이트 : https://nyol.tistory.com/m/159)
-	$(document).ready(function () {
-		let searchWord = '${map.searchWord}';
-		let searchFeild = $("select[name='searchField'] option:selected").val();
-		
-		let regex = new RegExp(searchWord, 'gi'); // g (global, 전역 판별) 처음 일치에서 중단하지 않고, 문자열 전체를 판별합니다.
-												  // i (ignore case, 대소문자 무시)				
-		let matcheWord; 
-		if(searchWord != ''){
-			
-			if(searchFeild == 'title'){
-				$(".view > a").each(function (e) {
-					matcheWord = $(this).text().match(regex); // 정규식 표현에 해당하는 단어만 추출한다.
-					
-					// 정규 표현식에 해당하는 부분을 replace를 사용하여 스타일을 바꾼다.
-					$(this).html($(this).text().replace(regex, "<span style='font-weight:bold; color:#D50000;'>" + matcheWord + "</span>"));
-				})
-			} else if(searchFeild == 'nick') {
-				$(".nick").each(function () {
-					matcheWord = $(this).text().match(regex); // 정규식 표현에 해당하는 단어만 추출한다.
-					
-					// 정규 표현식에 해당하는 부분을 replace를 사용하여 스타일을 바꾼다.
-					$(this).html($(this).text().replace(regex, "<span style='font-weight:bold; color:#D50000;'>" + matcheWord + "</span>"));
-				})
-			}
-		}
-	})
 	
+	// 검색어 하이라이트를 위한 검색 단어 값을 저장
+	let searchWord = '${map.searchWord}';
 </script>
+<!--  검색어 하이라이트(참고 사이트 : https://nyol.tistory.com/m/159)--> 
+<script src='<c:url value='/js/searchHighlight.js'/>'></script>
         <main id="board">
             <section class="list">                
                 <form action="#">

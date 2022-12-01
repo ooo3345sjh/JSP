@@ -45,7 +45,7 @@ public class DeleteController extends HttpServlet {
 				service.deleteFile(req, "/file", newName);
 			}
 			
-			resp.sendRedirect(req.getContextPath() + "/board/list.do?group=" + group + "&cate" + cate);
+			resp.sendRedirect(req.getContextPath() + "/board/list.do?group=" + group + "&cate=" + cate);
 			return;
 			
 		} else { 		  // 게시물 삭제 실패
