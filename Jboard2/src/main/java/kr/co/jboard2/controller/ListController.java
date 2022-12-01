@@ -48,6 +48,8 @@ public class ListController extends HttpServlet {
 		map = service.paging(map);  			    // 페이징처리
 		map.put("pageTags", service.getPageTags(map)); // 페이지 버튼을 출력하는 pageTags 문자열 추가 
 		
+		
+		req.setAttribute("queryString", req.getQueryString());
 		req.setAttribute("map", map);
 		req.getRequestDispatcher("/list.jsp").forward(req, resp);
 	}
