@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script type="module" src='<c:url value='/js/phoneAuth.js'/>'></script>
+<script type="module" src='<c:url value='/js/phoneAuthTest.js'/>'></script>
 </head>
 <body>
 	<form action="">

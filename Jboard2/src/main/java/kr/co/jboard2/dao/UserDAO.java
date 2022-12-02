@@ -99,6 +99,28 @@ public class UserDAO extends DBHelper {
 		return result;
 	}
 	
+	
+	public int checkHp(String hp) {
+		int result = 0;
+		
+		try {
+			logger.info("checkHp...");
+			con = getConnection();
+			psmt = con.prepareStatement(Sql.CHECK_HP);
+			psmt.setString(1, hp);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) result = 1;
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("result : " + result);
+		return result;
+	}
+	
 	public void insertUser(UserVO vo) {
 		
 		try {

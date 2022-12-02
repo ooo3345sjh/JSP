@@ -212,7 +212,7 @@
 			
 			isClick = true; // 중복확인 버튼을 눌렀으면 true;
 			
-			$('.auth').show();
+			
 			$('.emailResult').css('color', 'black').text('...'); // 중복확인 클릭시 로딩중을 표시
 			
 			$.ajax({
@@ -225,7 +225,7 @@
 					if(data.status == 1){
 						// 메일발송 성공
 						emailCode = data.code;
-						
+						$('.auth').show();
 						$('.emailResult').css("color", "black").text('인증코드를 전송했습니다. 이메일을 확인 하세요.');
 					} else {
 						// 메일발송 실패
@@ -249,10 +249,16 @@
 			}
 		});
 		
+		let isHpClick;
+		let hp;
+		
 		// 휴대폰 검사하기
 		$('input[name=hp]').focusout(function () {
 			
-			let hp = $(this).val();
+			if(hp != $(this).val()){ // 기존에 입력된 이메일과 현재 입력된 이메일이 다르면
+				hp = $(this).val();
+				isHpClick = false;
+			}
 			
 			if(hp.match(reHp)){
 				isHpok = true;
@@ -261,6 +267,66 @@
 				isHpok = false;
 				$('.hpResult').css('color', 'red').text('유효하지 않는 휴대폰입니다.');
 			}
+		});
+		
+		// 휴대폰 인증 검사하기
+		$('#btnHpAuth').click(function () {
+			hp = $('input[name=hp]').val();
+			$('#phoneNumber').val(hp);
+			
+			if(!hp){
+				alert('휴대폰 번호를 입력 해주세요.');
+				return;
+			}
+			
+			if(!isHpok){
+				alert('유효하지 않은 휴대폰입니다.');
+				return;
+			}
+			
+			if(isHpClick){ // 중복확인을 이미 한번 누른 상태이면
+				alert('이미 인증번호가 전송 중입니다. \n메시지를 확인 해주세요.');
+				return;
+			}
+			
+			isHpClick = true; // 중복확인 버튼을 눌렀으면 true;
+			
+			
+			$.ajax({
+				url: '/' + contextRoot + '/user/phoneAuth.do',
+				method:'get',
+				data: {"hp":hp},
+				dataType:'json',
+				success: function (data) {
+					console.log(data);
+					if(data.result != 1){
+						// 메일발송 성공
+						$('#phoneNumberBtn').trigger('click');			
+						$('.hpResult').css("color", "black").text('인증번호를 전송했습니다. 메시지를 확인 하세요.');
+						$('.hpAuth').show();
+					} else {
+						// 메일발송 실패
+						$('.hpResult').css("color", "red").text('이미 사용중인 휴대폰입니다.');
+						isHpClick = false;
+					}
+				}
+			});
+		});
+		
+		// 휴대폰 인증코드 확인
+		$('#btnHpConfirm').click(function () {
+			$('#confirmCodeBtn').trigger('click');
+			$('.hpResult').css('color', 'black').text('...'); // 중복확인 클릭시 로딩중을 표시
+			
+			setTimeout(function() {
+				if( $('#confirmCodeBtn').val() == 'true'){
+					isHpok = true;
+					$('.hpResult').css('color', 'green').text('휴대폰이 인증 되었습니다.');
+				} else {
+					isHpok = false;
+					$('.hpResult').css('color', 'red').text('인증번호가 일치하지 않습니다.');
+				}
+			}, 2000);			
 		});
 		
 		// 최종 폼 전송할 때

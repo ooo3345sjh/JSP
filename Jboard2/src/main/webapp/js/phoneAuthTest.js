@@ -37,10 +37,10 @@ $(function(){
             onSignInSubmit();
         }
     }, auth);
-	
+
     $('#phoneNumberBtn').click(function(e){
         e.preventDefault();
-        const phoneNumber = '+82' + $('#phoneNumber').val();
+        const phoneNumber = /*'+82'+ */"+1" + $('#phoneNumber').val();
         const appVerifier = window.recaptchaVerifier;
 
         signInWithPhoneNumber(auth, phoneNumber, appVerifier)
@@ -48,7 +48,6 @@ $(function(){
             // SMS sent. Prompt user to type the code from the message, then sign the
             // user in with confirmationResult.confirm(code).
             window.confirmationResult = confirmationResult;
-            
             console.log(confirmationResult);
             // ...
         }).catch((error) => {
@@ -67,13 +66,11 @@ $(function(){
         // User signed in successfully.
         const user = result.user;
         console.log(result);
-        $('#confirmCodeBtn').val('true');
         // ...
     }).catch((error) => {
         // User couldn't sign in (bad verification code?)
         // ...
         console.log(error);
-        $('#confirmCodeBtn').val('false');
         });
     })
 

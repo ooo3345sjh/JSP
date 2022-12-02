@@ -232,6 +232,11 @@ footer > p {
     display: none;
     margin-top: 6px;
 }
+
+#user > .register > form .hpAuth {
+    display: none;
+    margin-top: 6px;
+}
 #user > .register .emailResult{
 	display: block;
 	margin-top: 5px;

@@ -11,6 +11,7 @@ public class Sql {
 	public static final String CHECK_USER = "SELECT * FROM `board_user` WHERE `uid`= ?";
 	public static final String CHECK_NICK = "SELECT * FROM `board_user` WHERE `nick`= ?";
 	public static final String CHECK_EMAIL = "SELECT * FROM `board_user` WHERE `email` = ?";
+	public static final String CHECK_HP = "SELECT * FROM `board_user` WHERE `hp` = ?";
 	public static final String INSERT_USER = "INSERT INTO `board_user` SET "
 			                               + " `uid`=?, "
 			                               + " `pass`=SHA2(?, 256), "

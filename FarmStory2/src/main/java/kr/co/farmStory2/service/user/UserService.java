@@ -46,6 +46,11 @@ public enum UserService {
 		return dao.checkEmail(email);
 	}
 	
+	// 휴대폰 체크
+	public int checkHp(String hp) {
+		return dao.checkHp(hp);
+	}
+	
 	// 회원 등록
 	public void insertUser(UserVO vo) {
 		dao.insertUser(vo);

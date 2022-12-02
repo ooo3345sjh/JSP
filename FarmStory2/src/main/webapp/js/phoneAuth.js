@@ -12,13 +12,13 @@ import { getAuth, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber} fro
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyBteDZKy4shGe5lhIB3mE72XvpGUaxI_QA",
-    authDomain: "farmstory2-13d21.firebaseapp.com",
-    projectId: "farmstory2-13d21",
-    storageBucket: "farmstory2-13d21.appspot.com",
-    messagingSenderId: "128099688481",
-    appId: "1:128099688481:web:16d400c626b5ad0b8a4360",
-    measurementId: "G-QCY8S44W3N"
+    apiKey: "AIzaSyBG9WrwOrHLmrIc1-2C3GIp-NfFd24NZeo",
+    authDomain: "farmstory2-46784.firebaseapp.com",
+    projectId: "farmstory2-46784",
+    storageBucket: "farmstory2-46784.appspot.com",
+    messagingSenderId: "218489183119",
+    appId: "1:218489183119:web:3170503e7640ebeb7349fa",
+    measurementId: "G-YHG0CZQJNR"
 };
 
 // Initialize Firebase

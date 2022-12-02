@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/_header.jsp"/>
-<script src="${pageContext.servletContext.contextPath}/js/validation.js"></script>
-<script src="${pageContext.servletContext.contextPath}/js/zipcode.js"></script>
+<script type="module" src='<c:url value='/js/phoneAuth.js'/>'></script>
+<script src='<c:url value='/js/validation.js'/>'></script>
+<script src='<c:url value='/js/zipcode.js'/>'></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- 우편번호 찾기 오픈 API -->
         <main id="user">
             <section class="register">
@@ -58,15 +59,24 @@
                                 <div class="auth">
                                     <input type="text" name="auth" placeholder="인증번호 입력"/>
                                     <button type="button" id="btnEmailConfirm"><img src='<c:url value='/board/img/chk_confirm.gif'/>' alt="확인"/></button>
-                                    <br/><span class="emailResult"></span>
                                 </div>
+                                <br/><span class="emailResult"></span>
                             </td>
                         </tr>
                         <tr>
                             <td>휴대폰</td>
                             <td>
                             	<input type="text" name="hp" placeholder="휴대폰 입력"/>
-                                <span class="hpResult"></span>
+                            	<input type="hidden" id="phoneNumberBtn"/> <!-- firebase 인증번호 요청 -->
+                            	<input type="hidden" id="phoneNumber"/>	   <!-- firebase 휴대폰 번호값 -->
+                                <button type="button" id="btnHpAuth"><img src='<c:url value='/board/img/chk_auth.gif'/>' alt="인증번호 받기"/></button>
+                                
+                                <div class="hpAuth">
+                            		<input type="hidden" id="confirmCodeBtn" value="false"> <!-- firebase 인증코드 전송 -->
+                                    <input type="text" name="auth" id="confirmCode" placeholder="인증번호 입력"/>
+                                    <button type="button" id="btnHpConfirm"><img src='<c:url value='/board/img/chk_confirm.gif'/>' alt="확인"/></button>
+                                </div>
+                                <br/><span class="hpResult"></span>
                             </td>
                         </tr>
                         <tr>

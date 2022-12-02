@@ -32,11 +32,11 @@
                     		<c:when test="${empty map.croptalk2}">
                     			<tr>
                     				<td>></td>
-                    				<td colspan="2" width="195px"><a>최신 글이 없습니다</a><td>
+                    				<td colspan="2" width="190px"><a>최신 글이 없습니다</a><td>
                     			</tr>
                     		</c:when>
                     		<c:otherwise>
-		                    	<c:forEach  items="${map.croptalk2}" end="3" var="row" varStatus="loop">
+		                    	<c:forEach  items="${map.croptalk2}" end="4" var="row" varStatus="loop">
 			                        <tr>
 			                            <td>></td>
 			                            <td><a href='<c:url value='/board/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
@@ -55,7 +55,7 @@
                     		<c:when test="${empty map.croptalk3}">
                     			<tr>
                     				<td>></td>
-                    				<td colspan="2" width="195px"><a>최신 글이 없습니다</a><td>
+                    				<td colspan="2" width="190px"><a>최신 글이 없습니다</a><td>
                     			</tr>
                     		</c:when>
                     		<c:otherwise>
@@ -78,11 +78,11 @@
                     		<c:when test="${empty map.croptalk1}">
                     			<tr>
                     				<td>></td>
-                    				<td colspan="2" width="195px"><a>최신 글이 없습니다</a><td>
+                    				<td colspan="2" width="190px"><a>최신 글이 없습니다</a><td>
                     			</tr>
                     		</c:when>
                     		<c:otherwise>
-		                    	<c:forEach  items="${map.croptalk1}" end="3" var="row" varStatus="loop">
+		                    	<c:forEach  items="${map.croptalk1}" end="4" var="row" varStatus="loop">
 			                        <tr>
 			                            <td>></td>
 			                            <td><a href='<c:url value='/board/view.do?no=${row.no}&group=${row.group}&cate=${row.cate}'/>'>${row.title}</a></td>
@@ -139,7 +139,7 @@
 		                    		</c:when>
 		                    		<c:otherwise>
 				                    	<c:forEach  items="${map.community1}" end="2" var="row" varStatus="loop">
-		                               		<li><a href="#">· ${row.title}</a></li>
+		                               		<li><a href='<c:url value='/board/list.do?no=${row.no}&group=community&cate=1'/>'>· ${row.title}</a></li>
 				                    	</c:forEach>
 		                    		</c:otherwise>
 	                    		</c:choose>
@@ -153,7 +153,7 @@
 		                    		</c:when>
 		                    		<c:otherwise>
 				                    	<c:forEach  items="${map.community3}" end="2" var="row" varStatus="loop">
-		                               		<li><a href="#">· ${row.title}</a></li>
+		                               		<li><a href='<c:url value='/board/list.do?no=${row.no}&group=community&cate=3'/>'>· ${row.title}</a></li>
 				                    	</c:forEach>
 		                    		</c:otherwise>
 	                    		</c:choose>
@@ -167,7 +167,7 @@
 		                    		</c:when>
 		                    		<c:otherwise>
 				                    	<c:forEach  items="${map.community4}" end="2" var="row" varStatus="loop">
-		                               		<li><a href="#">· ${row.title}</a></li>
+		                               		<li><a href='<c:url value='/board/list.do?no=${row.no}&group=community&cate=4'/>'>· ${row.title}</a></li>
 				                    	</c:forEach>
 		                    		</c:otherwise>
 	                    		</c:choose>
