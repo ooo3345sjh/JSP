@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/_header.jsp"/>
 <jsp:include page="/${group}.jsp"/>
+<script type="text/javascript" src='<c:url value='/smartEditor/js/HuskyEZCreator.js'/>' charset="utf-8"></script>
+<script src='<c:url value='/js/smartEditor.js'/>'></script>
 <script>
+/*
 	function validateForm(form) {
 		if(!form.title.value){
 			alert("제목을 입력하세요.");
@@ -15,8 +18,10 @@
 			return false;
 		}
 	}
-	
+	*/
 	$(function () {
+		smarteditor();
+		
 		$('.upload').click(function () {
 			$('input[type=file]').trigger("click");
 		});
@@ -65,7 +70,9 @@
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+	                            <textarea name="editorTxt" id="editorTxt" rows="20" cols="10" 
+	                            placeholder="내용을 입력해주세요" style="width: 100%"></textarea>
+                                <!--  <textarea name="content" placeholder="내용을 입력하세요."></textarea> -->
                             </td>
                         </tr>
                         <tr>

@@ -347,6 +347,7 @@ public class ArticleDAO extends DBHelper {
 					updateFilePsmt.setString(2, fVo.getOriName());
 					updateFilePsmt.setInt(3, aVo.getNo());
 					result = updateFilePsmt.executeUpdate();
+					updateFilePsmt.close();
 					
 				} else {
 					insertFilePsmt = con.prepareStatement(Sql.UPDATE_ADD_FILE);
@@ -354,13 +355,12 @@ public class ArticleDAO extends DBHelper {
 					insertFilePsmt.setString(2, fVo.getNewName());
 					insertFilePsmt.setString(3, fVo.getOriName());
 					result = insertFilePsmt.executeUpdate();
+					insertFilePsmt.close();
 				}
 			}
 			
 			con.commit();
 			
-			updateFilePsmt.close();
-			insertFilePsmt.close();
 			close();
 			
 		} catch (Exception e) {

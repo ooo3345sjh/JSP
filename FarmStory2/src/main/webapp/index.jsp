@@ -1,6 +1,51 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="./_header.jsp"/>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript">
+	let contextRoot = location.pathname.split('/')[1]; // 컨택트루트 ex) Jboard2
+	var naver_id_login = new naver_id_login("6rcEp4ee87ghzsC7eyL6", "http://junghyun.site/FarmStory2/index.do");
+	// 접근 토큰 값 출력
+	if(naver_id_login.oauthParams.access_token){
+		console.log(naver_id_login.oauthParams.access_token);
+		// 네이버 사용자 프로필 조회
+		naver_id_login.get_naver_userprofile("naverSignInCallback()");
+		// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+		
+		function naverSignInCallback() {
+			// naver_id_login.getProfileData('프로필항목명');
+			// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
+			const uid = naver_id_login.getProfileData('id');
+			const name = naver_id_login.getProfileData('name');
+			const nick = naver_id_login.getProfileData('nickname');
+			const email = naver_id_login.getProfileData('email');
+			const age = naver_id_login.getProfileData('age');
+			const gender = naver_id_login.getProfileData('gender');
+			
+			let jsonData = {
+    				"uid" : uid,
+    				"pass" : "naver",
+    				"nick" : nick,
+    				"name" : name,
+    				"email" : email,
+    				"gender" : gender
+    		}
+    		$.post("/" + contextRoot + '/user/kakaoLogin.do', jsonData, function(data){
+				console.log(data);
+    			if(!data){
+					alert('로그인에 실패 했습니다.');
+				} else {
+					location.href = "/" + contextRoot + "/index.do";
+				}
+    		});
+			
+		}
+	
+	
+		// 네이버 사용자 프로필 조회
+		//naver_id_login.get_naver_userprofile("naverSignInCallback()");
+	}
+</script>
         <main>
             <div class="slider">
                 <ul>

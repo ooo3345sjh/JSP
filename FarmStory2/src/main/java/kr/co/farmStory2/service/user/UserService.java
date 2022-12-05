@@ -56,6 +56,11 @@ public enum UserService {
 		dao.insertUser(vo);
 	}
 	
+	// 회원 등록 및 회원 정보 조회
+	public UserVO insert_select_User(UserVO vo) {
+		return dao.insert_select_User(vo);
+	}
+	
 	/*** login ***/
 	
 	// 아이디 / 패스워드 확인

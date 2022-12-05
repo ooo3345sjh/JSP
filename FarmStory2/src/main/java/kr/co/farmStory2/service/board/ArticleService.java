@@ -79,7 +79,7 @@ public enum ArticleService {
 	
 	//====== update ======//
 	// 조건에 해당하는 게시물 수정
-	public int updateArticle(ArticleVO aVo, FileVO fVo, boolean newSave) {
+	public int updateArticleAndFile(ArticleVO aVo, FileVO fVo, boolean newSave) {
 		return dao.updateArticleAndFile(aVo, fVo, newSave);
 	}
 	

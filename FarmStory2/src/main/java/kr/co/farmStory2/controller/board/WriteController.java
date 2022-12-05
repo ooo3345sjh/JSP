@@ -75,7 +75,7 @@ public class WriteController extends HttpServlet {
 		String uid = ((UserVO)req.getAttribute("reqUser")).getUid();
 		aVo.setUid(uid);
 		aVo.setTitle(mr.getParameter("title"));
-		aVo.setContent(mr.getParameter("content"));
+		aVo.setContent(mr.getParameter("editorTxt"));
 		aVo.setCate(mr.getParameter("group") + mr.getParameter("cate"));
 		aVo.setFile(mr.getFilesystemName("oriName") == null? 0 : 1);
 		aVo.setRegip(req.getRemoteAddr());

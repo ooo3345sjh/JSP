@@ -1,5 +1,7 @@
 package kr.co.farmStory2.dao;
 
+import java.sql.PreparedStatement;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,6 +146,50 @@ public class UserDAO extends DBHelper {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+	}
+	
+	public UserVO insert_select_User(UserVO vo) {
+		UserVO user = null;
+		try {
+			logger.info("insert_select_User...");
+			con = getConnection();
+			con.setAutoCommit(false);
+			psmt = con.prepareStatement(Sql.INSERT_USER);
+			psmt.setString(1, vo.getUid());
+			psmt.setString(2, vo.getPass());
+			psmt.setString(3, vo.getNick());
+			psmt.setString(4, vo.getNick());
+			psmt.setString(5, vo.getEmail());
+			psmt.setString(6, vo.getHp());
+			psmt.setString(7, vo.getZip());
+			psmt.setString(8, vo.getAddr1());
+			psmt.setString(9, vo.getAddr2());
+			psmt.setString(10, vo.getRegip());
+			
+			psmt.executeUpdate();
+			
+			PreparedStatement selectPsmt = con.prepareStatement(Sql.SELECT_USER);
+			selectPsmt.setString(1, vo.getUid());
+			selectPsmt.setString(2, vo.getPass());
+			
+			rs = selectPsmt.executeQuery();
+			
+			while(rs.next()) {
+				user = new UserVO();
+				user.setUid(rs.getString("uid"));
+				user.setPass(rs.getString("pass"));
+				user.setNick(rs.getString("nick"));
+				user.setEmail(rs.getString("email"));
+				user.setRdate(rs.getString("rdate"));
+			}
+			
+			con.commit();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("user : " + user);
+		return user;
 	}
 	
 	

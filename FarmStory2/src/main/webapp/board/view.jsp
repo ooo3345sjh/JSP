@@ -58,10 +58,10 @@
 	                        <td id="down"><a href='<c:url value="/board/download.do?no=${map.board.no}"/>'>${map.board.fileName}</a>&nbsp;<span>${map.board.download}</span>회 다운로드</td>
 	                    </tr>
                     </c:if>
-                    <tr>
+                    <tr class='contentTrTag'>
                         <th>내용</th>
                         <td>
-                            <p class="content">${map.board.content}</p>
+                            <div class="content">${map.board.content}</div>
                         </td>
                     </tr>                    
                 </table>
@@ -69,7 +69,7 @@
                 <div>
                 	<c:if test="${reqUser.uid eq map.board.uid}">
 	                    <a href='<c:url value="/board/delete.do?${queryString}"/>' class="btn btnRemove" onclick="return realDelete();">삭제</a>
-	                    <a href='<c:url value="/board/modify.do?${queryString}&title=${map.board.title}&content=${map.board.content}&fname=${map.board.fileName}"/>' class="btn btnModify">수정</a>
+	                    <a href='<c:url value="/board/modify.do?${queryString}"/>' class="btn btnModify">수정</a>
                 	</c:if>
                		<a href='<c:url value="/board/list.do?${joiner}"/>' class="btn btnList">목록</a>
                 </div>

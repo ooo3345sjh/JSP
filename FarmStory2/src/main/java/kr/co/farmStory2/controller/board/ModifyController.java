@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,11 +37,12 @@ public class ModifyController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("ModifyController doGet...");
+		int no = Integer.parseInt(req.getParameter("no"));
+		Map<String, Object> map = service.selectArticle(no);
+		ArticleVO vo = (ArticleVO)map.get("board");
 		
-		req.setAttribute("no", req.getParameter("no"));				// 게시글 번호
-		req.setAttribute("title", req.getParameter("title"));		// 게시글 제목
-		req.setAttribute("content", req.getParameter("content"));   // 게시글 내
-		req.setAttribute("fname", req.getParameter("fname"));       // 파일 이름
+		
+		req.setAttribute("article", vo);       				        // 게시글 정보
 		req.setAttribute("group", req.getParameter("group"));  	    // 그룹
 		req.setAttribute("cate", req.getParameter("cate"));         // 카테고리
 		
@@ -73,7 +75,7 @@ public class ModifyController extends HttpServlet {
 		
 		int no = Integer.parseInt(mr.getParameter("no"));				// 게시글 번호
 		String title = mr.getParameter("title");						// 게시글 제목
-		String content = mr.getParameter("content");					// 게시글 내용
+		String content = mr.getParameter("editorTxt");					// 게시글 내용
 		String oriName = mr.getFilesystemName("oriName");				// 파일명
 		String regip = req.getRemoteAddr();								// 회원 IP주소
 		String uid = ((UserVO)req.getAttribute("reqUser")).getUid();    // 회원 ID
@@ -126,7 +128,7 @@ public class ModifyController extends HttpServlet {
 		
 		
 		int result = 0; 								   // 결과 변수
-		result = service.updateArticle(aVo, fVo, newSave); // 작성 글 등록
+		result = service.updateArticleAndFile(aVo, fVo, newSave); // 작성 글 등록
 		
 		String group = req.getParameter("group"); // 그룹
 		String cate = req.getParameter("cate");   // 카테고리

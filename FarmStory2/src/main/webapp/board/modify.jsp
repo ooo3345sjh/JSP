@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/_header.jsp"/>
 <jsp:include page="/${group}.jsp"/>
+<script type="text/javascript" src='<c:url value='/smartEditor/js/HuskyEZCreator.js'/>' charset="utf-8"></script>
+<script src='<c:url value='/js/smartEditor.js'/>'></script>
 <script>
+/*
 	function validateForm(form) {
 		if(!form.title.value){
 			alert("제목을 입력하세요.");
@@ -15,7 +18,10 @@
 			return false;
 		}
 	}
+	*/
 	$(function () {
+		smarteditor();
+		
 		$(document).ready(function () {
 			$('textarea[name=title]').focus();
 		})
@@ -64,31 +70,33 @@
                         <tr>
                             <th>제목</th>
                             <td>
-                            	<textarea name="title" placeholder="제목을 입력하세요.">${title}</textarea>
+                            	<textarea name="title" placeholder="제목을 입력하세요.">${article.title}</textarea>
                             </td>
                             
                         </tr>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="content" placeholder="내용을 입력하세요." >${content}</textarea>
+                                <textarea name="editorTxt" id="editorTxt" rows="20" cols="10" 
+	                            placeholder="내용을 입력해주세요" style="width: 100%">${article.content}</textarea>
+                                <!--  <textarea name="content" placeholder="내용을 입력하세요."></textarea> -->
                             </td>
                         </tr>
                         <tr>
                             <th>파일</th>
                             <td>
-                            	<input type="hidden" name="no" value="${no}">     <!-- 게시판 번호 -->
+                            	<input type="hidden" name="no" value="${article.no}">     <!-- 게시판 번호 -->
                             	<input type="hidden" name="changeFile" value="false">     <!-- 업로드를 하게될 경우 true로 전환 -->
-                            	<input type="hidden" name="currentFile" value="${fname}"> <!-- 기존에 저장된 파일 -->
+                            	<input type="hidden" name="currentFile" value="${article.fileName}"> <!-- 기존에 저장된 파일 -->
                                 <input type="file" name="oriName" style="display:none;"/>
                                 <button type="button" class="btn upload">업로드</button>&nbsp;
                                 <span id="fname">
                                 	<c:choose>
-										<c:when test="${empty fname}">
+										<c:when test="${empty article.fileName}">
 	                                		선택된 파일 없음
 										</c:when>
 										<c:otherwise>
-											${fname}
+											${article.fileName}
 										</c:otherwise>
                                 	</c:choose>
                                 </span>
