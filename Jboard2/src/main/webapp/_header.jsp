@@ -14,6 +14,7 @@
             <h3>Board System v2.0</h3>
             <p>
                 <span>${sessUser.nick}</span>님 반갑습니다.
+                <a href='<c:url value="/user/info.do?uid=${sessUser.uid}"/>'>[회원정보]</a>
                 <a href='<c:url value="/user/logout.do?uid=${sessUser.uid}"/>'>[로그아웃]</a>
             </p>
         </header>

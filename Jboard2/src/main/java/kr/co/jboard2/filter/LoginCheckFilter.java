@@ -38,7 +38,9 @@ public class LoginCheckFilter implements Filter {
 		uriList.add("view.do");
 		uriList.add("download.do");
 		uriList.add("delete.do");
-		
+		uriList.add("info.do");
+		uriList.add("myInfo.do");
+		uriList.add("logout.do");
 	}
 	
 	@Override
@@ -50,6 +52,7 @@ public class LoginCheckFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse)response;
 		HttpSession sess = req.getSession(false);
 		
+		String fromUrl = req.getHeader("referer"); // 요청을 하는 uri
 		String[] uriArr = req.getRequestURI().split("/"); // ex) {Jboard2, list.do} 
 		String uri = uriArr[uriArr.length-1]; // ex) list.do
 		UserVO vo = null;
@@ -70,11 +73,15 @@ public class LoginCheckFilter implements Filter {
 			} 
 			
 			/*** a-2.로그인 되어 있다면 ***/
-			else {			
+			else {		
+				if(uri.contains("info.do") || uri.contains("myInfo.do") || fromUrl.contains("info.do")  || fromUrl.contains("myInfo.do")) {
+					System.out.println("A도착");
+				}
 				
 				/*** List 컬렉션에 포함되지 않고, ['logout.do' 'style.css']도 아닌 경우에 ***/
-				if(!uriList.contains(uri) && !uri.equals("logout.do") && !uri.equals("style.css")&& !uri.equals("comment.js")) { 
+				else if(!uriList.contains(uri) && !uri.equals("logout.do") && !uri.equals("style.css")&& !uri.equals("comment.js")) { 
 					resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 목록 뷰로 이동
+					System.out.println("B도착");
 					return;
 				}
 			}
@@ -84,7 +91,7 @@ public class LoginCheckFilter implements Filter {
 		/*** B.세션이 null이면 ***/
 		else {
 			
-			String fromUrl = req.getHeader("referer"); // 요청을 하는 uri
+			fromUrl = req.getHeader("referer"); // 요청을 하는 uri
 			String toUrl = req.getRequestURI(); 	   // 요청을 받는 uri 
 			
 			if(fromUrl != null && fromUrl.contains("login.do") && toUrl.contains("list.do")) { 

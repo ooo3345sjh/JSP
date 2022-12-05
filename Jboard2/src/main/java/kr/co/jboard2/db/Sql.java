@@ -42,10 +42,26 @@ public class Sql {
 	
 	// 비밀번호 변경
 	public static final String UPDATE_USER_PW = "UPDATE `board_user` SET `pass`=SHA2(?, 256) WHERE `uid`=?";
-											  
+	
+	// 회원정보 수정
+	public static final String UPDATE_USER_INFO = "UPDATE `board_user` SET "
+												+ "		`name`=?, "
+												+ "		`nick`=?, "
+												+ "		`email`=?, "
+												+ "		`hp`=?, "
+												+ "		`zip`=?, "
+												+ "		`addr1`=?, "
+												+ "		`addr2`=? "
+												+ " WHERE `uid`=?";
+	// 회원정보 수정
+	public static final String DELETE_USER = "UPDATE `board_user` SET"
+			                               + "	`grade` = 0,"
+			                               + "	`wdate` = NOW()"
+			                               + " WHERE `uid` = ?";
+																				  
+	
 	
 	/*** board ***/
-	
 	/* write */
 	// 게시글 등록
 	public static final String INSERT_ARTICLE = "INSERT INTO "

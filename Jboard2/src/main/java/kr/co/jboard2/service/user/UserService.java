@@ -99,6 +99,17 @@ public enum UserService {
 		dao.updateUserForSessionOut(uid);
 	}
 	
+	/*** myInfo ***/
+	// 회원 정보수정
+	public int updateUserInfo(UserVO vo) {
+		return dao.updateUserInfo(vo);
+	}
+	
+	// 회원 탈퇴
+	public int deleteUser(String uid) {
+		return dao.deleteUser(uid);
+	}
+	
 	
 	
 	
