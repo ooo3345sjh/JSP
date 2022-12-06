@@ -50,7 +50,6 @@ public class LogoutCheckFilter implements Filter {
 		String fromUrl = req.getHeader("referer"); // 요청을 하는 uri
 		String[] uriArr = req.getRequestURI().split("/"); // ex) {Jboard2, list.do} 
 		String uri = uriArr[uriArr.length-1]; // ex) list.do
-		
 		UserVO vo = (UserVO)req.getAttribute("reqUser");
 		if(uriList.contains(uri)) {
 			if(vo != null) {
