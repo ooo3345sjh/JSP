@@ -1,4 +1,4 @@
-package kr.co.jboard2.controller.user;
+package kr.co.farmStory2.controller.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
 
-import kr.co.jboard2.service.user.UserService;
-import kr.co.jboard2.utils.JSFunction;
-import kr.co.jboard2.vo.UserVO;
+import kr.co.farmStory2.service.user.UserService;
+import kr.co.farmStory2.utils.JSFunction;
+import kr.co.farmStory2.vo.UserVO;
 
 @WebServlet("/user/info.do")
 public class InfoController extends HttpServlet {
@@ -35,11 +35,11 @@ public class InfoController extends HttpServlet {
 		logger.info("InfoController doGet...");
 		String fromUrl = req.getHeader("referer");
 		System.out.println(fromUrl);
-		if(fromUrl == null || !fromUrl.contains("list.do")) {
+		if(fromUrl == null || !fromUrl.contains("index.do")) {
 			JSFunction.alertBack(resp, "비정상적인 접근입니다.");
 			return;
 		}
-		req.getRequestDispatcher("/user/info.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/user/info.jsp").forward(req, resp);
 	}
 	
 	@Override

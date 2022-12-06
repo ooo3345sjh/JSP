@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="./_header.jsp"/>
+<jsp:include page="/_header.jsp"/>
 <script type="module" src='<c:url value='/js/phoneAuth.js'/>'></script>
 <script src='<c:url value='/js/myinfo_validation.js'/>'></script>
 <script src='<c:url value='/js/zipcode.js'/>'></script>
@@ -94,7 +94,7 @@
                             <td>비밀번호 확인</td>
                             <td>
 	                            <input type="password" name="pass2" placeholder="비밀번호 입력 확인"/>
-	                            <button type="button" class='passUpdate'>
+	                            <button type="button" class='passUpdate' style="vertical-align: baseline;">
 	                            비밀번호 수정	
 	                            </button>
 	                            <span class="passResult"></span>
@@ -120,7 +120,7 @@
                             <td>
                                 <p class="nickInfo">공백없는 한글, 영문, 숫자 입력</p>
                                 <input type="text" name="nick" placeholder="별명 입력" value="${reqUser.nick}"/>
-                                <button type="button" id="btnNickCheck"><img src='<c:url value='/img/chk_id.gif'/>' alt="중복확인"/></button>
+                                <button type="button" id="btnNickCheck"><img src='<c:url value='/board/img/chk_id.gif'/>' alt="중복확인"/></button>
                                 <br/><span class="nickResult"></span>
                             </td>
                         </tr>
@@ -129,13 +129,13 @@
                             <td>
                                 
                                 <input type="email" name="email" placeholder="이메일 입력" value="${reqUser.email}"/>
-                                <button type="button" id="btnEmailAuth"><img src='<c:url value='/img/chk_auth.gif'/>' alt="인증번호 받기"/></button>
+                                <button type="button" id="btnEmailAuth"><img src='<c:url value='/board/img/chk_auth.gif'/>' alt="인증번호 받기"/></button>
                                 
                                 <div class="auth">
                                     <input type="text" name="auth" placeholder="인증번호 입력"/>
-                                    <button type="button" id="btnEmailConfirm"><img src='<c:url value='/img/chk_confirm.gif'/>' alt="확인"/></button>
+                                    <button type="button" id="btnEmailConfirm"><img src='<c:url value='/board/img/chk_confirm.gif'/>' alt="확인"/></button>
                                 </div>
-                                <br/><span class="emailResult"></span>
+                                <span class="emailResult"></span>
                             </td>
                         </tr>
                         <tr>
@@ -144,12 +144,12 @@
                             	<input type="text" name="hp" placeholder="휴대폰 입력" value="${reqUser.hp}"/>
                             	<input type="hidden" id="phoneNumberBtn"/> <!-- firebase 인증번호 요청 -->
                             	<input type="hidden" id="phoneNumber"/>	   <!-- firebase 휴대폰 번호값 -->
-                                <button type="button" id="btnHpAuth"><img src='<c:url value='/img/chk_auth.gif'/>' alt="인증번호 받기"/></button>
+                                <button type="button" id="btnHpAuth"><img src='<c:url value='/board/img/chk_auth.gif'/>' alt="인증번호 받기"/></button>
                                 
                                 <div class="hpAuth">
                             		<input type="hidden" id="confirmCodeBtn" value="false"> <!-- firebase 인증코드 전송 -->
                                     <input type="text" name="auth" id="confirmCode" placeholder="인증번호 입력"/>
-                                    <button type="button" id="btnHpConfirm"><img src='<c:url value='/img/chk_confirm.gif'/>' alt="확인"/></button>
+                                    <button type="button" id="btnHpConfirm"><img src='<c:url value='/board/img/chk_confirm.gif'/>' alt="확인"/></button>
                                 </div>
                                 <br/><span class="hpResult"></span>
                             </td>
@@ -158,7 +158,7 @@
                             <td>주소</td>
                             <td>
                                 <input type="text" name="zip" id="zip" placeholder="우편번호" value="${reqUser.zip}"/>
-                                <button type="button" onclick="zipcode()"><img src='<c:url value='/img/chk_post.gif'/>' alt="우편번호찾기"/></button>
+                                <button type="button" onclick="zipcode()"><img src='<c:url value='/board/img/chk_post.gif'/>' alt="우편번호찾기"/></button>
                                 <input type="text" name="addr1" id="addr1" placeholder="주소 검색" value="${reqUser.addr1}"/>
                                 <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력" value="${reqUser.addr2}"/>
                             </td>
@@ -172,7 +172,7 @@
                     </table>
 
                     <div>
-                        <a href="<c:url value="/list.do"/>" class="btn btnCancel">취소</a>
+                        <a href="<c:url value="/index.do"/>" class="btn btnCancel">취소</a>
                         <input type="submit" value="회원수정" class="btn btnRegister"/>
                     </div>
 
@@ -180,4 +180,4 @@
 
             </section>
         </main>
-<jsp:include page="./_footer.jsp"/>
+<jsp:include page="/_footer.jsp"/>

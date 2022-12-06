@@ -25,6 +25,7 @@ public class LoginCheckFilter implements Filter {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private List<String> uriList;
+	private List<String> userUriList;
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -41,6 +42,14 @@ public class LoginCheckFilter implements Filter {
 		uriList.add("info.do");
 		uriList.add("myInfo.do");
 		uriList.add("logout.do");
+		
+		userUriList = new ArrayList<String>();
+		userUriList.add("login.do");
+		userUriList.add("findId.do");
+		userUriList.add("findIdResult.do");
+		userUriList.add("findPwChange.do");
+		userUriList.add("findPw.do");
+		userUriList.add("terms.do");
 	}
 	
 	@Override
@@ -57,6 +66,9 @@ public class LoginCheckFilter implements Filter {
 		String uri = uriArr[uriArr.length-1]; // ex) list.do
 		UserVO vo = null;
 		
+		logger.info("touri : " + uri);
+		logger.info("fromUrl" + fromUrl);
+		
 		/*** A.세션이 null이 아니면 ***/
 		if(sess != null) {   
 			
@@ -64,7 +76,6 @@ public class LoginCheckFilter implements Filter {
 			
 			/*** a-1.로그인이 되어있지 않다면 ***/
 			if(vo == null) { 
-				
 				/*** List 컬렉션에 포함된 uri라면 (로그인 후에 접속가능) ***/
 				if(uriList.contains(uri)) { // 
 					JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", req.getContextPath() + "/user/login.do"); // 로그인 뷰로 이동
@@ -74,14 +85,10 @@ public class LoginCheckFilter implements Filter {
 			
 			/*** a-2.로그인 되어 있다면 ***/
 			else {		
-				if(uri.contains("info.do") || uri.contains("myInfo.do") || fromUrl.contains("info.do")  || fromUrl.contains("myInfo.do")) {
-					System.out.println("A도착");
-				}
-				
-				/*** List 컬렉션에 포함되지 않고, ['logout.do' 'style.css']도 아닌 경우에 ***/
-				else if(!uriList.contains(uri) && !uri.equals("logout.do") && !uri.equals("style.css")&& !uri.equals("comment.js")) { 
+				/*** userUriList 컬렉션에 포함되는 경우 ***/
+				if(uri.contains("findPwChange.do") && fromUrl != null && fromUrl.contains("myInfo.do")) {}
+				else if(userUriList.contains(uri)) { 
 					resp.sendRedirect(req.getContextPath() + "/list.do"); // 게시판 목록 뷰로 이동
-					System.out.println("B도착");
 					return;
 				}
 			}

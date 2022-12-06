@@ -49,6 +49,11 @@ public class LoginController  extends HttpServlet{
 			HttpSession sess = req.getSession(true); // 세션 객체 가져오기
 			sess.setAttribute("sessUser", vo); 	     // 세션에 회원 정보 저장
 			
+			if(vo.getGrade() == 0 ) {
+				JSFunction.alertLocation(resp, "입력하신 정보는 탈퇴한 회원입니다.", req.getContextPath() + "/user/login.do"); // 로그인 뷰로 이동
+				return;
+			} 
+			
 			if(auto != null) { // 자동 로그인 체크가 되어있으면
 				String sessId = sess.getId();
 				

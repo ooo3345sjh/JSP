@@ -34,6 +34,8 @@
                 <a href='<c:url value='/'/>'>HOME |</a>
                	<c:choose>
                		<c:when test="${not empty reqUser}">
+		                <a>${reqUser.nick}님 반갑습니다. </a>
+		                <a href='<c:url value='/user/info.do'/>'>회원정보 |</a>
 		                <a href='<c:url value='/user/logout.do'/>'>로그아웃 |</a>
                		</c:when>
                		<c:otherwise>

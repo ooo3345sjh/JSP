@@ -237,6 +237,10 @@
 	display: block;
 	margin-top: 5px;
 }
+#user > .register .nickResult{
+	display: block;
+	margin-top: 5px;
+}
 
 #user > .register .hpResult{
 	display: block;
@@ -603,6 +607,16 @@
     border: 1px solid #bebebe; 
     text-align: center;
    	cursor: pointer;
+}
+
+.passUpdate{
+	color: #eaecee;
+	background: url("../img/pass.png");
+	background-size: cover;
+	background-repeat: no-repeat; 
+	width: 80px;
+    height: 18px;
+    font-size: 11px;
 }
 
 /* 아이디, 비밀번호 찾기 공통 */

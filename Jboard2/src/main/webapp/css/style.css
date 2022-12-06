@@ -567,6 +567,15 @@ footer > p {
     text-align: center;
    	cursor: pointer;
 }
+.passUpdate{
+	color: #eaecee;
+	background: url("/Jboard2/img/pass.png");
+	background-size: cover;
+	background-repeat: no-repeat; 
+	width: 80px;
+    height: 18px;
+    font-size: 11px;
+}
 
 /* 아이디, 비밀번호 찾기 공통 */
 #user > .find {

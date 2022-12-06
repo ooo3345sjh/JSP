@@ -1,7 +1,6 @@
-package kr.co.jboard2.controller.user;
+package kr.co.farmStory2.controller.user;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,15 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.JsonObject;
+import kr.co.farmStory2.service.user.UserService;
+import kr.co.farmStory2.utils.JSFunction;
+import kr.co.farmStory2.vo.UserVO;
 
-import kr.co.jboard2.service.user.UserService;
-import kr.co.jboard2.utils.JSFunction;
-import kr.co.jboard2.vo.UserVO;
 
 @WebServlet("/user/myInfo.do")
 public class MyInfoController extends HttpServlet {
@@ -39,7 +36,7 @@ public class MyInfoController extends HttpServlet {
 			JSFunction.alertBack(resp, "비정상적인 접근입니다.");
 			return;
 		}
-		req.getRequestDispatcher("/user/myInfo.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/user/myInfo.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -76,7 +73,7 @@ public class MyInfoController extends HttpServlet {
 		result = service.updateUserInfo(vo);
 		
 		if(result == 1) {
-			resp.sendRedirect(req.getContextPath() + "/list.do");
+			resp.sendRedirect(req.getContextPath() + "/index.do");
 		} else {
 			JSFunction.alertBack(resp, "회원 수정에 실패했습니다.");
 		}

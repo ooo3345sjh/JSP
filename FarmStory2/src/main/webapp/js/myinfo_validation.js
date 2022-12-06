@@ -256,7 +256,7 @@
 				$('.hpResult').text('');
 			} else{
 				isHpok = false;
-				$('.hpResult').css('color', 'red').text('유효하지 않는 이메일입니다.');
+				$('.hpResult').css('color', 'red').text('유효하지 않는 휴대폰입니다.');
 			}
 		});
 		

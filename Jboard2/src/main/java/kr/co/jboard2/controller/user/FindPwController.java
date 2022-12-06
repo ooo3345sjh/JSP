@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.JsonObject;
 
 import kr.co.jboard2.service.user.UserService;
@@ -18,6 +21,7 @@ public class FindPwController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void init() throws ServletException {
@@ -25,11 +29,13 @@ public class FindPwController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("FindPwController doGet...");
 		req.getRequestDispatcher("/user/findPw.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("FindPwController doPost...");
 		String uid = req.getParameter("uid");
 		String email = req.getParameter("email");
 		System.out.println("비밀번호 찾기 시작");
