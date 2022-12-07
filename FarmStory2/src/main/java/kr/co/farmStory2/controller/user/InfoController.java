@@ -33,12 +33,7 @@ public class InfoController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("InfoController doGet...");
-		String fromUrl = req.getHeader("referer");
-		System.out.println(fromUrl);
-		if(fromUrl == null || !fromUrl.contains("index.do")) {
-			JSFunction.alertBack(resp, "비정상적인 접근입니다.");
-			return;
-		}
+		
 		req.getRequestDispatcher("/board/user/info.jsp").forward(req, resp);
 	}
 	
