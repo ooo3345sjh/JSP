@@ -47,6 +47,10 @@
 
 ## Shop. 2022-10-26 SQL응용 수행평가
 
+## FarmStory1. Model1
+
+## FarmStory2. Model2 
+
 # [Book 실습 예제](https://github.com/ooo3345sjh/JSP/tree/main/Book/src/main/webapp)
 
 
